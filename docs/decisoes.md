@@ -1,5 +1,45 @@
 # Decisões
 
+## 2026-09-11 — Organização nova nasce igreja (resolve pendência do gatilho)
+
+- **DECISÃO — o gatilho de seed deixa de semear e-commerce (migration 0144):** a
+  entrada de 2026-08-14 registrava `fn_seed_default_pipeline_for_org` como pendência
+  ("não foi tocado nesta sessão"). Era o único caminho pelo qual uma igreja que
+  instalasse o kit abriria o produto e veria "Pedidos → Carrinho abandonado": o funil
+  piloto só estava certo porque foi renomeado à mão. Eram **duas** origens, e corrigir
+  uma só deixaria a outra de pé — o corpo do gatilho e o DEFAULT da coluna
+  `crm_pipelines.vocabulary` (que vale para todo funil criado sem `vocabulary`
+  explícito, inclusive pela UI). Agora semeia `Jornada` com
+  `Visitante / Em acompanhamento / Membro / Afastado`, espelhando `ETAPAS_INICIAIS`
+  — o funil semeado e o criado na tela deixam de divergir. Slugs preservados.
+- **DECISÃO — sem backfill:** organização que já existe não é renomeada. Nome de etapa
+  é exibição (o código lê slug e `is_won`/`is_lost`), e reescrever dado que o dono pode
+  ter customizado é pior que deixar um rótulo velho. A migration muda o que NASCE.
+- **CONFIRMADO — provado em banco real:** `scripts/test-db.sh` num
+  `pgvector/pgvector:pg17` do zero, install (`ON_ERROR_STOP=1`) e update
+  (re-aplicação) verdes, com `tests/invariants/org-nova-nasce-igreja.test.ts` 6/6.
+  Nota de ambiente: o script chama `vitest` puro, então precisa de
+  `PATH="$PWD/node_modules/.bin:$PATH"` — sem isso ele aplica o baseline, imprime
+  `vitest: command not found` e **pula a suíte inteira**.
+
+## 2026-09-11 — Vocabulário fora do kanban
+
+- **DECISÃO — onde há funil em contexto, usar o mecanismo, não string nova:**
+  `FilterBar` passou a receber `vocabulary` (que `app/app/pipelines/[id]/_client.tsx`
+  já resolvia) em vez de ganhar "Membros/Afastados" hardcoded.
+- **DECISÃO — onde não há funil, texto estático de igreja:** empty states,
+  notificações, escopos de token, webhooks, LGPD, painel de evolução e configurações
+  de funil. IDs de escopo (`leads:read`) e paths de regra (`lead.title`) **não** mudam:
+  são contrato, não rótulo.
+- **PENDÊNCIA — o agente ainda fala venda:** `lib/agent-engine/**` e `lib/ai/**` têm
+  "negócio"/"cliente" dentro de prompt de modelo e copy de guardrail. Mudar ali muda
+  comportamento do agente, não só leitura de tela — é Fase 1, junto do motor de fluxo.
+- **NOTA — chaves mortas no `vocabulary`:** o jsonb grava oito chaves, mas
+  `lib/kanban/vocabulary.ts` só lê quatro (`lead`, `deal`, `won`, `lost`).
+  `lead_plural`, `deal_plural`, `stage` e `stage_plural` não são lidas por ninguém.
+  Não removidas aqui (o DEFAULT da coluna já tinha as oito); decidir na Fase 1 se
+  viram leitura de verdade ou saem.
+
 ## 2026-08-31 — Pendência registrada (fora de escopo Fase 0)
 
 - **PENDÊNCIA — formulário de cadastro de visitante (app futuro):** quando o app mobile do
