@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useLeadTimeline } from "@/hooks/leads/useLeadTimeline";
 import type { Lead } from "@/lib/types/leads";
+import type { PipelineVocabulary } from "@/lib/kanban/types";
 import { LeadFieldsForm } from "./LeadFieldsForm";
 import { ScoreSlot } from "./ScoreSlot";
 import { LeadTimeline } from "./LeadTimeline";
@@ -17,6 +18,7 @@ interface Props {
   pipelineId: string;
   stageName: string;
   ownerNames?: Map<string, string | null>;
+  vocabulary: Required<PipelineVocabulary>;
 }
 
 function formatBRL(cents: number | null, currency: string | null): string {
@@ -52,6 +54,7 @@ export function LeadDossier({
   pipelineId,
   stageName,
   ownerNames,
+  vocabulary,
 }: Props) {
   const campos = useRef<HTMLDivElement | null>(null);
   const timeline = useLeadTimeline(open ? lead.id : null, lead.contact_id);
@@ -138,7 +141,7 @@ export function LeadDossier({
           <h3 className="mb-2 text-xs font-medium uppercase tracking-wide text-text-muted">
             Dados do negócio
           </h3>
-          <LeadFieldsForm lead={lead} pipelineId={pipelineId} />
+          <LeadFieldsForm lead={lead} pipelineId={pipelineId} vocabulary={vocabulary} />
         </div>
       </SheetContent>
     </Sheet>

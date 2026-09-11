@@ -1,4 +1,4 @@
-# CLAUDE.md — DeskcommCRM
+# CLAUDE.md — Cajado
 
 > Instruções pra futuras sessões Claude trabalhando neste repo. Leitura obrigatória antes de qualquer task de código.
 
@@ -9,12 +9,13 @@
 - [`docs/current-state.md`](docs/current-state.md) — o que está pronto, incompleto e quebrado. **Leia antes de estimar ou prometer qualquer coisa.**
 - [`docs/harness-audit.md`](docs/harness-audit.md) — onde a verificação tem buraco. Importante: `pnpm gov:verify` **não** cobre `test:db` nem `test:e2e` — verde ali não é prova para mudança de schema ou de UI.
 - [`docs/threat-model.md`](docs/threat-model.md) — superfície de ataque real do self-host.
+- [`docs/dominio-nao-e-venda.md`](docs/dominio-nao-e-venda.md) — **leia antes de tocar em pipeline/lead/stage.** O Cajado é fork de um CRM de vendas; campo/tabela/etapa com nome comercial (`deal`, `won`, `value_cents`, "Ganho/Perdido") quase sempre tem significado pastoral, não literal. Evita "consertar" resquício esperado do fork como se fosse bug.
 
 ---
 
 ## Visão (1 parágrafo)
 
-DeskcommCRM é um sistema operacional de vendas open source com agentes de IA nativos — multi-nicho (e-commerce, clínicas, imobiliárias, infoprodutos, serviços), com WhatsApp como canal primário (via WAHA). Agentes com RAG por tenant atendem, qualificam e movem o funil junto com humanos; CRM inteiro exposto via MCP. Monetização = self-host em VPS (parceria HostGator), não assinatura. Arquitetura multi-tenant com RLS desde o dia 1; LGPD nativa. Posicionamento completo: `VISION.md`.
+Cajado é um sistema operacional de cuidado pastoral, derivado do DeskcommCRM (mesma base técnica: multi-tenant, RLS desde o dia 1, WhatsApp como canal primário via WAHA, agentes com RAG por tenant). Em vez de qualificar lead e mover funil de venda, acompanha visitante, membro e voluntário na jornada de vida da igreja — confirmação de escala, pesquisa pós-culto, cobrança de relatório de líder, tudo capturado e classificado automaticamente. CRM inteiro exposto via MCP. Posicionamento completo: `docs/decisoes.md`.
 
 ---
 
@@ -38,6 +39,7 @@ DeskcommCRM é um sistema operacional de vendas open source com agentes de IA na
 ## Convenções críticas (NÃO NEGOCIÁVEIS)
 
 ### Multi-tenancy
+
 - `organization_id uuid not null references organizations(id) on delete cascade` em **toda** tabela tenant-aware
 - RLS policy `tenant_isolation_<tabela>_all` aplicada via helper `fn_user_org_ids()`
 - Service role bypassa RLS — handlers que usam admin client **DEVEM** filtrar `organization_id` manualmente, resolvido de fonte confiável (cookie/JWT/webhook secret/path token), **NUNCA do body**
@@ -45,11 +47,13 @@ DeskcommCRM é um sistema operacional de vendas open source com agentes de IA na
 - Teste de isolamento (cria 2 tenants, verifica não-vazamento) é obrigatório no CI antes de merge
 
 ### Idempotência & event sourcing leve
+
 - Mensagens WhatsApp e eventos externos: `unique (organization_id, external_id)` + captura `code === '23505'` no INSERT
 - POSTs de criação na API aceitam header `Idempotency-Key: <uuid>` (TTL 24h via Upstash)
 - **Trigger Postgres NUNCA faz HTTP.** Trigger emite linha em `event_log`; worker (cron / Realtime listener) consome e dispara side effect
 
 ### API REST `/api/v1/`
+
 - Versionamento por path. JSON snake_case. UUID v4. ISO-8601 UTC. Dinheiro em `_cents` + `currency` ISO-4217
 - Wrapper sucesso: `{ data, meta?: { cursor, has_more, total } }`
 - Wrapper erro: `{ error: { code, message, details? } }` — usar helpers `ok()` / `fail()` de `lib/api/wrappers.ts`
@@ -61,6 +65,7 @@ DeskcommCRM é um sistema operacional de vendas open source com agentes de IA na
 - `X-Request-Id` em toda response (correlaciona com audit log)
 
 ### Auth & RBAC
+
 - Sempre `getUser()` (valida JWT no backend). NUNCA `getSession()` (confia no cookie local)
 - 4 roles dentro do tenant: `viewer` (1) < `agent` (2) < `manager` (3) < `admin` (4)
 - Super-admin de plataforma é uma role transversal — `is_platform_admin` (decisão final na Spec 01)
@@ -68,12 +73,14 @@ DeskcommCRM é um sistema operacional de vendas open source com agentes de IA na
 - Permissão por pipeline (`user_pipeline_access`) **NÃO** entra no MVP
 
 ### Audit log
+
 - Toda mutação POST/PATCH/DELETE bem-sucedida → 1 entrada em `api_audit_log` (fire-and-forget, p99 ≤500ms)
 - Audit é append-only. Sem RLS de UPDATE/DELETE. Edição apenas via DBA manual
 - Retenção 5 anos. Hot 90 dias, cold (S3) o resto
 - Falha de write em audit gera alerta Sentry, não bloqueia mutação principal
 
 ### LGPD
+
 - Anonimização preferida sobre delete. Nome do contato vira `Cliente Anonimizado #N`
 - Cascade de redact: contact + conversations + messages (mídia removida do storage) + activities (preserva timestamps)
 - Reversão de anonimização: 403 `lgpd_anonymization_irreversible`
@@ -81,6 +88,7 @@ DeskcommCRM é um sistema operacional de vendas open source com agentes de IA na
 - Action audit obrigatória: `lgpd.data_request_received`, `lgpd.export_generated`, `lgpd.redact_executed`, `lgpd.consent_changed`
 
 ### WAHA
+
 - Plus obrigatório (Core não suporta multi-tenant, sem retry, sem S3)
 - Engine NOWEB default; WEBJS apenas se precisar stickers animados / botões
 - Auth: env do WAHA recebe **hash SHA512 hex** da api key; cliente envia plaintext em `X-Api-Key`
@@ -93,22 +101,24 @@ DeskcommCRM é um sistema operacional de vendas open source com agentes de IA na
 - Cron `recover-stuck-messages` (`app/api/v1/cron/recover-stuck-messages/route.ts`, agendado no `scheduler` do `docker-compose.prod.yml`): marca `status='sending'` há >5min como `failed` **e abre aviso na Central** (`agent_inbox_items` kind `message_send_stuck`). Não toca em `queued`: esse estado tem dono (o agent-engine reagenda por `SEND_QUEUED_RETRY_MS`), e falhá-lo perderia mensagem que ia sair. Não reenvia — envio em dobro é pior que não-envio
 
 ### Doutrina DIRC (antes de adicionar campo)
+
 - **D**uplicar — vive aqui mesmo?
 - **I**ntegrar — vem de outra tabela via FK?
 - **R**eferenciar — só ponteiro?
 - **C**alcular — pode ser computado on-demand?
 
 ### Modelagem
+
 - 5 tabelas core CRM: `crm_pipelines`, `crm_stages`, `crm_leads`, `crm_lead_activities` (polimórfica timeline), `crm_lead_links` (polimórficos vínculos)
 - `position_in_stage numeric` (fractional indexing via `midpoint()`) — **NUNCA `int`**
 - `external_id` nullable (mensagem outbound `sending` ainda não tem ID WAHA)
 - `type` é `text` + `check constraint`, **não enum** (enum é difícil de estender)
   - **Exceção deliberada — colunas de vocabulário ABERTO:** onde um clone pode ter linhas com valor
-    legado (ex.: `crm_lead_activities.type`), o CHECK **não** entra: a constraint faria o `update.sh`
-    do clone quebrar, e a doutrina de migrations proíbe. Nesses casos o vocabulário vive só no
-    TypeScript, o emissor usa **constante compartilhada, nunca string literal**, e a coluna fica
-    **fora** do invariante `tests/invariants/vocabulario-banco-x-typescript.test.ts` — que cobre
-    apenas colunas que JÁ têm CHECK. Ver o cabeçalho desse arquivo antes de "completar" o schema.
+  legado (ex.: `crm_lead_activities.type`), o CHECK **não** entra: a constraint faria o `update.sh`
+  do clone quebrar, e a doutrina de migrations proíbe. Nesses casos o vocabulário vive só no
+  TypeScript, o emissor usa **constante compartilhada, nunca string literal**, e a coluna fica
+  **fora** do invariante `tests/invariants/vocabulario-banco-x-typescript.test.ts` — que cobre
+  apenas colunas que JÁ têm CHECK. Ver o cabeçalho desse arquivo antes de "completar" o schema.
 - `tags text[]` + GIN index; promove pra coluna gerada apenas quando vira hot path
 - `custom_fields jsonb` com schema declarativo em `pipeline.settings.fields`; Zod construído dinamicamente
 - `vocabulary jsonb` em pipeline permite renomear lead/deal/won/lost (e-commerce: lead=Cliente, deal=Pedido, won=Pago, lost=Cancelado)
@@ -136,22 +146,24 @@ DeskcommCRM é um sistema operacional de vendas open source com agentes de IA na
 
 ## Paths importantes
 
-| Path | Conteúdo |
-|---|---|
-| `docs/prd/00-prd-master.md` | Visão geral, escopo MVP, KPIs |
-| `docs/prd/01-prd-platform-base.md` | Auth, tenancy, RBAC, LGPD framework |
-| `docs/prd/02-...06-` | Customer 360, WhatsApp, Pipeline, IA-RAG, Nuvemshop |
-| `docs/specs/` | Specs técnicas detalhadas (schema SQL, payloads exatos) |
-| `docs/business-rules/` | Regras de negócio fora do código |
-| `docs/research/reference-synthesis.md` | Arquitetura herdada do curso WAHA |
-| `tasks/todo.md` | Workflow de construção atual |
-| `lib/api/wrappers.ts` | `ok()`, `fail()`, tipos `ApiSuccess<T>` / `ApiError` |
-| `lib/api/errors.ts` | Códigos de erro canônicos |
-| `lib/env.ts` | Validação Zod das env vars (lança no startup se faltar crítica) |
-| `lib/supabase/{browser,server,admin}.ts` | Clients canônicos |
-| `app/api/v1/health/route.ts` | Health check (Supabase + Redis + WAHA) |
-| `supabase/migrations/` | Schema versionado |
-| `docs/runbooks/deploy.md` | **Deploy em produção — leia ANTES de mexer na VPS** |
+
+| Path                                     | Conteúdo                                                        |
+| ---------------------------------------- | --------------------------------------------------------------- |
+| `docs/prd/00-prd-master.md`              | Visão geral, escopo MVP, KPIs                                   |
+| `docs/prd/01-prd-platform-base.md`       | Auth, tenancy, RBAC, LGPD framework                             |
+| `docs/prd/02-...06-`                     | Customer 360, WhatsApp, Pipeline, IA-RAG, Nuvemshop             |
+| `docs/specs/`                            | Specs técnicas detalhadas (schema SQL, payloads exatos)         |
+| `docs/business-rules/`                   | Regras de negócio fora do código                                |
+| `docs/research/reference-synthesis.md`   | Arquitetura herdada do curso WAHA                               |
+| `tasks/todo.md`                          | Workflow de construção atual                                    |
+| `lib/api/wrappers.ts`                    | `ok()`, `fail()`, tipos `ApiSuccess<T>` / `ApiError`            |
+| `lib/api/errors.ts`                      | Códigos de erro canônicos                                       |
+| `lib/env.ts`                             | Validação Zod das env vars (lança no startup se faltar crítica) |
+| `lib/supabase/{browser,server,admin}.ts` | Clients canônicos                                               |
+| `app/api/v1/health/route.ts`             | Health check (Supabase + Redis + WAHA)                          |
+| `supabase/migrations/`                   | Schema versionado                                               |
+| `docs/runbooks/deploy.md`                | **Deploy em produção — leia ANTES de mexer na VPS**             |
+
 
 ---
 
@@ -208,10 +220,10 @@ pnpm test:e2e    # Playwright (requer dev server)
 
 Checks **obrigatórios** na branch protection da `main` (verificado na configuração, não só no papel):
 
-- **`verify`** (`ci.yml`) — typecheck + lint + test:unit.
-- **`invariants`** (`ci.yml`) — `pnpm test:db`: sobe `pgvector/pgvector:pg17`, aplica `supabase/baseline.sql` em modo install (`ON_ERROR_STOP=1`) e update (idempotência), e roda os testes de invariante, incluindo o de isolamento RLS entre 2 organizações.
-- **`build-and-size`** (`perf.yml`) — `pnpm build` em Node 22.
-- **`e2e`** (`e2e.yml`) — sobe Supabase local, aplica o `baseline.sql` e roda **37 das 39 specs** Playwright (medido em 2026-08-10; **reconte antes de citar**, com `ls tests/e2e/*.spec.ts | wc -l` e `grep -oE '[a-z0-9-]+\.spec\.ts' .github/workflows/e2e.yml | sort -u | wc -l` — este número já apodreceu duas vezes, e uma delas fui eu copiando o `echo` do próprio workflow em vez de contar os arquivos). As duas de fora: `vps-fresh-onboarding` (precisa de WAHA + Redis + Resend + Nuvemshop) e `agente-papeis-operador`. A primeira é a **P0** da doutrina de QA Visual — ou seja, `e2e` verde **não** prova a jornada de instalação fresca, que é o produto que se vende.
+- `**verify**` (`ci.yml`) — typecheck + lint + test:unit.
+- `**invariants**` (`ci.yml`) — `pnpm test:db`: sobe `pgvector/pgvector:pg17`, aplica `supabase/baseline.sql` em modo install (`ON_ERROR_STOP=1`) e update (idempotência), e roda os testes de invariante, incluindo o de isolamento RLS entre 2 organizações.
+- `**build-and-size**` (`perf.yml`) — `pnpm build` em Node 22.
+- `**e2e**` (`e2e.yml`) — sobe Supabase local, aplica o `baseline.sql` e roda **37 das 39 specs** Playwright (medido em 2026-08-10; **reconte antes de citar**, com `ls tests/e2e/*.spec.ts | wc -l` e `grep -oE '[a-z0-9-]+\.spec\.ts' .github/workflows/e2e.yml | sort -u | wc -l` — este número já apodreceu duas vezes, e uma delas fui eu copiando o `echo` do próprio workflow em vez de contar os arquivos). As duas de fora: `vps-fresh-onboarding` (precisa de WAHA + Redis + Resend + Nuvemshop) e `agente-papeis-operador`. A primeira é a **P0** da doutrina de QA Visual — ou seja, `e2e` verde **não** prova a jornada de instalação fresca, que é o produto que se vende.
 
 Todos os quatro são **obrigatórios** — medido em 2026-08-08 na branch protection:
 
@@ -233,6 +245,7 @@ Ao mexer em schema, RLS, RBAC, atribuição, escopo, roteamento, follow-up, webh
 **O DeskcommCRM é distribuído open-source: a experiência de quem instala numa VPS É o produto.** Toda feature nova (ou fix de comportamento visível) DEVE ser provada como um **usuário leigo a usaria de verdade** — pelo frontend, num ambiente que imita a instalação fresca — antes de "pronto". Não é opcional; é critério de aceite de toda sessão que toca UI ou fluxo de usuário.
 
 **O que "recurso real" significa (e o que NÃO conta):**
+
 - **Conta.** Prova pela tela, dirigindo o browser (Playwright), logando com conta de teste real. `curl`/chamada de API **não** provam UX — validam o backend, mas não o que o usuário vê, clica e entende. Use curl só como diagnóstico.
 - **Banco fresco estilo VPS.** Postgres limpo aplicado do `supabase/baseline.sql` (não das `migrations/` — a cadeia fresh não sobe) + `scripts/bootstrap-owner.ts` (o que o `install.sh` faz). O ambiente do teste = o que o clone recém-instalado tem: sem os seus dados, sem os seus envs opcionais.
 - **Dependências como na VPS.** WAHA local, Redis local (`redis` + `serverless-redis-http`), cron drain via endpoint. E **teste com os envs opcionais AUSENTES** (ex.: sem `RESEND_API_KEY`) — é o estado real de um primeiro deploy, e é onde moram os piores bugs de primeira impressão.
@@ -241,6 +254,7 @@ Ao mexer em schema, RLS, RBAC, atribuição, escopo, roteamento, follow-up, webh
 **Prioridade: primeira impressão acima de tudo.** Onboarding e as primeiras ações (criar conta, conectar canal, primeiro lead, primeiro convite) são a primeira impressão do usuário — bug ali é abandono. Teste esses caminhos primeiro e com o maior rigor.
 
 **Registro obrigatório (senão o progresso é invisível):**
+
 - Mapa de jornadas vivo em `docs/testing/user-journey-map.md` — casos por jornada, prioridade (`[P0]` primeira impressão), e achados. Atualize quando adicionar cobertura ou achar bug.
 - Specs em `tests/e2e/*.spec.ts` que dirigem o **frontend** (não só API). Evidência visual (screenshot/trace) em `.superpowers/evidence/`.
 - Bug achado executando → **conserta na causa raiz**, com migration versionada se tocar schema (ver doutrina abaixo), commit próprio, e re-teste verde como prova.
@@ -253,7 +267,7 @@ Ao mexer em schema, RLS, RBAC, atribuição, escopo, roteamento, follow-up, webh
 
 ## Higiene de branches — DOUTRINA (NÃO NEGOCIÁVEL)
 
-**`main` é produção e é a fonte da verdade. Toda branch começa e se mantém atualizada com a `main`.** Trabalho iniciado numa branch atrasada gera conflito e retrabalho — é a causa número um de "cagada" em ambiente multi-sessão. Regra:
+`**main` é produção e é a fonte da verdade. Toda branch começa e se mantém atualizada com a `main`.** Trabalho iniciado numa branch atrasada gera conflito e retrabalho — é a causa número um de "cagada" em ambiente multi-sessão. Regra:
 
 1. **ANTES de começar QUALQUER trabalho numa branch, atualize-a com a `main`:** `git fetch origin && git merge origin/main` (traz produção pra dentro). Se a branch ainda não tem commits próprios, é fast-forward puro (`git merge --ff-only origin/main`). Não codar antes disso.
 2. **NUNCA `reset --hard`/force pra "atualizar"** — apaga trabalho. Só dois caminhos: **fast-forward** (branch sem commits próprios) ou **merge da `main` pra dentro** (preserva os dois lados). `main` nunca é reescrita.
@@ -278,11 +292,10 @@ Processo padrão (siga sempre):
 7. **Aplique e prove**: aplique via `mcp__plugin_supabase_supabase__apply_migration` (ou `supabase db push`), capture o estado ANTES/DEPOIS e prove invariantes (ex.: contagem de linhas que não pode mudar). Se mexeu em contrato, regenere `lib/database.types.ts`. Para mudanças de schema no kit, valide o baseline num Postgres descartável (`pgvector/pgvector:pg17` + extensões) aplicando `install` (fresh, `ON_ERROR_STOP=1`) e `update` (re-aplicar, sem a flag) — ambos têm que passar.
 8. **Backfill de dados quebrados existentes**: constraint nova falha se os dados atuais a violam — a migration (e o apêndice do baseline) deve deduplicar/corrigir ANTES de criar a constraint.
 9. **Função nova em `public` nasce EXPOSTA — revogue as DUAS origens.** Toda `create function` no schema `public` termina com:
-
-   ```sql
+  ```sql
    revoke execute on function public.fn_x(...) from public, anon;
    grant  execute on function public.fn_x(...) to <só quem precisa>;
-   ```
+  ```
 
    São duas origens distintas de `EXECUTE`, e tratar só uma deixa a função exposta com o gate verde: **(A)** o grant direto a `anon` do `ALTER DEFAULT PRIVILEGES ... GRANT ALL ON FUNCTIONS TO anon` do baseline, que vale para toda função criada depois dele — isto é, para todo apêndice novo — e que `revoke from public` **não** remove; **(B)** o grant a `PUBLIC` que o Postgres dá a qualquer função ao criá-la, que `revoke from anon` **não** remove. Sem os dois, o PostgREST expõe a função como RPC alcançável pela anon key, que vai para o browser. Vigiado por `tests/invariants/hardening-definer-varredura.test.ts`, que varre todas as `security definer` de `public` (issue #128 — a versão anterior checava uma lista fixa de 6, e 8 de 25 estavam expostas).
 
@@ -324,4 +337,17 @@ Antes de declarar uma task pronta:
 13. **Living System Checklist respondido** (lei em `docs/doctrine/sistema-vivo.md`; racional no manual `docs/doctrine/sistema-vivo/`) — a feature não é ilha: tem entrada + saída, emite atividade/log, aparece na tela, tem porta na navegação, tem mecanismo anti-morte, **declara seu laço de retorno** (invariante 7 — o que muda no sistema quando ela erra), e o mapa vivo (`docs/architecture/`) reflete peça nova com ≥2 arestas. Resposta que não **nomeia o artefato concreto** (consumidor real, tela real, log real) não conta
 14. **Tela nova tem porta** — declarada em `lib/navigation/registry.ts` com seu grupo, ou na allowlist de `tests/unit/navegacao-completude.test.ts` **com justificativa escrita**. Ter tela e ser alcançável são coisas diferentes: o CI reprova tela que existe mas em que só se chega digitando a URL
 
-Um staff engineer aprovaria? Se não, itera.
+Um staff engineer aprovaria? Se não, itera.  
+
+---
+
+**Processo — camada Cajado (adicional à doutrina acima)**
+
+1. Antes de usar lib/framework externo, consultar MCP context7 pra versão atual — não confiar em memória de treino. As libs mudam rápido e o projeto trava em versão específica (ver Stack canônica acima).
+2. Todo texto voltado ao usuário final (WhatsApp, notificação, copy de tela, e-mail, onboarding) passa pela skill humanizer-pt-br antes de pronto. Vale pra string de erro e texto de UI também. Não vale pra nome de variável, comentário, commit message ou documentação técnica.
+3. Modos de trabalho: **caveman** (implementação direta, escopo fechado, sem embelezar) →**ponytail** (revisão/refino depois que o caveman entrega — nomenclatura, edge case) →**improve** (melhoria incremental sobre código já funcional, não pra primeira versão).
+4. Fluxo padrão: caveman implementa → ponytail revisa → improve só se algo for apontado.
+5. Decisão estrutural nova (fora do que já está documentado nas seções acima) entra em`docs/[decisoes.md](http://decisoes.md)` **antes** de codar — não sobrescrever silenciosamente uma decisão já registrada lá.
+6. Schema e políticas de RLS do domínio novo (ministérios, escalas, jornada, EAD) vivem em `docs/[schema.md](http://schema.md)`, seguindo as mesmas convenções não-negociáveis de multi-tenancy já descritas acima nesse arquivo (organization_id obrigatório, RLS via fn_user_org_ids, nunca confiar em organization_id vindo do body).
+7. Escopo da tarefa em andamento vive em `docs/[tarefa-atual.md](http://tarefa-atual.md)` — ler antes de começar qualquer trabalho de código.
+

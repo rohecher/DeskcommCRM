@@ -33,16 +33,16 @@ export function generateMetadata(): Metadata {
   const { name } = branding();
   return {
     title: {
-      default: `${name} — atendimento e vendas por WhatsApp com agentes de IA`,
+      default: `${name} — cuidado pastoral pelo WhatsApp`,
       template: `%s · ${name}`,
     },
     description:
-      "Centralize o atendimento por WhatsApp num funil só. Agentes de IA resolvem o que dá pra resolver e passam para o time humano o que importa — com tudo registrado. Multi-tenant, LGPD-nativo, feito para operações brasileiras.",
+      "Acompanhe visitantes, membros e voluntários pelo WhatsApp, com o histórico de cada pessoa organizado em um só lugar.",
     applicationName: name,
     authors: [{ name }],
     keywords: [
-      "CRM",
-      "atendimento",
+      "cuidado pastoral",
+      "igreja",
       "WhatsApp",
       "IA conversacional",
       "LGPD",

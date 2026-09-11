@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useEditLead } from "@/hooks/kanban/useUpdateLead";
 import type { Lead } from "@/lib/types/leads";
+import type { PipelineVocabulary } from "@/lib/kanban/types";
 import { updateLeadSchema, type UpdateLeadInput } from "@/lib/schemas/leads";
 import { parseReaisToCents } from "@/lib/money";
 import { EcoDoValor } from "./EcoDoValor";
@@ -33,6 +34,7 @@ interface Props {
   onOpenChange: (v: boolean) => void;
   lead: Lead;
   pipelineId: string;
+  vocabulary: Required<PipelineVocabulary>;
 }
 
 function centsToReais(cents: number | null | undefined): string {
@@ -40,7 +42,7 @@ function centsToReais(cents: number | null | undefined): string {
   return (cents / 100).toFixed(2).replace(".", ",");
 }
 
-export function EditLeadDialog({ open, onOpenChange, lead, pipelineId }: Props) {
+export function EditLeadDialog({ open, onOpenChange, lead, pipelineId, vocabulary }: Props) {
   const edit = useEditLead(pipelineId);
 
   const form = useForm<FormShape>({
@@ -102,7 +104,7 @@ export function EditLeadDialog({ open, onOpenChange, lead, pipelineId }: Props) 
         leadId: lead.id,
         patch: parsed.data as UpdateLeadInput,
       });
-      toast.success("Lead atualizado");
+      toast.success(`${vocabulary.lead} atualizado`);
       onOpenChange(false);
     } catch {
       // toast already shown
@@ -113,7 +115,7 @@ export function EditLeadDialog({ open, onOpenChange, lead, pipelineId }: Props) 
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Editar lead</DialogTitle>
+          <DialogTitle>Editar {vocabulary.lead.toLocaleLowerCase("pt-BR")}</DialogTitle>
           <DialogDescription>
             Atualize os campos. Mover de etapa ou marcar ganho/perdido tem opções
             próprias.

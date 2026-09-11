@@ -7,6 +7,7 @@
  * Output: .e2e-creds.json (gitignored) com URLs e creds para Playwright/curl.
  *
  * Run: npx tsx scripts/seed-e2e-credentials.ts
+ * Fase 0 (sem viewer): npx tsx scripts/seed-e2e-credentials.ts --phase0
  */
 
 import { createClient } from "@supabase/supabase-js";
@@ -40,14 +41,24 @@ const PASSWORD = "E2E!Test1234";
 
 const USERS: Array<{
   email: string;
+  previous_email?: string;
   role: "admin" | "manager" | "agent" | "viewer";
   full_name: string;
 }> = [
-  { email: "e2e-admin@deskcomm.test", role: "admin", full_name: "E2E Admin" },
+  {
+    email: "roberto.hecher@automonte.com.br",
+    previous_email: "e2e-admin@deskcomm.test",
+    role: "admin",
+    full_name: "E2E Admin",
+  },
   { email: "e2e-manager@deskcomm.test", role: "manager", full_name: "E2E Manager" },
   { email: "e2e-agent@deskcomm.test", role: "agent", full_name: "E2E Agent" },
   { email: "e2e-viewer@deskcomm.test", role: "viewer", full_name: "E2E Viewer" },
 ];
+
+const usersToSeed = process.argv.includes("--phase0")
+  ? USERS.filter((user) => user.role !== "viewer")
+  : USERS;
 
 async function ensureOrg(): Promise<string> {
   const { data: existing } = await admin
@@ -77,14 +88,24 @@ async function ensureOrg(): Promise<string> {
   return orgId;
 }
 
-async function ensureUser(email: string, full_name: string): Promise<string> {
+async function ensureUser(
+  email: string,
+  full_name: string,
+  previousEmail?: string,
+): Promise<string> {
   // listUsers paginado — perPage default 50; nosso pool é pequeno
   const { data: list } = await admin.auth.admin.listUsers({ perPage: 200 });
-  const existing = list.users.find((u) => u.email === email);
+  const existing = list.users.find((u) => u.email === email || u.email === previousEmail);
   if (existing) {
     console.log(`[seed] user existing ${email}: ${existing.id}`);
-    // garantir senha conhecida
-    await admin.auth.admin.updateUserById(existing.id, { password: PASSWORD });
+    // Garante endereço atual, confirmação e senha conhecida sem trocar o UUID.
+    const { error } = await admin.auth.admin.updateUserById(existing.id, {
+      email,
+      email_confirm: true,
+      password: PASSWORD,
+      user_metadata: { full_name },
+    });
+    if (error) throw new Error(`update user ${email}: ${error.message}`);
     return existing.id;
   }
   const { data, error } = await admin.auth.admin.createUser({
@@ -242,8 +263,8 @@ async function main(): Promise<void> {
   const orgId = await ensureOrg();
 
   const users: Record<string, { id: string; email: string; role: string }> = {};
-  for (const u of USERS) {
-    const userId = await ensureUser(u.email, u.full_name);
+  for (const u of usersToSeed) {
+    const userId = await ensureUser(u.email, u.full_name, u.previous_email);
     await ensureMembership(userId, orgId, u.role);
     users[u.role] = { id: userId, email: u.email, role: u.role };
   }

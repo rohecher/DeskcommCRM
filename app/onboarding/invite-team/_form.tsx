@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { sendOnboardingInvites } from "@/app/actions/onboarding/sendOnboardingInvites";
-import { ROLES, type Role } from "@/lib/schemas/team";
+import { ROLES, ROLE_LABELS, type Role } from "@/lib/schemas/team";
 
 export function InviteTeamForm() {
   const [emailsRaw, setEmailsRaw] = useState("");
@@ -79,7 +79,7 @@ export function InviteTeamForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="role">Role</Label>
+        <Label htmlFor="role">Papel</Label>
         <Select value={role} onValueChange={(v) => setRole(v as Role)}>
           <SelectTrigger id="role">
             <SelectValue />
@@ -87,7 +87,7 @@ export function InviteTeamForm() {
           <SelectContent>
             {ROLES.map((r) => (
               <SelectItem key={r} value={r}>
-                {r}
+                {ROLE_LABELS[r]}
               </SelectItem>
             ))}
           </SelectContent>

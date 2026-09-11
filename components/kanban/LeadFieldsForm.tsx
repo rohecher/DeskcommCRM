@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useEditLead } from "@/hooks/kanban/useUpdateLead";
 import type { Lead } from "@/lib/types/leads";
+import type { PipelineVocabulary } from "@/lib/kanban/types";
 import { updateLeadSchema, type UpdateLeadInput } from "@/lib/schemas/leads";
 import { parseReaisToCents } from "@/lib/money";
 import { EcoDoValor } from "./EcoDoValor";
@@ -24,6 +25,7 @@ interface FormShape {
 interface Props {
   lead: Lead;
   pipelineId: string;
+  vocabulary: Required<PipelineVocabulary>;
   /** Quando o salvamento dá certo. O dossiê NÃO fecha aqui — ver abaixo. */
   onSaved?: () => void;
   /** O dossiê não tem "cancelar"; o diálogo tem. */
@@ -44,7 +46,7 @@ function centsToReais(cents: number | null | undefined): string {
  * registro justamente de quem o produziu — a funcionalidade que prova "sua ação
  * fica registrada" provaria isso para todo mundo menos para o autor.
  */
-export function LeadFieldsForm({ lead, pipelineId, onSaved, onCancel }: Props) {
+export function LeadFieldsForm({ lead, pipelineId, vocabulary, onSaved, onCancel }: Props) {
   const edit = useEditLead(pipelineId);
 
   const form = useForm<FormShape>({
@@ -104,7 +106,7 @@ export function LeadFieldsForm({ lead, pipelineId, onSaved, onCancel }: Props) {
         leadId: lead.id,
         patch: parsed.data as UpdateLeadInput,
       });
-      toast.success("Lead atualizado");
+      toast.success(`${vocabulary.lead} atualizado`);
       onSaved?.();
     } catch {
       // toast already shown

@@ -11,6 +11,7 @@ import { useReactivations } from "@/hooks/leads/useReactivations";
 import { midpoint } from "@/lib/kanban/fractional-indexing";
 import type { Lead } from "@/lib/types/leads";
 import type { Pipeline, Stage } from "@/lib/kanban/types";
+import { resolveVocabulary } from "@/lib/kanban/vocabulary";
 import { StageColumn } from "./StageColumn";
 import { LeadDossier } from "./LeadDossier";
 
@@ -222,10 +223,12 @@ export function KanbanBoard({
     return null;
   }
 
+  const vocabulary = resolveVocabulary(data.pipeline.vocabulary);
+
   if (data.stages.length === 0) {
     return (
       <Card className="m-4 p-6 text-sm text-text-muted">
-        Nenhum lead nesta pipeline ainda.
+        Nenhum {vocabulary.lead.toLocaleLowerCase("pt-BR")} neste funil ainda.
       </Card>
     );
   }
@@ -247,6 +250,7 @@ export function KanbanBoard({
             selectedLeadIds={selectedLeadIds}
             onSelect={handleSelect}
             onOpen={setDossieId}
+            vocabulary={vocabulary}
           />
         ))}
       </div>
@@ -260,6 +264,7 @@ export function KanbanBoard({
             data.stages.find((s) => s.id === leadDoDossie.stage_id)?.name ?? "—"
           }
           ownerNames={ownerNames}
+          vocabulary={vocabulary}
         />
       )}
     </DragDropContext>

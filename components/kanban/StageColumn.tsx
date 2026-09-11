@@ -3,7 +3,7 @@ import { Droppable } from "@hello-pangea/dnd";
 import type { CSSProperties } from "react";
 import { cn } from "@/lib/utils";
 import type { Lead } from "@/lib/types/leads";
-import type { Stage } from "@/lib/kanban/types";
+import type { PipelineVocabulary, Stage } from "@/lib/kanban/types";
 import { buildCardInput } from "@/lib/kanban/card-state";
 import { KanbanCard } from "./KanbanCard";
 
@@ -25,6 +25,7 @@ interface StageColumnProps {
   onSelect?: (leadId: string, additive: boolean) => void;
   /** Abrir o dossiê — atravessa o board até o card, como `pulses`. */
   onOpen?: (leadId: string) => void;
+  vocabulary: Required<PipelineVocabulary>;
 }
 
 function formatBRL(cents: number): string {
@@ -51,6 +52,7 @@ export function StageColumn({
   pulses,
   onSelect,
   onOpen,
+  vocabulary,
 }: StageColumnProps) {
   const totalCents = leads.reduce((sum, l) => sum + (l.value_cents ?? 0), 0);
   const accentStyle: CSSProperties | undefined = stage.color
@@ -109,6 +111,7 @@ export function StageColumn({
                 pulseCount={pulses?.get(lead.id) ?? 0}
                 onSelect={onSelect}
                 onOpen={onOpen}
+                vocabulary={vocabulary}
               />
             ))}
             {provided.placeholder}

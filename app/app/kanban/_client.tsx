@@ -143,7 +143,7 @@ export function FunisClient({
           if (e.key === "Enter") criarFunil();
           if (e.key === "Escape") setNovo(null);
         }}
-        placeholder="Nome do funil — ex.: Consultas, Obras, Matrículas"
+        placeholder="Nome do funil — ex.: Jornada de Vida, Escalas, Discipulado"
         aria-label="Nome do novo funil"
         data-testid="nome-do-novo-funil"
         disabled={ocupado}
@@ -192,7 +192,7 @@ export function FunisClient({
         <div className="flex justify-end">
           {novo === null ? (
             <Button onClick={() => setNovo("")} disabled={ocupado} data-testid="novo-funil">
-              <Plus size={16} className="mr-2" aria-hidden /> Novo funil
+              <Plus size={16} className="mr-2" aria-hidden /> Nova jornada
             </Button>
           ) : null}
         </div>

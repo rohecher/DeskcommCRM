@@ -225,13 +225,13 @@ async function ensurePipeline(orgId: string): Promise<string> {
     .maybeSingle();
 
   const vocabulary = {
-    lead: "Paciente",
-    lead_plural: "Pacientes",
-    deal: "Tratamento",
-    deal_plural: "Tratamentos",
-    won: "Fechado",
-    lost: "Perdido",
-    stage: "Etapa",
+    lead: "Visitante",
+    lead_plural: "Visitantes",
+    deal: "Acompanhamento",
+    deal_plural: "Acompanhamentos",
+    won: "Membro",
+    lost: "Afastado",
+    stage: "Etapa da Jornada",
     stage_plural: "Etapas",
   };
   // canonical_tags: a UMA tag que sobrevive no card como ponto de 6px (§5).

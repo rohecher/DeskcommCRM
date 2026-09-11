@@ -10,6 +10,18 @@ import { z } from "zod";
 export const ROLES = ["viewer", "agent", "manager", "admin"] as const;
 export type Role = (typeof ROLES)[number];
 
+/**
+ * Rótulo de exibição por papel (contexto de igreja). Puramente label — o papel
+ * técnico (RBAC, RLS, checks) continua sendo `admin`/`manager`/`agent`/`viewer`.
+ * Ver docs/decisoes.md e cajado-arquitetura.md §3.2.
+ */
+export const ROLE_LABELS: Record<Role, string> = {
+  admin: "Pastor/Administrador",
+  manager: "Líder de Ministério",
+  agent: "Secretaria",
+  viewer: "Leitura",
+};
+
 export const inviteMemberSchema = z.object({
   invitations: z
     .array(

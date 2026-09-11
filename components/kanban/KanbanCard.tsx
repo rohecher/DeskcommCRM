@@ -3,6 +3,7 @@ import { Draggable } from "@hello-pangea/dnd";
 import type { MouseEvent } from "react";
 import { cn } from "@/lib/utils";
 import type { Lead } from "@/lib/types/leads";
+import type { PipelineVocabulary } from "@/lib/kanban/types";
 import { resolveCardState, stageAgeLabel, type CardInput } from "@/lib/kanban/card-state";
 import { KanbanCardActions } from "./KanbanCardActions";
 import { NextActionSlot } from "./NextActionSlot";
@@ -27,6 +28,7 @@ interface KanbanCardProps {
   onSelect?: (leadId: string, additive: boolean) => void;
   /** Abrir o dossiê. Separado de `onSelect`: são gestos e intenções diferentes. */
   onOpen?: (leadId: string) => void;
+  vocabulary: Required<PipelineVocabulary>;
 }
 
 function formatBRL(cents: number | null, currency: string | null): string | null {
@@ -63,6 +65,7 @@ export function KanbanCard({
   pulseCount = 0,
   onSelect,
   onOpen,
+  vocabulary,
 }: KanbanCardProps) {
   const value = formatBRL(card.valueCents, card.currency);
   const state = resolveCardState(card);
@@ -92,7 +95,7 @@ export function KanbanCard({
           // teclado do dnd (tabIndex e handlers continuam vindo do spread) sem
           // aninhar dois controles — nada de aria-hidden nem de suprimir regra.
           role="group"
-          aria-label={`Lead: ${card.title}`}
+          aria-label={`${vocabulary.lead}: ${card.title}`}
           onClick={handleClick}
           // Tags saem do card (Lei A): ficam a um hover, sem ocupar altura.
           title={card.tags.length > 0 ? `Tags: ${card.tags.join(", ")}` : undefined}
@@ -162,7 +165,7 @@ export function KanbanCard({
                 </button>
               </h3>
             </div>
-            <KanbanCardActions lead={lead} pipelineId={pipelineId} />
+            <KanbanCardActions lead={lead} pipelineId={pipelineId} vocabulary={vocabulary} />
           </div>
 
           {/* ② valor — altura reservada mesmo sem valor, senão o card encolhe. */}

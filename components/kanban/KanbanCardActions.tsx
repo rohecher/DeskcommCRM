@@ -19,13 +19,15 @@ import { usePermission } from "@/hooks/auth/AuthProvider";
 import { LoseLeadDialog } from "./LoseLeadDialog";
 import { EditLeadDialog } from "./EditLeadDialog";
 import type { Lead } from "@/lib/types/leads";
+import type { PipelineVocabulary } from "@/lib/kanban/types";
 
 interface KanbanCardActionsProps {
   lead: Lead;
   pipelineId: string;
+  vocabulary: Required<PipelineVocabulary>;
 }
 
-export function KanbanCardActions({ lead, pipelineId }: KanbanCardActionsProps) {
+export function KanbanCardActions({ lead, pipelineId, vocabulary }: KanbanCardActionsProps) {
   const [loseOpen, setLoseOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const winMutation = useWinLead(pipelineId);
@@ -65,7 +67,7 @@ export function KanbanCardActions({ lead, pipelineId }: KanbanCardActionsProps) 
             size="icon"
             className="h-7 w-7 shrink-0 opacity-0 transition-opacity group-hover:opacity-100 data-[state=open]:opacity-100"
             onClick={(e) => e.stopPropagation()}
-            aria-label="Ações do lead"
+            aria-label={`Ações do ${vocabulary.lead.toLocaleLowerCase("pt-BR")}`}
           >
             <DotsThree size={16} weight="bold" />
           </Button>
@@ -147,12 +149,14 @@ export function KanbanCardActions({ lead, pipelineId }: KanbanCardActionsProps) 
         onOpenChange={setLoseOpen}
         leadId={lead.id}
         pipelineId={pipelineId}
+        vocabulary={vocabulary}
       />
       <EditLeadDialog
         open={editOpen}
         onOpenChange={setEditOpen}
         lead={lead}
         pipelineId={pipelineId}
+        vocabulary={vocabulary}
       />
     </>
   );

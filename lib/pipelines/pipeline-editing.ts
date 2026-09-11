@@ -253,10 +253,12 @@ export function regrasQueApontamPara(regras: RegraDeAutomacao[], pipelineId: str
  * `pipeline_no_won_stage` sem ela, ou seja, o funil nasceria incapaz de fechar
  * negócio.
  *
- * Os nomes são neutros de propósito. O gatilho `fn_seed_default_pipeline_for_org`
- * semeia um funil de e-commerce ("Carrinho abandonado") em toda org nova, e é
- * justamente isso que uma clínica não consegue usar — repetir o erro no funil
- * criado à mão seria absurdo. Tudo aqui é renomeável em Configurações › Funis.
+ * Nomes alinhados à jornada de igreja (Cajado): visitante entra, fica em
+ * acompanhamento, e o funil fecha em Membro (ganho) ou Afastado (perdido) —
+ * mesmo vocabulário de `vocabulary.won`/`vocabulary.lost` usado no seed do
+ * pipeline piloto (ver docs/decisoes.md). Slugs preservados (estáveis, não
+ * é chave de vocabulário) — só o rótulo de exibição mudou. Tudo aqui
+ * continua renomeável em Configurações › Funis.
  */
 export const ETAPAS_INICIAIS: ReadonlyArray<{
   name: string;
@@ -264,10 +266,10 @@ export const ETAPAS_INICIAIS: ReadonlyArray<{
   is_won: boolean;
   is_lost: boolean;
 }> = [
-  { name: "Novo", slug: "novo", is_won: false, is_lost: false },
-  { name: "Em andamento", slug: "em_andamento", is_won: false, is_lost: false },
-  { name: "Ganho", slug: "ganho", is_won: true, is_lost: false },
-  { name: "Perdido", slug: "perdido", is_won: false, is_lost: true },
+  { name: "Visitante", slug: "novo", is_won: false, is_lost: false },
+  { name: "Em acompanhamento", slug: "em_andamento", is_won: false, is_lost: false },
+  { name: "Membro", slug: "ganho", is_won: true, is_lost: false },
+  { name: "Afastado", slug: "perdido", is_won: false, is_lost: true },
 ];
 
 /**

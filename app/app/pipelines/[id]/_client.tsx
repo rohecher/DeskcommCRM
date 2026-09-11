@@ -27,6 +27,7 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "@/lib/ui/icons";
 import type { LeadFilters } from "@/lib/kanban/filters";
 import { applyFilters, filtersFromParams, filtersToParams } from "@/lib/kanban/filters";
+import { resolveVocabulary } from "@/lib/kanban/vocabulary";
 
 export function PipelinePageClient({
   pipelineId,
@@ -51,6 +52,7 @@ export function PipelinePageClient({
   const [newOpen, setNewOpen] = useState(false);
 
   const filteredLeads = data ? applyFilters(data.leads, filters) : [];
+  const vocabulary = resolveVocabulary(data?.pipeline.vocabulary);
 
   return (
     <div
@@ -79,7 +81,7 @@ export function PipelinePageClient({
           {data?.pipeline.name ?? initialName}
         </h1>
         <Button onClick={() => setNewOpen(true)} disabled={!data}>
-          <Plus size={16} className="mr-2" /> Novo Lead
+          <Plus size={16} className="mr-2" /> Novo {vocabulary.lead}
         </Button>
       </header>
       {data && (
@@ -88,6 +90,7 @@ export function PipelinePageClient({
           onOpenChange={setNewOpen}
           pipelineId={pipelineId}
           stages={data.stages}
+          vocabulary={vocabulary}
         />
       )}
       <FilterBar filters={filters} onChange={setFilters} leads={data?.leads ?? []} />

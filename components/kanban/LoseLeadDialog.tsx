@@ -13,14 +13,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useLoseLead } from "@/hooks/kanban/useUpdateLead";
 import { CANONICAL_LOST_REASONS } from "@/lib/schemas/leads";
+import type { PipelineVocabulary } from "@/lib/kanban/types";
 
-const REASON_LABELS: Record<(typeof CANONICAL_LOST_REASONS)[number], string> = {
-  requested_by_customer: "Cliente solicitou cancelamento",
+const STATIC_REASON_LABELS: Partial<Record<(typeof CANONICAL_LOST_REASONS)[number], string>> = {
   price: "Preço",
-  no_response: "Sem resposta do cliente",
   product_unavailable: "Produto indisponível",
   cancelled_by_store: "Cancelado pela loja",
-  cancelled_by_customer: "Cancelado pelo cliente",
   payment_failed: "Falha no pagamento",
   other: "Outro motivo",
 };
@@ -30,6 +28,7 @@ interface LoseLeadDialogProps {
   onOpenChange: (open: boolean) => void;
   leadId: string;
   pipelineId: string;
+  vocabulary: Required<PipelineVocabulary>;
 }
 
 const MAX_LEN = 500;
@@ -39,10 +38,18 @@ export function LoseLeadDialog({
   onOpenChange,
   leadId,
   pipelineId,
+  vocabulary,
 }: LoseLeadDialogProps) {
   const [reasonCode, setReasonCode] = useState<string>("");
   const [otherText, setOtherText] = useState("");
   const mutation = useLoseLead(pipelineId);
+  const lead = vocabulary.lead.toLocaleLowerCase("pt-BR");
+  const reasonLabels: Record<(typeof CANONICAL_LOST_REASONS)[number], string> = {
+    ...STATIC_REASON_LABELS,
+    requested_by_customer: `${vocabulary.lead} solicitou cancelamento`,
+    no_response: `Sem resposta do ${lead}`,
+    cancelled_by_customer: `Cancelado pelo ${lead}`,
+  } as Record<(typeof CANONICAL_LOST_REASONS)[number], string>;
 
   const finalReason = reasonCode === "other" ? otherText.trim() || "other" : reasonCode;
   const disabled = !reasonCode || finalReason.length === 0 || finalReason.length > MAX_LEN || mutation.isPending;
@@ -84,7 +91,7 @@ export function LoseLeadDialog({
                   checked={reasonCode === code}
                   onChange={(e) => setReasonCode(e.target.value)}
                 />
-                <span>{REASON_LABELS[code]}</span>
+                <span>{reasonLabels[code]}</span>
               </label>
             ))}
           </div>
@@ -95,7 +102,7 @@ export function LoseLeadDialog({
                 id="lost-reason-other"
                 value={otherText}
                 onChange={(e) => setOtherText(e.target.value)}
-                placeholder="Ex: Cliente desistiu por X motivo"
+                placeholder={`Ex: ${vocabulary.lead} desistiu por outro motivo`}
                 maxLength={MAX_LEN}
                 rows={3}
               />

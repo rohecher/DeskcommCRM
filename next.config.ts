@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
   output: "standalone",
   reactStrictMode: true,
   poweredByHeader: false,
+  // Evita que um lockfile fora do repo faça o Turbopack observar C:\Users\rober.
+  turbopack: {
+    root: process.cwd(),
+  },
   // typedRoutes moved out of experimental in Next 15.5+
   typedRoutes: true,
   experimental: {

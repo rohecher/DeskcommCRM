@@ -19,6 +19,7 @@ import { useDefaultPipeline } from "@/hooks/pipelines/useDefaultPipeline";
 import { NewLeadDialog } from "@/components/kanban/NewLeadDialog";
 import { cn } from "@/lib/utils";
 import { rotuloDoContato } from "@/lib/contacts/rotulo-do-contato";
+import { resolveVocabulary } from "@/lib/kanban/vocabulary";
 
 interface Props {
   conversation: ConversationWithContact | null;
@@ -240,6 +241,7 @@ export function CRMSidePanel({ conversation }: Props) {
   const [tagEditorOpen, setTagEditorOpen] = useState(false);
   const [leadDialogOpen, setLeadDialogOpen] = useState(false);
   const defaultPipeline = useDefaultPipeline(leadDialogOpen);
+  const pipelineVocabulary = resolveVocabulary(defaultPipeline.data?.pipeline.vocabulary);
 
   useEffect(() => {
     if (leadDialogOpen && defaultPipeline.isError) {
@@ -371,7 +373,7 @@ export function CRMSidePanel({ conversation }: Props) {
               onClick={() => setLeadDialogOpen(true)}
             >
               <Users size={12} className="mr-1" weight="regular" aria-hidden />
-              {leadDialogOpen && defaultPipeline.isLoading ? "Carregando…" : "Lead"}
+              {leadDialogOpen && defaultPipeline.isLoading ? "Carregando…" : pipelineVocabulary.lead}
             </Button>
             {contactId && (
               <Button asChild size="sm" variant="ghost" className="h-7 px-2 text-xs">
@@ -392,6 +394,7 @@ export function CRMSidePanel({ conversation }: Props) {
           onOpenChange={setLeadDialogOpen}
           pipelineId={defaultPipeline.data.pipeline.id}
           stages={defaultPipeline.data.stages}
+          vocabulary={pipelineVocabulary}
           contactId={contactId}
         />
       )}

@@ -36,7 +36,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { ROLES, type Role } from "@/lib/schemas/team";
+import { ROLES, ROLE_LABELS, type Role } from "@/lib/schemas/team";
 import { DotsThree } from "@/lib/ui/icons";
 
 interface Props {
@@ -69,7 +69,7 @@ export function TeamMembersClient({ currentUserId, canManage }: Props) {
           <TableHeader>
             <TableRow>
               <TableHead>Membro</TableHead>
-              <TableHead>Role</TableHead>
+              <TableHead>Papel</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Última atividade</TableHead>
               {canManage ? <TableHead className="w-[80px]" /> : null}
@@ -101,13 +101,13 @@ export function TeamMembersClient({ currentUserId, canManage }: Props) {
                       <SelectContent>
                         {ROLES.map((r) => (
                           <SelectItem key={r} value={r}>
-                            {r}
+                            {ROLE_LABELS[r]}
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                   ) : (
-                    <Badge variant="secondary">{m.role}</Badge>
+                    <Badge variant="secondary">{ROLE_LABELS[m.role as Role] ?? m.role}</Badge>
                   )}
                 </TableCell>
                 <TableCell>

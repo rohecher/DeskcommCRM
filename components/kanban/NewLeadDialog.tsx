@@ -22,7 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useCreateLead } from "@/hooks/kanban/useCreateLead";
-import type { Stage } from "@/lib/kanban/types";
+import type { PipelineVocabulary, Stage } from "@/lib/kanban/types";
 import { createLeadSchema, type CreateLeadInput } from "@/lib/schemas/leads";
 import { parseReaisToCents } from "@/lib/money";
 import { EcoDoValor } from "./EcoDoValor";
@@ -41,6 +41,7 @@ interface Props {
   onOpenChange: (v: boolean) => void;
   pipelineId: string;
   stages: Stage[];
+  vocabulary: Required<PipelineVocabulary>;
   /** Vincula o lead criado a este contato de origem (ex.: painel do Inbox). */
   contactId?: string | null;
 }
@@ -50,7 +51,7 @@ function defaultStageId(stages: Stage[]): string {
   return open?.id ?? stages[0]?.id ?? "";
 }
 
-export function NewLeadDialog({ open, onOpenChange, pipelineId, stages, contactId }: Props) {
+export function NewLeadDialog({ open, onOpenChange, pipelineId, stages, vocabulary, contactId }: Props) {
   const create = useCreateLead(pipelineId);
   const initialStage = useMemo(() => defaultStageId(stages), [stages]);
 
@@ -110,7 +111,7 @@ export function NewLeadDialog({ open, onOpenChange, pipelineId, stages, contactI
 
     try {
       await create.mutateAsync(parsed.data as CreateLeadInput);
-      toast.success("Lead criado");
+      toast.success(`${vocabulary.lead} criado`);
       form.reset({
         title: "",
         description: "",
@@ -131,9 +132,9 @@ export function NewLeadDialog({ open, onOpenChange, pipelineId, stages, contactI
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Novo Lead</DialogTitle>
+          <DialogTitle>Novo {vocabulary.lead}</DialogTitle>
           <DialogDescription>
-            Crie um lead manualmente neste pipeline.
+            Cadastre um novo {vocabulary.lead.toLocaleLowerCase("pt-BR")} neste funil.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -141,7 +142,7 @@ export function NewLeadDialog({ open, onOpenChange, pipelineId, stages, contactI
             <Label htmlFor="title">Título</Label>
             <Input
               id="title"
-              placeholder="Ex: Pedido Maria — combo presente"
+              placeholder={`Ex: ${vocabulary.deal} de Maria — pós-culto de domingo`}
               {...form.register("title", { required: true, minLength: 2 })}
             />
           </div>
@@ -222,7 +223,7 @@ export function NewLeadDialog({ open, onOpenChange, pipelineId, stages, contactI
               Cancelar
             </Button>
             <Button type="submit" disabled={create.isPending || !stageId}>
-              {create.isPending ? "Criando…" : "Criar lead"}
+              {create.isPending ? "Criando…" : `Criar ${vocabulary.lead.toLocaleLowerCase("pt-BR")}`}
             </Button>
           </DialogFooter>
         </form>
