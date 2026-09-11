@@ -10904,3 +10904,56 @@ grant execute on function public.fn_lgpd_cascade_redact_contact(uuid, uuid, uuid
 grant execute on function public.fn_update_budget_consumption() to service_role;
 
 notify pgrst, 'reload schema';
+
+-- ---- organização nova nasce igreja, não loja (migration 0144) ----
+-- O dump acima ainda carrega o funil de e-commerce do DeskcommCRM: o DEFAULT de
+-- `crm_pipelines.vocabulary` (lead=Cliente, deal=Pedido, won=Pago, lost=Cancelado) e o
+-- corpo de `fn_seed_default_pipeline_for_org()` ("Pedidos" → Carrinho abandonado …).
+-- Num produto de igreja isso é a PRIMEIRA TELA de quem instala. Idempotente: `alter
+-- column ... set default` e `create or replace function` podem ser re-aplicados.
+-- SEM BACKFILL de propósito — muda o que NASCE, não o que já existe (nome de etapa é
+-- exibição; o código lê slug e is_won/is_lost). Racional completo na 0144.
+alter table public.crm_pipelines
+  alter column vocabulary set default jsonb_build_object(
+    'lead',         'Visitante',
+    'lead_plural',  'Visitantes',
+    'deal',         'Acompanhamento',
+    'deal_plural',  'Acompanhamentos',
+    'won',          'Membro',
+    'lost',         'Afastado',
+    'stage',        'Etapa da Jornada',
+    'stage_plural', 'Etapas'
+  );
+
+create or replace function public.fn_seed_default_pipeline_for_org() returns trigger
+    language plpgsql
+    set search_path to 'public', 'pg_temp'
+    as $$
+declare
+  v_pipeline_id uuid;
+  v_position numeric := 1000;
+  r record;
+begin
+  insert into public.crm_pipelines (organization_id, name, slug, is_default, position)
+  values (new.id, 'Jornada', 'jornada', true, 1000)
+  returning id into v_pipeline_id;
+
+  -- espelha ETAPAS_INICIAIS (lib/pipelines/pipeline-editing.ts): o funil semeado e o
+  -- funil criado na tela precisam nascer iguais.
+  for r in
+    select * from (values
+      ('Visitante',         'novo',         false, false),
+      ('Em acompanhamento', 'em_andamento', false, false),
+      ('Membro',            'ganho',        true,  false),
+      ('Afastado',          'perdido',      false, true)
+    ) as t(stage_name, stage_slug, won, lost)
+  loop
+    insert into public.crm_stages (organization_id, pipeline_id, name, slug, position, is_won, is_lost)
+    values (new.id, v_pipeline_id, r.stage_name, r.stage_slug, v_position, r.won, r.lost);
+    v_position := v_position + 1000;
+  end loop;
+
+  return new;
+end$$;
+
+notify pgrst, 'reload schema';
