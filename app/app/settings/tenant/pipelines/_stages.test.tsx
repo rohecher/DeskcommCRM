@@ -153,12 +153,12 @@ describe("destinosPossiveis — para onde os negócios podem ir", () => {
 
 describe("contagemDeNegocios — a tela recompõe a frase, então pluraliza", () => {
   it("um negócio não vira «1 negócios»", () => {
-    expect(contagemDeNegocios(1)).toBe("1 negócio");
+    expect(contagemDeNegocios(1)).toBe("1 acompanhamento");
   });
 
   it("zero e muitos ficam no plural", () => {
-    expect(contagemDeNegocios(0)).toBe("0 negócios");
-    expect(contagemDeNegocios(38)).toBe("38 negócios");
+    expect(contagemDeNegocios(0)).toBe("0 acompanhamentos");
+    expect(contagemDeNegocios(38)).toBe("38 acompanhamentos");
   });
 });
 

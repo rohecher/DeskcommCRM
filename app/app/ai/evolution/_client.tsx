@@ -56,9 +56,9 @@ const DESCRICAO_RESULTADO =
  * andaram e que os cartões não andam.
  */
 const SIGNIFICA_GANHOS =
-  "Clientes que o agente marcou como fechados. Negócio que a sua equipe fechou na mão, movendo o cartão no quadro, não entra aqui.";
+  "Pessoas que o agente marcou como membro. Acompanhamento que a sua equipe fechou na mão, movendo o cartão no quadro, não entra aqui.";
 const SIGNIFICA_PERDIDOS =
-  "Clientes que o agente marcou como perdidos — contraponto necessário, porque ganhos sem perdidos ao lado enganam. Também não conta o que a sua equipe marcou na mão.";
+  "Pessoas que o agente marcou como afastadas — contraponto necessário, porque só contar quem virou membro engana. Também não conta o que a sua equipe marcou na mão.";
 /**
  * "Avanço" prometeria DIREÇÃO, e o dado não tem: `stage_transitions` é o total
  * de transições, e o grafo do funil do agente permite `qualquer → lost`. Num mês
@@ -525,12 +525,12 @@ function Conteudo({ payload }: { payload: NonNullable<ReturnType<typeof useEvolu
       >
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           <StatCard
-            rotulo="Negócios fechados pelo agente"
+            rotulo="Tornaram-se membros pelo agente"
             valor={num(outcome.won)}
             significa={SIGNIFICA_GANHOS}
           />
           <StatCard
-            rotulo="Negócios perdidos pelo agente"
+            rotulo="Afastados pelo agente"
             valor={num(outcome.lost)}
             significa={SIGNIFICA_PERDIDOS}
           />

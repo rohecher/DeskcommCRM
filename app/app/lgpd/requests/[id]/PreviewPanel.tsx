@@ -20,7 +20,7 @@ interface PreviewPanelProps {
 const COUNT_LABELS: Record<keyof LgpdPreviewCounts, string> = {
   conversations: "Conversas",
   messages_total: "Mensagens (total)",
-  leads: "Leads",
+  leads: "Acompanhamentos",
   orders: "Pedidos",
   activities: "Atividades",
   audit_entries: "Entradas de auditoria",
@@ -135,7 +135,7 @@ export function PreviewPanel({ requestId }: PreviewPanelProps) {
                     <SampleBlock label="Mensagens (recentes)" rows={preview.sample.messages_recent} />
                   )}
                   {preview.sample.leads.length > 0 && (
-                    <SampleBlock label="Leads" rows={preview.sample.leads} />
+                    <SampleBlock label="Acompanhamentos" rows={preview.sample.leads} />
                   )}
                   {preview.sample.orders.length > 0 && (
                     <SampleBlock label="Pedidos" rows={preview.sample.orders} />

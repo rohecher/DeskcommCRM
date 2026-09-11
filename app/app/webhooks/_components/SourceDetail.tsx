@@ -99,7 +99,7 @@ export function SourceDetail({ source, open, onOpenChange }: Props) {
       const res = await fetch(`/api/v1/webhooks/in/${source.path_token}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nome: "Lead de Teste", telefone: "11999990000", utm_source: "teste" }),
+        body: JSON.stringify({ nome: "Visitante de Teste", telefone: "11999990000", utm_source: "teste" }),
       });
       if (!res.ok) {
         const body = await res.json().catch(() => null);
@@ -109,7 +109,7 @@ export function SourceDetail({ source, open, onOpenChange }: Props) {
         );
         return;
       }
-      toast.success("Funcionou! Um lead de teste entrou no seu funil.");
+      toast.success("Funcionou! Um visitante de teste entrou na sua jornada.");
       setTestOk(true);
       void refetchEvents();
     } catch {
@@ -198,7 +198,7 @@ export function SourceDetail({ source, open, onOpenChange }: Props) {
 
           <section className="space-y-3">
             <Button type="button" onClick={sendTestLead} disabled={testing}>
-              {testing ? "Enviando…" : "Enviar lead de teste"}
+              {testing ? "Enviando…" : "Enviar visitante de teste"}
             </Button>
             {testOk ? (
               <p className="text-sm">

@@ -88,10 +88,12 @@ export function PipelinesClient({
 
 function PipelineEditor({ pipeline }: { pipeline: PipelineRow }) {
   const v = pipeline.vocabulary ?? {};
-  const [lead, setLead] = useState(v.lead ?? "Lead");
-  const [deal, setDeal] = useState(v.deal ?? "Deal");
-  const [won, setWon] = useState(v.won ?? "Ganho");
-  const [lost, setLost] = useState(v.lost ?? "Perdido");
+  // Mesmos valores do DEFAULT de `crm_pipelines.vocabulary` (migration 0144): o editor
+  // não pode sugerir vocabulário de venda num produto de igreja.
+  const [lead, setLead] = useState(v.lead ?? "Visitante");
+  const [deal, setDeal] = useState(v.deal ?? "Acompanhamento");
+  const [won, setWon] = useState(v.won ?? "Membro");
+  const [lost, setLost] = useState(v.lost ?? "Afastado");
   const [reasonsText, setReasonsText] = useState(readLostReasons(pipeline.settings).join(", "));
   const [fieldsJson, setFieldsJson] = useState(
     JSON.stringify(readFields(pipeline.settings), null, 2),

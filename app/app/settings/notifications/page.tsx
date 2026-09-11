@@ -9,9 +9,9 @@ import {
 export const dynamic = "force-dynamic";
 
 const CATEGORY_LABELS: Record<(typeof NOTIFICATION_CATEGORIES)[number], string> = {
-  lead_assigned: "Lead atribuído a você",
-  lead_won: "Lead ganho",
-  lead_lost: "Lead perdido",
+  lead_assigned: "Acompanhamento atribuído a você",
+  lead_won: "Tornou-se membro",
+  lead_lost: "Afastou-se",
   mention: "Você foi mencionado",
 };
 

@@ -14,6 +14,8 @@ import { useUser } from "@/hooks/auth/AuthProvider";
 import { useAssignableMembers } from "@/hooks/inbox/useAssignableMembers";
 import { useAssignableAgents } from "@/hooks/kanban/useAssignableAgents";
 import type { Lead, OwnerKind } from "@/lib/types/leads";
+import type { PipelineVocabulary } from "@/lib/kanban/types";
+import { resolveVocabulary } from "@/lib/kanban/vocabulary";
 import { OwnerBadge } from "./OwnerBadge";
 import {
   agentOwnerFilter,
@@ -26,16 +28,24 @@ interface FilterBarProps {
   filters: LeadFilters;
   onChange: (next: LeadFilters) => void;
   leads: Lead[];
+  /** Vocabulário do funil: "Ganho/Perdido" é venda, e num funil de igreja é
+   *  "Membro/Afastado". Mesma fonte que o board já usa — não uma segunda. */
+  vocabulary?: PipelineVocabulary | null;
 }
 
-const STATUS_OPTIONS: Array<{ value: NonNullable<LeadFilters["status"]>; label: string }> = [
-  { value: "all", label: "Todos" },
-  { value: "open", label: "Abertos" },
-  { value: "won", label: "Ganhos" },
-  { value: "lost", label: "Perdidos" },
-];
+function statusOptions(
+  v: Required<PipelineVocabulary>,
+): Array<{ value: NonNullable<LeadFilters["status"]>; label: string }> {
+  return [
+    { value: "all", label: "Todos" },
+    { value: "open", label: "Abertos" },
+    { value: "won", label: v.won },
+    { value: "lost", label: v.lost },
+  ];
+}
 
-export function FilterBar({ filters, onChange, leads }: FilterBarProps) {
+export function FilterBar({ filters, onChange, leads, vocabulary }: FilterBarProps) {
+  const STATUS_OPTIONS = statusOptions(resolveVocabulary(vocabulary));
   const user = useUser();
   const { data: members } = useAssignableMembers(true);
   const { data: agents } = useAssignableAgents(true);

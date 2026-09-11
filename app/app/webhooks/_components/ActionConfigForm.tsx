@@ -103,7 +103,7 @@ function CreateOrMoveLeadForm({
 const TEMPLATE_VARS = [
   { token: "{{nome}}", label: "Nome" },
   { token: "{{telefone}}", label: "Telefone" },
-  { token: "{{lead.title}}", label: "Título do lead" },
+  { token: "{{lead.title}}", label: "Título do acompanhamento" },
 ];
 
 function SendWhatsappForm({
@@ -197,7 +197,7 @@ function AddTagForm({ config, onChange }: FormProps<{ tags: string[] }>) {
             .filter(Boolean);
           onChange({ tags });
         }}
-        placeholder="boas-vindas, novo-lead"
+        placeholder="boas-vindas, novo-visitante"
       />
     </div>
   );

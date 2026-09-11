@@ -93,7 +93,12 @@ export function PipelinePageClient({
           vocabulary={vocabulary}
         />
       )}
-      <FilterBar filters={filters} onChange={setFilters} leads={data?.leads ?? []} />
+      <FilterBar
+        filters={filters}
+        onChange={setFilters}
+        leads={data?.leads ?? []}
+        vocabulary={data?.pipeline.vocabulary}
+      />
       {error ? (
         <div className="rounded-md border border-destructive/30 bg-destructive/10 p-4 text-sm">
           Erro ao carregar pipeline:{" "}

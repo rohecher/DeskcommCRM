@@ -135,9 +135,10 @@ function passoPorEtapa(mapa: MapaDoAgente): Map<string, LeadStage> {
   return m;
 }
 
-/** "1 negócio", "4 negócios" — a tela recompõe a frase, então pluraliza como o servidor. */
+/** "1 acompanhamento", "4 acompanhamentos" — a tela recompõe a frase, então pluraliza
+ *  como o servidor. O nome da função guarda o termo técnico herdado; o texto é de igreja. */
 export function contagemDeNegocios(n: number): string {
-  return `${n} ${n === 1 ? "negócio" : "negócios"}`;
+  return `${n} ${n === 1 ? "acompanhamento" : "acompanhamentos"}`;
 }
 
 /**
@@ -591,7 +592,7 @@ export function StagesSection({
                       >
                         {arquivandoAqui.negocios === null
                           ? "Arquivar"
-                          : "Mover os negócios e arquivar"}
+                          : "Mover os acompanhamentos e arquivar"}
                       </Button>
                     )}
                     <Button size="sm" variant="ghost" onClick={() => setArquivamento(null)}>

@@ -67,10 +67,10 @@ export function FunisDoAgente({ funis, value, onChange, cobertura, disabled = fa
   return (
     <Card className="space-y-3 p-4">
       <div>
-        <h3 className="text-sm font-medium">Em que negócios ele pode mexer</h3>
+        <h3 className="text-sm font-medium">Em que acompanhamentos ele pode mexer</h3>
         <p className="text-xs text-muted-foreground">
           Marque os funis que este assistente cuida. Ele conversa com qualquer cliente, mas só
-          move, edita ou encerra negócio dos funis marcados aqui.
+          move, edita ou encerra acompanhamento dos funis marcados aqui.
         </p>
       </div>
 
@@ -122,23 +122,23 @@ export function FunisDoAgente({ funis, value, onChange, cobertura, disabled = fa
       {value.length === 0 ? (
         <p data-testid="agente-sem-funil" className="text-xs text-muted-foreground">
           Sem nenhum funil marcado, ele conversa com os clientes normalmente, mas não mexe em
-          negócio nenhum — nem move, nem encerra, nem marca.
+          acompanhamento nenhum — nem move, nem encerra, nem marca.
         </p>
       ) : null}
 
       {mudosMarcados.length > 0 ? (
         <p data-testid="agente-funis-mudos" className="text-xs text-warning-fg">
           {mudosMarcados.length === 1
-            ? `Você marcou ${mudosMarcados[0]}, mas ninguém disse ao assistente o que cada etapa desse funil significa — ele vai atender e deixar os negócios parados onde estão.`
-            : `Você marcou ${mudosMarcados.length} funis em que ninguém disse ao assistente o que cada etapa significa — ele vai atender e deixar os negócios parados onde estão.`}{" "}
+            ? `Você marcou ${mudosMarcados[0]}, mas ninguém disse ao assistente o que cada etapa desse funil significa — ele vai atender e deixar os acompanhamentos parados onde estão.`
+            : `Você marcou ${mudosMarcados.length} funis em que ninguém disse ao assistente o que cada etapa significa — ele vai atender e deixar os acompanhamentos parados onde estão.`}{" "}
           Isso se configura em Configurações › Funis.
         </p>
       ) : null}
 
       {entradaDeFora ? (
         <p data-testid="agente-entrada-de-fora" className="text-xs text-warning-fg">
-          As conversas novas viram negócio em <strong>{funilDeEntrada?.name}</strong>, que não está
-          marcado. O assistente vai atender e os negócios vão se acumular ali sem que ele possa
+          As conversas novas viram acompanhamento em <strong>{funilDeEntrada?.name}</strong>, que não está
+          marcado. O assistente vai atender e os acompanhamentos vão se acumular ali sem que ele possa
           organizá-los.
         </p>
       ) : null}

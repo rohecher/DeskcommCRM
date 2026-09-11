@@ -35,7 +35,7 @@ const MODO_COPY: Record<RoutingMode, { titulo: string; corpo: string }> = {
   round_robin: {
     titulo: "Rodízio automático entre os atendentes",
     corpo:
-      "Cliente 1 vai para o atendente A, cliente 2 para o B, e ao acabar a lista volta ao " +
+      "A pessoa 1 vai para o atendente A, a pessoa 2 para o B, e ao acabar a lista volta ao " +
       "primeiro. Quem recebe é sempre quem está há mais tempo sem receber — entre os que " +
       "estão disponíveis e dentro do horário. Ninguém escolhe, então não há fila furada.",
   },
@@ -44,7 +44,7 @@ const MODO_COPY: Record<RoutingMode, { titulo: string; corpo: string }> = {
 const VISIBILIDADE_COPY: Record<VisibilityMode, { titulo: string; corpo: string }> = {
   all: {
     titulo: "Todos veem tudo",
-    corpo: "Qualquer atendente abre a conversa e o negócio de qualquer colega.",
+    corpo: "Qualquer atendente abre a conversa e o acompanhamento de qualquer colega.",
   },
   own_and_unassigned: {
     titulo: "Os seus, mais os que ainda não têm dono",
