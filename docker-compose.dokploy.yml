@@ -1,0 +1,212 @@
+# Cajado — stack para VPS com Dokploy.
+#
+# É a fusão de docker-compose.prod.yml + docker-compose.traefik.yml num arquivo
+# só, porque o Dokploy aponta para UM caminho de compose e não aceita dois `-f`.
+# Nada aqui é novo: o conteúdo veio dos dois arquivos, com o Caddy REMOVIDO em
+# vez de posto num profile (aqui ele nunca será usado — o Traefik do Dokploy é
+# quem ocupa as portas 80/443 e emite o certificado).
+#
+# QUANDO MEXER NOS OUTROS ARQUIVOS, MEXA AQUI TAMBÉM. Este arquivo é uma cópia
+# derivada; divergência silenciosa entre ele e o prod é o jeito mais fácil de
+# rodar em produção uma stack que ninguém revisou.
+#
+#   Dokploy → Compose → Compose Path: docker-compose.dokploy.yml
+#
+# A REDE `dokploy-network` é overlay (Swarm), criada pelo Dokploy. Ela precisa
+# ser `attachable: true` para um contêiner de compose clássico entrar nela —
+# é o padrão do Dokploy, mas confira com:
+#   docker network inspect dokploy-network --format '{{.Attachable}}'
+
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m" # rotação: evita que o log encha o disco do VPS
+    max-file: "3"
+
+services:
+  app:
+    image: ${APP_IMAGE}
+    pull_policy: ${APP_PULL_POLICY:-always}
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      srh:
+        condition: service_started
+      waha:
+        condition: service_started
+    healthcheck:
+      # Probe TCP puro (node existe na imagem; curl/nc não). NÃO usar /api/v1/health:
+      # ele dá 503 se WAHA/Redis caem, o que deixaria o app "unhealthy" e tiraria
+      # o contêiner do Traefik por causa de uma dependência secundária.
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('net').connect(3000,'127.0.0.1').on('connect',()=>process.exit(0)).on('error',()=>process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    logging: *default-logging
+    # Só o `app` entra na rede do proxy. Juntar o Traefik à `internal` colocaria
+    # um contêiner que serve outros tenants da VPS numa rede onde o redis roda
+    # sem senha. waha, redis e srh ficam de fora.
+    networks:
+      - internal
+      - proxy
+    labels:
+      traefik.enable: "true"
+      # Em qual rede o Traefik pega o IP do contêiner. Apontar para `internal`
+      # faz ele mirar um IP que não alcança e a requisição pendura até o timeout,
+      # mesmo com o contêiner nas duas redes.
+      traefik.docker.network: "${TRAEFIK_NETWORK:-dokploy-network}"
+
+      # Rota principal — equivale ao `reverse_proxy app:3000` do Caddyfile.
+      traefik.http.routers.cajado.rule: "Host(`${DOMAIN}`)"
+      traefik.http.routers.cajado.entrypoints: "${TRAEFIK_ENTRYPOINT:-websecure}"
+      traefik.http.routers.cajado.tls.certresolver: "${TRAEFIK_CERTRESOLVER:-letsencrypt}"
+      traefik.http.routers.cajado.middlewares: "cajado-compress"
+      traefik.http.services.cajado.loadbalancer.server.port: "3000"
+      traefik.http.middlewares.cajado-compress.compress: "true"
+
+      # O webhook GLOBAL do WAHA não pode ser alcançável da internet: quem
+      # soubesse o endereço injetaria mensagem falsa e faria o WhatsApp do dono
+      # responder a um número arbitrário. Aqui dentro o WAHA fala com o app pela
+      # rede do Docker, então esta rota nunca precisou ser pública.
+      # O Traefik não tem "responda 403"; o equivalente é um ipallowlist cuja
+      # única faixa é 192.0.2.1/32 — TEST-NET-1 (RFC 5737), endereço reservado
+      # que nenhum cliente real tem. A prioridade alta faz esta rota vencer a
+      # principal, que casaria o mesmo Host.
+      traefik.http.routers.cajado-waha-block.rule: "Host(`${DOMAIN}`) && Path(`/api/v1/webhooks/waha`)"
+      traefik.http.routers.cajado-waha-block.entrypoints: "${TRAEFIK_ENTRYPOINT:-websecure}"
+      traefik.http.routers.cajado-waha-block.tls.certresolver: "${TRAEFIK_CERTRESOLVER:-letsencrypt}"
+      traefik.http.routers.cajado-waha-block.priority: "1000"
+      traefik.http.routers.cajado-waha-block.service: "cajado"
+      traefik.http.routers.cajado-waha-block.middlewares: "cajado-deny"
+      traefik.http.middlewares.cajado-deny.ipallowlist.sourcerange: "192.0.2.1/32"
+
+      # HTTP -> HTTPS. O Caddy fazia sozinho; no Traefik precisa ser dito.
+      traefik.http.routers.cajado-http.rule: "Host(`${DOMAIN}`)"
+      traefik.http.routers.cajado-http.entrypoints: "${TRAEFIK_ENTRYPOINT_HTTP:-web}"
+      traefik.http.routers.cajado-http.middlewares: "cajado-https"
+      traefik.http.routers.cajado-http.service: "cajado"
+      traefik.http.middlewares.cajado-https.redirectscheme.scheme: "https"
+      traefik.http.middlewares.cajado-https.redirectscheme.permanent: "true"
+
+  # Worker 24/7 do agent-engine. Buildado a partir do fonte — por isso o Dokploy
+  # precisa fazer deploy por GIT, não por compose colado na interface.
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      WAHA_API_BASE_URL: http://waha:3000
+    healthcheck:
+      test:
+        ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:8787/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging: *default-logging
+    networks: [internal]
+
+  waha:
+    image: ${WAHA_IMAGE:-devlikeapro/waha}
+    restart: unless-stopped
+    environment:
+      # Prefixo sha512: faz o WAHA HASHEAR o X-Api-Key recebido e comparar com
+      # este hash. Sem o prefixo ele compara literal → o app toma 401.
+      WAHA_API_KEY: "sha512:${WAHA_API_KEY_SHA512}"
+      WHATSAPP_HOOK_URL: ${WAHA_WEBHOOK_BASE_URL}/api/v1/webhooks/waha
+      WHATSAPP_HOOK_EVENTS: "message,message.any,message.ack,session.status,state.change"
+      WHATSAPP_HOOK_HMAC: ${WAHA_HMAC_SECRET}
+      # WAHA lê WHATSAPP_DEFAULT_ENGINE (NÃO WAHA_DEFAULT_ENGINE — o nome errado
+      # cai no default WEBJS, engine com browser que corrompe a sessão).
+      WHATSAPP_DEFAULT_ENGINE: ${WHATSAPP_DEFAULT_ENGINE:-NOWEB}
+      WAHA_DASHBOARD_ENABLED: "false"
+    volumes:
+      - waha-data:/app/.sessions # sessões pareadas (QR) — perder = re-parear
+      - waha-media:/app/.media
+    logging: *default-logging
+    networks: [internal]
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--save", "", "--appendonly", "no"] # efêmero
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    logging: *default-logging
+    networks: [internal]
+
+  srh:
+    # serverless-redis-http: fala o REST do Upstash sobre o redis normal,
+    # mantendo o SDK @upstash/redis sem tocar código.
+    image: hiett/serverless-redis-http:latest
+    restart: unless-stopped
+    environment:
+      SRH_MODE: env
+      SRH_TOKEN: ${SRH_TOKEN}
+      SRH_CONNECTION_STRING: "redis://redis:6379"
+    depends_on:
+      redis:
+        condition: service_healthy
+    logging: *default-logging
+    networks: [internal]
+
+  scheduler:
+    # Cron sem docker.sock: alpine + crond batendo curl na rede interna.
+    image: alpine:3.20
+    restart: unless-stopped
+    depends_on:
+      app:
+        condition: service_healthy
+    environment:
+      TZ: UTC
+      INTERNAL_SECRET: ${INTERNAL_SECRET}
+    command:
+      - /bin/sh
+      - -c
+      - |
+        apk add --no-cache curl tzdata >/dev/null 2>&1
+        cat > /etc/crontabs/root <<EOF
+        * * * * * curl -fsS -m25 -H "Authorization: Bearer $$INTERNAL_SECRET" http://app:3000/api/v1/cron/agent-dispatcher >/dev/null 2>&1
+        * * * * * curl -fsS -m25 -H "Authorization: Bearer $$INTERNAL_SECRET" http://app:3000/api/v1/cron/followup-flow-worker >/dev/null 2>&1
+        * * * * * curl -fsS -m45 -H "Authorization: Bearer $$INTERNAL_SECRET" http://app:3000/api/v1/cron/event-log-drain >/dev/null 2>&1
+        * * * * * curl -fsS -m25 -H "Authorization: Bearer $$INTERNAL_SECRET" http://app:3000/api/v1/cron/routing-worker >/dev/null 2>&1
+        * * * * * curl -fsS -m25 -H "Authorization: Bearer $$INTERNAL_SECRET" http://app:3000/api/v1/cron/recover-stuck-messages >/dev/null 2>&1
+        */5 * * * * curl -fsS -m25 -H "Authorization: Bearer $$INTERNAL_SECRET" "http://app:3000/api/v1/cron/storage-redaction?limit=50" >/dev/null 2>&1
+        */5 * * * * curl -fsS -m25 -H "Authorization: Bearer $$INTERNAL_SECRET" http://app:3000/api/v1/cron/snooze-watcher >/dev/null 2>&1
+        */5 * * * * curl -fsS -m25 -H "Authorization: Bearer $$INTERNAL_SECRET" http://app:3000/api/v1/cron/attendant-heartbeat >/dev/null 2>&1
+        */15 * * * * curl -fsS -m60 -H "Authorization: Bearer $$INTERNAL_SECRET" http://app:3000/api/v1/cron/risk-watcher >/dev/null 2>&1
+        0 12 * * * curl -fsS -m60 -H "Authorization: Bearer $$INTERNAL_SECRET" http://app:3000/api/v1/cron/lgpd-sla-watcher >/dev/null 2>&1
+        30 3 * * * curl -fsS -m120 -H "Authorization: Bearer $$INTERNAL_SECRET" http://app:3000/api/v1/cron/kb-conversations-batch >/dev/null 2>&1
+        */10 * * * * curl -fsS -m60 -H "Authorization: Bearer $$INTERNAL_SECRET" http://app:3000/api/v1/cron/contact-avatars >/dev/null 2>&1
+        15 4 * * * curl -fsS -m60 -H "Authorization: Bearer $$INTERNAL_SECRET" http://app:3000/api/v1/cron/sync-model-catalog >/dev/null 2>&1
+        17 * * * * curl -fsS -m60 -H "Authorization: Bearer $$INTERNAL_SECRET" http://app:3000/api/v1/cron/contact-proposals-watcher >/dev/null 2>&1
+        EOF
+        exec crond -f -l 2
+    logging: *default-logging
+    networks: [internal]
+
+volumes:
+  waha-data:
+  waha-media:
+
+networks:
+  internal:
+    driver: bridge
+  # `external: true` = quem cria não é o compose. É a rede do Traefik do Dokploy,
+  # que já existe. Rede externa ausente é recusada ANTES de o compose criar
+  # qualquer coisa, com uma mensagem que não diz de onde saiu o nome.
+  proxy:
+    external: true
+    name: "${TRAEFIK_NETWORK:-dokploy-network}"
