@@ -29,7 +29,7 @@ test("criar conta: signup → e-mail de confirmação → onboarding → re-logi
   await expect(page).toHaveURL(/\/signup$/);
 
   // 2. Formulário de signup
-  await page.getByLabel("Nome da empresa").fill("Loja E2E Signup");
+  await page.getByLabel("Nome da igreja").fill("Igreja E2E Signup");
   await page.getByLabel("Email").fill(email);
   await page.getByLabel("Senha", { exact: true }).fill(password);
   await page.getByLabel("Confirmar senha").fill(password);
@@ -44,7 +44,7 @@ test("criar conta: signup → e-mail de confirmação → onboarding → re-logi
   // 4. Autenticado no onboarding — tenant provisionado
   await expect(page).toHaveURL(/\/onboarding\/welcome/);
   await expect(page.getByText("Boas-vindas ao DeskcommCRM")).toBeVisible();
-  await expect(page.getByText("Loja E2E Signup")).toBeVisible();
+  await expect(page.getByText("Igreja E2E Signup")).toBeVisible();
 
   // 5. Sai (limpa sessão) e entra de novo com as credenciais criadas
   await context.clearCookies();
