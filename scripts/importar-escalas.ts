@@ -135,6 +135,30 @@ interface Dados {
   lideres: { setor: string; nome: string; papel: string; telefone: string | null }[];
   cultos: Culto[];
   vetados: { data: string; setor: string; subfuncao: string; nome: string; motivo: string }[];
+  historico: RegistroHistorico[];
+}
+
+/**
+ * Uma linha do histórico: alguém serviu naquele setor naquele mês.
+ *
+ * `dia` é null quando a aba da planilha não identificava a data — inclusive
+ * quando identificava uma que não existe, como os 84 registros em 29, 30 e 31
+ * de fevereiro de 2026 que a extração produziu. O motor trata os dois casos
+ * igual: contam para afinidade, experiência e dia da semana, não para carga por
+ * período nem para rodada.
+ */
+interface RegistroHistorico {
+  nome: string;
+  ano: number;
+  mes: number;
+  dia: number | null;
+  dia_semana: string;
+  setor: string;
+  subfuncao: string;
+  aba: string;
+  texto_bruto: string;
+  metodo: string;
+  score: number | null;
 }
 
 function lerJson<T>(arquivo: string): T {
@@ -196,20 +220,26 @@ function validarNomes(): string[] {
     for (const s of c.slots) if (s.nome) ver(s.nome, `${c.data} ${s.setor}`);
   }
   for (const v of dados.vetados) ver(v.nome, `veto em ${v.data} ${v.setor}`);
+  // O histórico são 4.970 linhas e pode citar quem saiu da igreja. Reportar uma
+  // linha por registro afogaria o erro de verdade, então agrupa por pessoa.
+  const semCadastro = new Set(
+    dados.historico.filter((h) => !cadastro.has(h.nome)).map((h) => h.nome),
+  );
+  for (const nome of semCadastro) faltando.push(`histórico: "${nome}"`);
   return faltando;
 }
 
 /** Referência entre vagas que aponta para subfunção inexistente na ESTRUTURA. */
 function validarReferencias(): string[] {
   const vagas = new Set(
-    regras.setores.flatMap((s) => s.subfuncoes.map((sub) => `${s.nome}\u0000${sub.nome}`)),
+    regras.setores.flatMap((s) => s.subfuncoes.map((sub) => JSON.stringify([s.nome, sub.nome]))),
   );
   const erros: string[] = [];
   for (const s of regras.setores) {
     for (const sub of s.subfuncoes) {
       for (const campo of ["mesmo_sexo_que", "conjuge_de"] as const) {
         const ref = sub[campo];
-        if (ref && !vagas.has(`${ref[0]}\u0000${ref[1]}`)) {
+        if (ref && !vagas.has(JSON.stringify([ref[0], ref[1]]))) {
           erros.push(
             `${s.nome}/${sub.nome || "-"} ${campo} aponta para ${ref[0]}/${ref[1]}, que não existe`,
           );
@@ -233,7 +263,7 @@ if (problemasDeNome.length > 0) {
 const totalSlotsJson = dados.cultos.reduce((n, c) => n + c.slots.length, 0);
 console.info(
   `JSON conferido: ${dados.voluntarios.length} voluntários, ${regras.setores.length} setores, ` +
-    `${dados.cultos.length} cultos, ${totalSlotsJson} slots — todas as regras resolvem.`,
+    `${dados.cultos.length} cultos, ${totalSlotsJson} slots, ${dados.historico.length} registros de histórico — todas as regras resolvem.`,
 );
 
 if (DRY_RUN) {
@@ -384,7 +414,7 @@ async function importar() {
     );
   }
 
-  const subfuncoes = new Map<string, string>(); // "SETOR\u0000subfunção" → uuid
+  const subfuncoes = new Map<string, string>(); // JSON.stringify([setor, subfuncao]) → uuid
   for (const l of ok(
     await db
       .from("escala_subfuncoes")
@@ -392,9 +422,9 @@ async function importar() {
       .eq("organization_id", orgId),
     "select escala_subfuncoes",
   ) as { id: string; nome: string; escala_setores: { nome: string } }[]) {
-    subfuncoes.set(`${l.escala_setores.nome}\u0000${l.nome}`, l.id);
+    subfuncoes.set(JSON.stringify([l.escala_setores.nome, l.nome]), l.id);
   }
-  const chaveSub = (setor: string, sub: string) => `${setor}\u0000${sub}`;
+  const chaveSub = (setor: string, sub: string) => JSON.stringify([setor, sub]);
 
   // 2ª passada: as referências entre vagas.
   for (const s of regras.setores) {
@@ -522,24 +552,23 @@ async function importar() {
     cultos.set(l.data, l.id);
   }
 
-  // Vetos: quem a liderança TIROU daquela vaga.
+  // Vetos: quem a liderança TIROU daquele SETOR naquele culto.
   //
-  // Subfunção VAZIA num setor que TEM subfunções não é a vaga sem nome — é veto
-  // no setor inteiro naquele culto. É assim que o `rejeitados.csv` registra
-  // "Gustavo fora dos Atalaias no 27/09" e "Andressa, Andreza e Regina fora do
-  // Boas Vindas no 20/09": a liderança tirou a pessoa do setor, não de uma
-  // subfunção específica. Casar só por (data, setor, subfunção) descartava cinco
-  // dos oito vetos sem dizer nada, e o motor recolocaria essa gente na próxima
-  // geração — a correção da liderança se perderia calada.
-  const vetosPorVaga = new Map<string, string[]>();
+  // A chave é (data, setor) e a subfunção escrita no `rejeitados.csv` é
+  // informativa. É assim que `carregar_rejeitados()` indexa no motor, e o
+  // comentário dela diz por quê: "a recusa vale para o setor inteiro naquele
+  // culto: trocar de subfunção não contorna o veto". Quando a liderança tirou
+  // Willyam da Máquina de Cartão, não pediu que ele fosse para a Recepção.
+  //
+  // Guardar o veto na subfunção citada divergiria do motor de duas formas ao
+  // mesmo tempo: as cinco linhas SEM subfunção ("Gustavo fora dos Atalaias no
+  // 27/09", "Andressa, Andreza e Regina fora do Boas Vindas no 20/09") não
+  // casariam com vaga nenhuma e sumiriam caladas, e as três COM subfunção
+  // vetariam menos do que o motor veta.
   const vetosPorSetor = new Map<string, string[]>();
   for (const v of dados.vetados) {
-    const id = voluntarios.get(v.nome)!;
-    const alvo = v.subfuncao ? vetosPorVaga : vetosPorSetor;
-    const k = v.subfuncao
-      ? `${v.data}\u0000${v.setor}\u0000${v.subfuncao}`
-      : `${v.data}\u0000${v.setor}`;
-    alvo.set(k, [...(alvo.get(k) ?? []), id]);
+    const k = JSON.stringify([v.data, v.setor]);
+    vetosPorSetor.set(k, [...(vetosPorSetor.get(k) ?? []), voluntarios.get(v.nome)!]);
   }
   /** Quantos slots cada veto alcançou — zero é erro, não detalhe. */
   const vetosAplicados = new Map<string, number>();
@@ -603,13 +632,9 @@ async function importar() {
 
     const filas = c.slots.map((s, i) => {
       const subId = subfuncoes.get(chaveSub(s.setor, s.subfuncao)) ?? null;
-      const kVaga = `${c.data}\u0000${s.setor}\u0000${s.subfuncao}`;
-      const kSetor = `${c.data}\u0000${s.setor}`;
-      const daVaga = vetosPorVaga.get(kVaga) ?? [];
-      const doSetor = vetosPorSetor.get(kSetor) ?? [];
-      if (daVaga.length > 0) vetosAplicados.set(kVaga, (vetosAplicados.get(kVaga) ?? 0) + 1);
-      if (doSetor.length > 0) vetosAplicados.set(kSetor, (vetosAplicados.get(kSetor) ?? 0) + 1);
-      const vetos = [...new Set([...daVaga, ...doSetor])];
+      const kSetor = JSON.stringify([c.data, s.setor]);
+      const vetos = vetosPorSetor.get(kSetor) ?? [];
+      if (vetos.length > 0) vetosAplicados.set(kSetor, (vetosAplicados.get(kSetor) ?? 0) + 1);
       return {
         organization_id: orgId,
         culto_id: cultoId,
@@ -618,7 +643,7 @@ async function importar() {
         voluntario_id: s.nome ? voluntarios.get(s.nome)! : null,
         origem: s.origem,
         motivo: s.motivo,
-        vetados: vetos,
+        vetados: [...new Set(vetos)],
         posicao: i,
       };
     });
@@ -629,21 +654,52 @@ async function importar() {
   }
   // Veto que não alcançou slot nenhum é correção da liderança indo para o lixo:
   // o motor recoloca a pessoa na próxima geração e ninguém fica sabendo.
-  const vetosPerdidos = [...vetosPorVaga.keys(), ...vetosPorSetor.keys()].filter(
-    (k) => !vetosAplicados.has(k),
-  );
+  const vetosPerdidos = [...vetosPorSetor.keys()].filter((k) => !vetosAplicados.has(k));
   if (vetosPerdidos.length > 0) {
     throw new Error(
       `${vetosPerdidos.length} veto(s) não alcançaram nenhuma vaga: ` +
-        vetosPerdidos.map((k) => k.split("\u0000").join("/")).join(", "),
+        vetosPerdidos.map((k) => (JSON.parse(k) as string[]).join("/")).join(", "),
     );
   }
   console.info(
     `cultos: ${dados.cultos.length}, slots: ${totalSlots}, ` +
-      `vetos aplicados: ${vetosAplicados.size}/${vetosPorVaga.size + vetosPorSetor.size} vagas`,
+      `vetos aplicados: ${vetosAplicados.size}/${vetosPorSetor.size} setores-culto`,
   );
 
-  // ── 6. Config ────────────────────────────────────────────────────────────
+  // ── 6. Histórico ─────────────────────────────────────────────────────────
+  //
+  // O insumo do score (migration 0147). Substituído por inteiro, não somado:
+  // ele é uma FOTO da extração das planilhas, e importar duas vezes não pode
+  // dobrar a afinidade de ninguém.
+  ok(
+    await db.from("escala_historico").delete().eq("organization_id", orgId).select("id"),
+    "delete escala_historico",
+  );
+  const LOTE = 500; // 4.970 linhas numa tacada só estoura o limite do PostgREST
+  for (let i = 0; i < dados.historico.length; i += LOTE) {
+    const lote = dados.historico.slice(i, i + LOTE).map((h) => ({
+      organization_id: orgId,
+      voluntario_id: voluntarios.get(h.nome)!,
+      ano: h.ano,
+      mes: h.mes,
+      dia: h.dia,
+      dia_semana: h.dia_semana,
+      setor: h.setor,
+      subfuncao: h.subfuncao,
+      aba: h.aba,
+      texto_bruto: h.texto_bruto,
+      metodo: h.metodo,
+      score: h.score,
+    }));
+    ok(
+      await db.from("escala_historico").insert(lote).select("id"),
+      `insert escala_historico lote ${i / LOTE + 1}`,
+    );
+  }
+  const semDia = dados.historico.filter((h) => h.dia === null).length;
+  console.info(`histórico: ${dados.historico.length} registros (${semDia} sem dia exato)`);
+
+  // ── 7. Config ────────────────────────────────────────────────────────────
   const filasConfig = Object.entries(regras.config).map(([chave, valor]) => ({
     organization_id: orgId,
     chave,
