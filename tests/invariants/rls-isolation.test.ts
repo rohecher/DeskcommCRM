@@ -99,6 +99,11 @@ beforeAll(() => {
       v_conv uuid;
       v_pipe uuid;
       v_stage uuid;
+      v_setor uuid;
+      v_subf uuid;
+      v_vol_a uuid;
+      v_vol_b uuid;
+      v_culto uuid;
     begin
       foreach v_org in array array['${ORG_A}'::uuid, '${ORG_B}'::uuid] loop
         select id into v_sess from public.channel_sessions where organization_id = v_org limit 1;
@@ -186,6 +191,77 @@ beforeAll(() => {
             (organization_id, contact_id, campo, valor_proposto, expires_at)
             values (v_org, v_contact, 'email', 'rls-invariant@exemplo.test', now() + interval '7 days');
         end if;
+
+        -- Escalas (migration 0145): quem serve no culto, com nome completo,
+        -- telefone e o motivo de estar suspenso ("suspensão junto com a
+        -- esposa" é dado real da planilha de disponibilidade). É lista de membros de
+        -- igreja com histórico de presença — vazar a da vizinha é vazar quem
+        -- frequenta o quê, e quem parou de frequentar.
+        select id into v_setor from public.escala_setores
+          where organization_id = v_org and nome = 'RLS INVARIANT SETOR';
+        if v_setor is null then
+          insert into public.escala_setores (organization_id, nome)
+            values (v_org, 'RLS INVARIANT SETOR') returning id into v_setor;
+        end if;
+
+        select id into v_subf from public.escala_subfuncoes
+          where setor_id = v_setor and nome = '';
+        if v_subf is null then
+          insert into public.escala_subfuncoes (organization_id, setor_id, nome, qtd)
+            values (v_org, v_setor, '', 2) returning id into v_subf;
+        end if;
+
+        select id into v_vol_a from public.escala_voluntarios
+          where organization_id = v_org and nome = 'RLS Invariant Voluntaria';
+        if v_vol_a is null then
+          insert into public.escala_voluntarios (organization_id, nome, sexo)
+            values (v_org, 'RLS Invariant Voluntaria', 'F') returning id into v_vol_a;
+        end if;
+
+        select id into v_vol_b from public.escala_voluntarios
+          where organization_id = v_org and nome = 'RLS Invariant Voluntario';
+        if v_vol_b is null then
+          insert into public.escala_voluntarios (organization_id, nome, sexo)
+            values (v_org, 'RLS Invariant Voluntario', 'M') returning id into v_vol_b;
+        end if;
+
+        if not exists (select 1 from public.escala_apelidos where organization_id = v_org) then
+          insert into public.escala_apelidos (organization_id, apelido, voluntario_id)
+            values (v_org, 'RLS Inv', v_vol_a);
+        end if;
+
+        if not exists (select 1 from public.escala_casais where organization_id = v_org) then
+          insert into public.escala_casais (organization_id, voluntario_a, voluntario_b)
+            values (v_org, v_vol_a, v_vol_b);
+        end if;
+
+        if not exists (select 1 from public.escala_lideres where organization_id = v_org) then
+          insert into public.escala_lideres (organization_id, setor_id, voluntario_id)
+            values (v_org, v_setor, v_vol_b);
+        end if;
+
+        select id into v_culto from public.escala_cultos
+          where organization_id = v_org and data = date '2026-09-20';
+        if v_culto is null then
+          insert into public.escala_cultos (organization_id, data, dia_semana, rodada_data)
+            values (v_org, date '2026-09-20', 'DOMINGO', date '2026-09-20')
+            returning id into v_culto;
+        end if;
+
+        if not exists (select 1 from public.escala_setor_off where organization_id = v_org) then
+          insert into public.escala_setor_off (organization_id, culto_id, setor_id, motivo)
+            values (v_org, v_culto, v_setor, 'rls invariant probe');
+        end if;
+
+        if not exists (select 1 from public.escala_slots where organization_id = v_org) then
+          insert into public.escala_slots (organization_id, culto_id, setor_id, subfuncao_id, voluntario_id)
+            values (v_org, v_culto, v_setor, v_subf, v_vol_a);
+        end if;
+
+        if not exists (select 1 from public.escala_config where organization_id = v_org) then
+          insert into public.escala_config (organization_id, chave, valor)
+            values (v_org, 'semanas_descanso', to_jsonb(8));
+        end if;
       end loop;
     end
     $seed$;
@@ -223,6 +299,20 @@ const TABLES = [
   // sabotada para `... or true` a suíte seguia 31/31 verde num banco em que o vizinho
   // lia e escrevia. É o modo de falha que o aviso acima descreve, encontrado vivo.
   "org_guardrail_layers",
+  // migration 0145 — o motor de escalas. `escala_voluntarios` é a lista nominal
+  // de quem serve na igreja, com telefone e o motivo de estar suspenso; os
+  // `escala_slots` são o histórico de presença de cada um, culto a culto. Uma
+  // igreja ler a escala da outra é ler quem frequenta o quê e quem parou.
+  "escala_setores",
+  "escala_subfuncoes",
+  "escala_voluntarios",
+  "escala_apelidos",
+  "escala_casais",
+  "escala_lideres",
+  "escala_cultos",
+  "escala_setor_off",
+  "escala_slots",
+  "escala_config",
 ] as const;
 
 describe("RLS tenant isolation (fn_user_org_ids pattern)", () => {

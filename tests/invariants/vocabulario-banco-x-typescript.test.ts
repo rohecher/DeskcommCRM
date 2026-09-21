@@ -169,6 +169,42 @@ const PARES: Array<{
     arquivo: "lib/channels/types.ts",
     simbolo: "ChannelProvider",
   },
+  // ── migration 0145, motor de escalas ────────────────────────────────────────
+  // Os quatro pares nascem no MESMO commit da migration, e não por zelo: escala
+  // se gera uma vez por semana, então nenhum destes caminhos de escrita é
+  // exercitado o bastante para um `23514` aparecer antes de meses. É o perfil de
+  // divergência que este invariante existe para pegar.
+  {
+    tabela: "escala_voluntarios",
+    coluna: "status",
+    // lib/escalas/tipos.ts → StatusVoluntario. No motor Python era
+    // `STATUS_OK = {"ATIVO"}`: qualquer outra grafia tirava a pessoa da escala
+    // em silêncio, que é o motivo de a coluna ter CHECK.
+    arquivo: "lib/escalas/tipos.ts",
+    simbolo: "StatusVoluntario",
+  },
+  {
+    tabela: "escala_voluntarios",
+    coluna: "sexo",
+    // lib/escalas/tipos.ts → SexoVoluntario. O `null` da coluna é "ainda não
+    // sei", não um terceiro valor do vocabulário — por isso não entra no union.
+    arquivo: "lib/escalas/tipos.ts",
+    simbolo: "SexoVoluntario",
+  },
+  {
+    tabela: "escala_cultos",
+    coluna: "status",
+    // lib/escalas/tipos.ts → StatusCulto.
+    arquivo: "lib/escalas/tipos.ts",
+    simbolo: "StatusCulto",
+  },
+  {
+    tabela: "escala_slots",
+    coluna: "origem",
+    // lib/escalas/tipos.ts → OrigemSlot.
+    arquivo: "lib/escalas/tipos.ts",
+    simbolo: "OrigemSlot",
+  },
 ];
 
 /** Tira um nível de parênteses externos, se ele envolver a expressão inteira. */
