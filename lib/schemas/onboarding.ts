@@ -12,15 +12,15 @@ export const welcomeSchema = z.object({
 export type WelcomeInput = z.infer<typeof welcomeSchema>;
 
 export const PROMPT_TEMPLATES = [
-  "ecommerce_friendly",
-  "ecommerce_professional",
-  "support_minimal",
+  "acolhedor",
+  "pastoral",
+  "objetivo",
 ] as const;
 export type PromptTemplate = (typeof PROMPT_TEMPLATES)[number];
 
 export const aiAgentDefaultSchema = z.object({
   name: z.string().min(2).max(80).default("Atendente IA"),
-  prompt_template: z.enum(PROMPT_TEMPLATES).default("ecommerce_friendly"),
+  prompt_template: z.enum(PROMPT_TEMPLATES).default("acolhedor"),
 });
 export type AiAgentDefaultInput = z.infer<typeof aiAgentDefaultSchema>;
 

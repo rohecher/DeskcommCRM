@@ -197,7 +197,7 @@ function montarBanco(mundo: Mundo = {}): Estado {
 function formulario(nome = "Atendente IA"): FormData {
   const fd = new FormData();
   fd.set("name", nome);
-  fd.set("prompt_template", "ecommerce_friendly");
+  fd.set("prompt_template", "acolhedor");
   return fd;
 }
 

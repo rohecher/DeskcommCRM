@@ -12,25 +12,25 @@ import { cn } from "@/lib/utils";
 
 const TEMPLATES: { id: PromptTemplate; title: string; desc: string }[] = [
   {
-    id: "ecommerce_friendly",
-    title: "Amigável (e-commerce)",
-    desc: "Tom caloroso e próximo. Bom para lojas com público B2C.",
+    id: "acolhedor",
+    title: "Acolhedor",
+    desc: "Tom caloroso e próximo. Bom para receber visitante e quem chega pela primeira vez.",
   },
   {
-    id: "ecommerce_professional",
-    title: "Profissional",
-    desc: "Tom formal e objetivo. Foco em pedidos e próximos passos.",
+    id: "pastoral",
+    title: "Pastoral",
+    desc: "Foco no cuidado. Percebe quando o assunto pede um humano e encaminha para o líder.",
   },
   {
-    id: "support_minimal",
-    title: "Suporte minimalista",
-    desc: "Frases curtas, direto ao ponto, escalonamento rápido.",
+    id: "objetivo",
+    title: "Objetivo",
+    desc: "Frases curtas para dúvida prática — horário, endereço, inscrição. Escala rápido.",
   },
 ];
 
 export function SetupAiForm() {
   const [name, setName] = useState("Atendente IA");
-  const [template, setTemplate] = useState<PromptTemplate>("ecommerce_friendly");
+  const [template, setTemplate] = useState<PromptTemplate>("acolhedor");
   const [naoPublicado, setNaoPublicado] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
 
