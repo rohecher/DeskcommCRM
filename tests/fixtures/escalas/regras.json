@@ -1,0 +1,616 @@
+{
+ "config": {
+  "max_padrao": 0,
+  "peso_rodizio": 3,
+  "bonus_casa": 1.5,
+  "peso_lider": -1.0,
+  "papel_lideranca": "LIDER",
+  "semanas_descanso": 8,
+  "quinta_apos_domingo": 4,
+  "reserva_max_no_mes": 1,
+  "meses_recentes": 8,
+  "inativo_meses": 6,
+  "horario": {
+   "QUINTA": "19:20",
+   "DOMINGO": "19:00"
+  },
+  "depto_externo": [
+   "DANCA",
+   "LOUVOR",
+   "M. DANCA",
+   "M. LOUVOR",
+   "MIDIA",
+   "MULTIMIDIA",
+   "SOM"
+  ],
+  "depto_apelido": {
+   "KIDS": "CULTO KIDS",
+   "ATALAIA": "ATALAIAS",
+   "MESA": "MESA DA COMUNHAO",
+   "BOAS VINDAS": "BOAS VINDAS"
+  },
+  "fixo_no_mes": []
+ },
+ "reserva": [
+  "Voluntario 076",
+  "Voluntario 079"
+ ],
+ "setores": [
+  {
+   "nome": "CAFETERIA",
+   "posicao": 0,
+   "nucleo": false,
+   "dupla_decente": true,
+   "casal_junto": true,
+   "so_casal": false,
+   "pool_pequeno": false,
+   "externo": false,
+   "rodizio_inverso_quinta": false,
+   "reforco_se_off": [],
+   "subfuncoes": [
+    {
+     "nome": "",
+     "qtd": 2,
+     "posicao": 0,
+     "qtd_por_dia": {},
+     "time_fixo": [],
+     "prioridade": [],
+     "pool_extra": [],
+     "por_frequencia": false,
+     "max_do_grupo": null,
+     "dupla_decente": false,
+     "casal_junto": false,
+     "mesmo_sexo_que": null,
+     "conjuge_de": null
+    }
+   ]
+  },
+  {
+   "nome": "AUXILIO PASTORAL",
+   "posicao": 1,
+   "nucleo": false,
+   "dupla_decente": true,
+   "casal_junto": true,
+   "so_casal": true,
+   "pool_pequeno": false,
+   "externo": false,
+   "rodizio_inverso_quinta": false,
+   "reforco_se_off": [],
+   "subfuncoes": [
+    {
+     "nome": "",
+     "qtd": 2,
+     "posicao": 0,
+     "qtd_por_dia": {},
+     "time_fixo": [],
+     "prioridade": [],
+     "pool_extra": [],
+     "por_frequencia": false,
+     "max_do_grupo": null,
+     "dupla_decente": false,
+     "casal_junto": false,
+     "mesmo_sexo_que": null,
+     "conjuge_de": null
+    }
+   ]
+  },
+  {
+   "nome": "INTERCESSAO",
+   "posicao": 2,
+   "nucleo": true,
+   "dupla_decente": false,
+   "casal_junto": false,
+   "so_casal": false,
+   "pool_pequeno": false,
+   "externo": false,
+   "rodizio_inverso_quinta": false,
+   "reforco_se_off": [],
+   "subfuncoes": [
+    {
+     "nome": "Lateral Altar",
+     "qtd": 1,
+     "posicao": 0,
+     "qtd_por_dia": {},
+     "time_fixo": [],
+     "prioridade": [],
+     "pool_extra": [],
+     "por_frequencia": false,
+     "max_do_grupo": null,
+     "dupla_decente": false,
+     "casal_junto": false,
+     "mesmo_sexo_que": null,
+     "conjuge_de": null
+    },
+    {
+     "nome": "Frente",
+     "qtd": 2,
+     "posicao": 1,
+     "qtd_por_dia": {},
+     "time_fixo": [],
+     "prioridade": [],
+     "pool_extra": [],
+     "por_frequencia": false,
+     "max_do_grupo": null,
+     "dupla_decente": false,
+     "casal_junto": false,
+     "mesmo_sexo_que": null,
+     "conjuge_de": null
+    },
+    {
+     "nome": "Meio",
+     "qtd": 2,
+     "posicao": 2,
+     "qtd_por_dia": {},
+     "time_fixo": [],
+     "prioridade": [],
+     "pool_extra": [],
+     "por_frequencia": false,
+     "max_do_grupo": null,
+     "dupla_decente": false,
+     "casal_junto": false,
+     "mesmo_sexo_que": null,
+     "conjuge_de": null
+    },
+    {
+     "nome": "Fundo",
+     "qtd": 1,
+     "posicao": 3,
+     "qtd_por_dia": {},
+     "time_fixo": [],
+     "prioridade": [],
+     "pool_extra": [],
+     "por_frequencia": false,
+     "max_do_grupo": null,
+     "dupla_decente": false,
+     "casal_junto": false,
+     "mesmo_sexo_que": null,
+     "conjuge_de": null
+    }
+   ]
+  },
+  {
+   "nome": "ATALAIAS",
+   "posicao": 3,
+   "nucleo": false,
+   "dupla_decente": false,
+   "casal_junto": false,
+   "so_casal": false,
+   "pool_pequeno": false,
+   "externo": false,
+   "rodizio_inverso_quinta": false,
+   "reforco_se_off": [],
+   "subfuncoes": [
+    {
+     "nome": "Servindo o altar",
+     "qtd": 1,
+     "posicao": 0,
+     "qtd_por_dia": {},
+     "time_fixo": [
+      "Voluntario 045",
+      "Voluntario 121",
+      "Voluntario 038",
+      "Voluntario 108",
+      "Voluntario 005",
+      "Voluntario 001"
+     ],
+     "prioridade": [],
+     "pool_extra": [],
+     "por_frequencia": false,
+     "max_do_grupo": null,
+     "dupla_decente": false,
+     "casal_junto": false,
+     "mesmo_sexo_que": null,
+     "conjuge_de": null
+    },
+    {
+     "nome": "Frente da igreja",
+     "qtd": 1,
+     "posicao": 1,
+     "qtd_por_dia": {},
+     "time_fixo": [],
+     "prioridade": [],
+     "pool_extra": [],
+     "por_frequencia": false,
+     "max_do_grupo": null,
+     "dupla_decente": false,
+     "casal_junto": false,
+     "mesmo_sexo_que": null,
+     "conjuge_de": null
+    },
+    {
+     "nome": "Corredor Externo, kids e lanchonete",
+     "qtd": 1,
+     "posicao": 2,
+     "qtd_por_dia": {},
+     "time_fixo": [],
+     "prioridade": [],
+     "pool_extra": [],
+     "por_frequencia": false,
+     "max_do_grupo": null,
+     "dupla_decente": false,
+     "casal_junto": false,
+     "mesmo_sexo_que": null,
+     "conjuge_de": null
+    },
+    {
+     "nome": "Corredor Interno / Banheiros",
+     "qtd": 1,
+     "posicao": 3,
+     "qtd_por_dia": {},
+     "time_fixo": [],
+     "prioridade": [],
+     "pool_extra": [],
+     "por_frequencia": false,
+     "max_do_grupo": null,
+     "dupla_decente": false,
+     "casal_junto": false,
+     "mesmo_sexo_que": null,
+     "conjuge_de": null
+    }
+   ]
+  },
+  {
+   "nome": "BOAS VINDAS",
+   "posicao": 4,
+   "nucleo": false,
+   "dupla_decente": false,
+   "casal_junto": false,
+   "so_casal": false,
+   "pool_pequeno": false,
+   "externo": false,
+   "rodizio_inverso_quinta": false,
+   "reforco_se_off": [],
+   "subfuncoes": [
+    {
+     "nome": "Maquina de Cartao",
+     "qtd": 2,
+     "posicao": 0,
+     "qtd_por_dia": {},
+     "time_fixo": [],
+     "prioridade": [],
+     "pool_extra": [],
+     "por_frequencia": false,
+     "max_do_grupo": null,
+     "dupla_decente": true,
+     "casal_junto": true,
+     "mesmo_sexo_que": null,
+     "conjuge_de": null
+    },
+    {
+     "nome": "Recepcao",
+     "qtd": 4,
+     "posicao": 1,
+     "qtd_por_dia": {
+      "QUINTA": 3
+     },
+     "time_fixo": [],
+     "prioridade": [],
+     "pool_extra": [],
+     "por_frequencia": false,
+     "max_do_grupo": null,
+     "dupla_decente": false,
+     "casal_junto": false,
+     "mesmo_sexo_que": null,
+     "conjuge_de": null
+    }
+   ]
+  },
+  {
+   "nome": "COZINHA",
+   "posicao": 5,
+   "nucleo": false,
+   "dupla_decente": false,
+   "casal_junto": false,
+   "so_casal": false,
+   "pool_pequeno": false,
+   "externo": false,
+   "rodizio_inverso_quinta": false,
+   "reforco_se_off": [
+    {
+     "setor": "BOAS VINDAS",
+     "subfuncao": "Recepcao",
+     "qtd": 4
+    }
+   ],
+   "subfuncoes": [
+    {
+     "nome": "Cozinheiro",
+     "qtd": 1,
+     "posicao": 0,
+     "qtd_por_dia": {},
+     "time_fixo": [
+      "Voluntario 026",
+      "Voluntario 112",
+      "Voluntario 107",
+      "Voluntario 060",
+      "Voluntario 062",
+      "Voluntario 123",
+      "Voluntario 069",
+      "Voluntario 076",
+      "Voluntario 079"
+     ],
+     "prioridade": [],
+     "pool_extra": [
+      "Voluntario 041"
+     ],
+     "por_frequencia": false,
+     "max_do_grupo": null,
+     "dupla_decente": false,
+     "casal_junto": false,
+     "mesmo_sexo_que": null,
+     "conjuge_de": null
+    },
+    {
+     "nome": "Auxiliar",
+     "qtd": 1,
+     "posicao": 1,
+     "qtd_por_dia": {},
+     "time_fixo": [],
+     "prioridade": [],
+     "pool_extra": [
+      "Voluntario 041"
+     ],
+     "por_frequencia": false,
+     "max_do_grupo": null,
+     "dupla_decente": false,
+     "casal_junto": false,
+     "mesmo_sexo_que": [
+      "COZINHA",
+      "Cozinheiro"
+     ],
+     "conjuge_de": [
+      "COZINHA",
+      "Cozinheiro"
+     ]
+    },
+    {
+     "nome": "Apoio",
+     "qtd": 2,
+     "posicao": 2,
+     "qtd_por_dia": {},
+     "time_fixo": [],
+     "prioridade": [],
+     "pool_extra": [
+      "Voluntario 100"
+     ],
+     "por_frequencia": false,
+     "max_do_grupo": null,
+     "dupla_decente": false,
+     "casal_junto": false,
+     "mesmo_sexo_que": [
+      "COZINHA",
+      "Cozinheiro"
+     ],
+     "conjuge_de": null
+    }
+   ]
+  },
+  {
+   "nome": "CULTO KIDS",
+   "posicao": 6,
+   "nucleo": false,
+   "dupla_decente": false,
+   "casal_junto": false,
+   "so_casal": false,
+   "pool_pequeno": false,
+   "externo": false,
+   "rodizio_inverso_quinta": false,
+   "reforco_se_off": [],
+   "subfuncoes": [
+    {
+     "nome": "Sala Maior",
+     "qtd": 1,
+     "posicao": 0,
+     "qtd_por_dia": {},
+     "time_fixo": [],
+     "prioridade": [
+      "Voluntario 062",
+      "Voluntario 083",
+      "Voluntario 118",
+      "Voluntario 064",
+      "Voluntario 033",
+      "Voluntario 013"
+     ],
+     "pool_extra": [],
+     "por_frequencia": true,
+     "max_do_grupo": null,
+     "dupla_decente": false,
+     "casal_junto": false,
+     "mesmo_sexo_que": null,
+     "conjuge_de": null
+    },
+    {
+     "nome": "Sala Menor",
+     "qtd": 2,
+     "posicao": 1,
+     "qtd_por_dia": {},
+     "time_fixo": [],
+     "prioridade": [
+      "Voluntario 032",
+      "Voluntario 046",
+      "Voluntario 034",
+      "Voluntario 051",
+      "Voluntario 110"
+     ],
+     "pool_extra": [],
+     "por_frequencia": false,
+     "max_do_grupo": 1,
+     "dupla_decente": false,
+     "casal_junto": false,
+     "mesmo_sexo_que": null,
+     "conjuge_de": null
+    },
+    {
+     "nome": "Apoio",
+     "qtd": 1,
+     "posicao": 2,
+     "qtd_por_dia": {},
+     "time_fixo": [],
+     "prioridade": [
+      "Voluntario 032",
+      "Voluntario 046",
+      "Voluntario 034",
+      "Voluntario 051",
+      "Voluntario 110"
+     ],
+     "pool_extra": [],
+     "por_frequencia": false,
+     "max_do_grupo": null,
+     "dupla_decente": false,
+     "casal_junto": false,
+     "mesmo_sexo_que": null,
+     "conjuge_de": null
+    }
+   ]
+  },
+  {
+   "nome": "ESTACIONAMENTO",
+   "posicao": 7,
+   "nucleo": false,
+   "dupla_decente": true,
+   "casal_junto": false,
+   "so_casal": false,
+   "pool_pequeno": false,
+   "externo": false,
+   "rodizio_inverso_quinta": false,
+   "reforco_se_off": [],
+   "subfuncoes": [
+    {
+     "nome": "",
+     "qtd": 2,
+     "posicao": 0,
+     "qtd_por_dia": {},
+     "time_fixo": [],
+     "prioridade": [],
+     "pool_extra": [],
+     "por_frequencia": false,
+     "max_do_grupo": null,
+     "dupla_decente": false,
+     "casal_junto": false,
+     "mesmo_sexo_que": null,
+     "conjuge_de": null
+    }
+   ]
+  },
+  {
+   "nome": "COORDENACAO DO CULTO",
+   "posicao": 8,
+   "nucleo": true,
+   "dupla_decente": false,
+   "casal_junto": false,
+   "so_casal": false,
+   "pool_pequeno": true,
+   "externo": false,
+   "rodizio_inverso_quinta": false,
+   "reforco_se_off": [],
+   "subfuncoes": [
+    {
+     "nome": "",
+     "qtd": 1,
+     "posicao": 0,
+     "qtd_por_dia": {},
+     "time_fixo": [],
+     "prioridade": [],
+     "pool_extra": [],
+     "por_frequencia": false,
+     "max_do_grupo": null,
+     "dupla_decente": false,
+     "casal_junto": false,
+     "mesmo_sexo_que": null,
+     "conjuge_de": null
+    }
+   ]
+  },
+  {
+   "nome": "MESA DA COMUNHAO",
+   "posicao": 9,
+   "nucleo": false,
+   "dupla_decente": true,
+   "casal_junto": false,
+   "so_casal": false,
+   "pool_pequeno": false,
+   "externo": false,
+   "rodizio_inverso_quinta": false,
+   "reforco_se_off": [],
+   "subfuncoes": [
+    {
+     "nome": "",
+     "qtd": 2,
+     "posicao": 0,
+     "qtd_por_dia": {},
+     "time_fixo": [
+      "Voluntario 095",
+      "Voluntario 025",
+      "Voluntario 054",
+      "Voluntario 124",
+      "Voluntario 022",
+      "Voluntario 019",
+      "Voluntario 001",
+      "Voluntario 118",
+      "Voluntario 075"
+     ],
+     "prioridade": [],
+     "pool_extra": [],
+     "por_frequencia": false,
+     "max_do_grupo": null,
+     "dupla_decente": false,
+     "casal_junto": false,
+     "mesmo_sexo_que": null,
+     "conjuge_de": null
+    }
+   ]
+  },
+  {
+   "nome": "M. DANCA",
+   "posicao": 10,
+   "nucleo": false,
+   "dupla_decente": false,
+   "casal_junto": false,
+   "so_casal": false,
+   "pool_pequeno": false,
+   "externo": true,
+   "rodizio_inverso_quinta": false,
+   "reforco_se_off": [],
+   "subfuncoes": []
+  },
+  {
+   "nome": "M. LOUVOR",
+   "posicao": 11,
+   "nucleo": false,
+   "dupla_decente": false,
+   "casal_junto": false,
+   "so_casal": false,
+   "pool_pequeno": false,
+   "externo": true,
+   "rodizio_inverso_quinta": false,
+   "reforco_se_off": [],
+   "subfuncoes": []
+  },
+  {
+   "nome": "MULTIMIDIA",
+   "posicao": 12,
+   "nucleo": false,
+   "dupla_decente": false,
+   "casal_junto": false,
+   "so_casal": false,
+   "pool_pequeno": false,
+   "externo": true,
+   "rodizio_inverso_quinta": false,
+   "reforco_se_off": [],
+   "subfuncoes": []
+  },
+  {
+   "nome": "SOM",
+   "posicao": 13,
+   "nucleo": false,
+   "dupla_decente": false,
+   "casal_junto": false,
+   "so_casal": false,
+   "pool_pequeno": false,
+   "externo": true,
+   "rodizio_inverso_quinta": false,
+   "reforco_se_off": [],
+   "subfuncoes": []
+  }
+ ]
+}

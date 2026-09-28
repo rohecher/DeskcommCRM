@@ -1,0 +1,2934 @@
+{
+ "hoje": "2026-09-21",
+ "datas": [
+  "2026-09-13",
+  "2026-09-17",
+  "2026-09-20",
+  "2026-09-24",
+  "2026-09-27",
+  "2026-10-01",
+  "2026-10-04",
+  "2026-10-08",
+  "2026-10-11",
+  "2026-10-15"
+ ],
+ "linhas": [
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "AUXILIO PASTORAL",
+   "subfuncao": "",
+   "nome": "Voluntario 117",
+   "historico": "5x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "AUXILIO PASTORAL",
+   "subfuncao": "",
+   "nome": "Voluntario 121",
+   "historico": "5x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "COORDENACAO DO CULTO",
+   "subfuncao": "",
+   "nome": "Voluntario 105",
+   "historico": "97x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "ATALAIAS",
+   "subfuncao": "Servindo o altar",
+   "nome": "Voluntario 108",
+   "historico": "30x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "COZINHA",
+   "subfuncao": "Cozinheiro",
+   "nome": "Voluntario 123",
+   "historico": "7x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "MESA DA COMUNHAO",
+   "subfuncao": "",
+   "nome": "Voluntario 022",
+   "historico": "4x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "MESA DA COMUNHAO",
+   "subfuncao": "",
+   "nome": "Voluntario 124",
+   "historico": "4x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "CAFETERIA",
+   "subfuncao": "",
+   "nome": "Voluntario 042",
+   "historico": "11x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "CAFETERIA",
+   "subfuncao": "",
+   "nome": "Voluntario 072",
+   "historico": "11x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "COZINHA",
+   "subfuncao": "Auxiliar",
+   "nome": "Voluntario 074",
+   "historico": "2x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "COZINHA",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 097",
+   "historico": "48x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "COZINHA",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 008",
+   "historico": "2x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Lateral Altar",
+   "nome": "Voluntario 020",
+   "historico": "71x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Frente",
+   "nome": "Voluntario 102",
+   "historico": "80x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Frente",
+   "nome": "Voluntario 009",
+   "historico": "78x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Meio",
+   "nome": "Voluntario 098",
+   "historico": "17x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Meio",
+   "nome": "Voluntario 018",
+   "historico": "16x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Fundo",
+   "nome": "Voluntario 096",
+   "historico": "15x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "ESTACIONAMENTO",
+   "subfuncao": "",
+   "nome": "Voluntario 035",
+   "historico": "7x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "ESTACIONAMENTO",
+   "subfuncao": "",
+   "nome": "Voluntario 059",
+   "historico": "3x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Maior",
+   "nome": "Voluntario 062",
+   "historico": "48x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Menor",
+   "nome": "Voluntario 110",
+   "historico": "14x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Menor",
+   "nome": "Voluntario 046",
+   "historico": "12x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 032",
+   "historico": "16x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "ATALAIAS",
+   "subfuncao": "Frente da igreja",
+   "nome": "Voluntario 071",
+   "historico": "12x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "ATALAIAS",
+   "subfuncao": "Corredor Externo, kids e lanchonete",
+   "nome": "Voluntario 041",
+   "historico": "5x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "ATALAIAS",
+   "subfuncao": "Corredor Interno / Banheiros",
+   "nome": "Voluntario 115",
+   "historico": "2x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Maquina de Cartao",
+   "nome": "Voluntario 126",
+   "historico": "10x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Maquina de Cartao",
+   "nome": "Voluntario 088",
+   "historico": "7x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 052",
+   "historico": "3x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 049",
+   "historico": "28x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 086",
+   "historico": "23x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-13",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 081",
+   "historico": "5x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "AUXILIO PASTORAL",
+   "subfuncao": "",
+   "nome": "",
+   "historico": "",
+   "obs": "OFF - não haverá nesta quinta"
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "COORDENACAO DO CULTO",
+   "subfuncao": "",
+   "nome": "Voluntario 105",
+   "historico": "97x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "ATALAIAS",
+   "subfuncao": "Servindo o altar",
+   "nome": "Voluntario 121",
+   "historico": "25x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "COZINHA",
+   "subfuncao": "Cozinheiro",
+   "nome": "Voluntario 123",
+   "historico": "7x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "MESA DA COMUNHAO",
+   "subfuncao": "",
+   "nome": "Voluntario 124",
+   "historico": "4x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "MESA DA COMUNHAO",
+   "subfuncao": "",
+   "nome": "Voluntario 022",
+   "historico": "4x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "CAFETERIA",
+   "subfuncao": "",
+   "nome": "Voluntario 108",
+   "historico": "12x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "CAFETERIA",
+   "subfuncao": "",
+   "nome": "Voluntario 115",
+   "historico": "3x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "COZINHA",
+   "subfuncao": "Auxiliar",
+   "nome": "Voluntario 074",
+   "historico": "2x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "COZINHA",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 018",
+   "historico": "6x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "COZINHA",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 097",
+   "historico": "48x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Lateral Altar",
+   "nome": "Voluntario 020",
+   "historico": "71x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Frente",
+   "nome": "Voluntario 009",
+   "historico": "78x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Frente",
+   "nome": "Voluntario 102",
+   "historico": "80x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Meio",
+   "nome": "Voluntario 098",
+   "historico": "17x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Meio",
+   "nome": "Voluntario 096",
+   "historico": "15x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Fundo",
+   "nome": "Voluntario 062",
+   "historico": "2x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "ESTACIONAMENTO",
+   "subfuncao": "",
+   "nome": "Voluntario 042",
+   "historico": "7x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "ESTACIONAMENTO",
+   "subfuncao": "",
+   "nome": "Voluntario 035",
+   "historico": "7x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Maior",
+   "nome": "Voluntario 118",
+   "historico": "36x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Menor",
+   "nome": "Voluntario 110",
+   "historico": "14x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Menor",
+   "nome": "Voluntario 081",
+   "historico": "60x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 032",
+   "historico": "16x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "ATALAIAS",
+   "subfuncao": "Frente da igreja",
+   "nome": "Voluntario 071",
+   "historico": "12x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "ATALAIAS",
+   "subfuncao": "Corredor Externo, kids e lanchonete",
+   "nome": "Voluntario 041",
+   "historico": "5x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "ATALAIAS",
+   "subfuncao": "Corredor Interno / Banheiros",
+   "nome": "Voluntario 117",
+   "historico": "2x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Maquina de Cartao",
+   "nome": "Voluntario 013",
+   "historico": "24x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Maquina de Cartao",
+   "nome": "Voluntario 026",
+   "historico": "2x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 052",
+   "historico": "3x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 049",
+   "historico": "28x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-17",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 086",
+   "historico": "23x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "AUXILIO PASTORAL",
+   "subfuncao": "",
+   "nome": "Voluntario 005",
+   "historico": "13x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "AUXILIO PASTORAL",
+   "subfuncao": "",
+   "nome": "Voluntario 111",
+   "historico": "13x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "COORDENACAO DO CULTO",
+   "subfuncao": "",
+   "nome": "Voluntario 045",
+   "historico": "18x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "ATALAIAS",
+   "subfuncao": "Servindo o altar",
+   "nome": "Voluntario 105",
+   "historico": "4x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "COZINHA",
+   "subfuncao": "Cozinheiro",
+   "nome": "Voluntario 060",
+   "historico": "11x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "MESA DA COMUNHAO",
+   "subfuncao": "",
+   "nome": "Voluntario 075",
+   "historico": "4x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "MESA DA COMUNHAO",
+   "subfuncao": "",
+   "nome": "Voluntario 118",
+   "historico": "2x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "CAFETERIA",
+   "subfuncao": "",
+   "nome": "Voluntario 012",
+   "historico": "22x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "CAFETERIA",
+   "subfuncao": "",
+   "nome": "Voluntario 051",
+   "historico": "2x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "COZINHA",
+   "subfuncao": "Auxiliar",
+   "nome": "Voluntario 063",
+   "historico": "10x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "COZINHA",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 107",
+   "historico": "6x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "COZINHA",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 112",
+   "historico": "10x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Lateral Altar",
+   "nome": "Voluntario 021",
+   "historico": "65x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Frente",
+   "nome": "Voluntario 043",
+   "historico": "70x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Frente",
+   "nome": "Voluntario 044",
+   "historico": "64x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Meio",
+   "nome": "Voluntario 038",
+   "historico": "75x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Meio",
+   "nome": "Voluntario 004",
+   "historico": "21x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Fundo",
+   "nome": "Voluntario 066",
+   "historico": "4x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "ESTACIONAMENTO",
+   "subfuncao": "",
+   "nome": "Voluntario 007",
+   "historico": "14x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "ESTACIONAMENTO",
+   "subfuncao": "",
+   "nome": "Voluntario 073",
+   "historico": "13x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Maior",
+   "nome": "Voluntario 064",
+   "historico": "3x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Menor",
+   "nome": "Voluntario 057",
+   "historico": "9x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Menor",
+   "nome": "Voluntario 083",
+   "historico": "50x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 033",
+   "historico": "33x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "ATALAIAS",
+   "subfuncao": "Frente da igreja",
+   "nome": "Voluntario 080",
+   "historico": "6x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "ATALAIAS",
+   "subfuncao": "Corredor Externo, kids e lanchonete",
+   "nome": "Voluntario 122",
+   "historico": "8x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "ATALAIAS",
+   "subfuncao": "Corredor Interno / Banheiros",
+   "nome": "Voluntario 041",
+   "historico": "5x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Maquina de Cartao",
+   "nome": "Voluntario 019",
+   "historico": "35x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Maquina de Cartao",
+   "nome": "Voluntario 001",
+   "historico": "22x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 058",
+   "historico": "5x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 104",
+   "historico": "4x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 097",
+   "historico": "8x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-20",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 090",
+   "historico": "7x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "AUXILIO PASTORAL",
+   "subfuncao": "",
+   "nome": "Voluntario 111",
+   "historico": "13x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "AUXILIO PASTORAL",
+   "subfuncao": "",
+   "nome": "Voluntario 005",
+   "historico": "13x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "COORDENACAO DO CULTO",
+   "subfuncao": "",
+   "nome": "Voluntario 045",
+   "historico": "18x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "ATALAIAS",
+   "subfuncao": "Servindo o altar",
+   "nome": "Voluntario 001",
+   "historico": "3x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "COZINHA",
+   "subfuncao": "Cozinheiro",
+   "nome": "Voluntario 060",
+   "historico": "11x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "MESA DA COMUNHAO",
+   "subfuncao": "",
+   "nome": "Voluntario 075",
+   "historico": "4x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "MESA DA COMUNHAO",
+   "subfuncao": "",
+   "nome": "Voluntario 118",
+   "historico": "2x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "CAFETERIA",
+   "subfuncao": "",
+   "nome": "Voluntario 012",
+   "historico": "22x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "CAFETERIA",
+   "subfuncao": "",
+   "nome": "Voluntario 051",
+   "historico": "2x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "COZINHA",
+   "subfuncao": "Auxiliar",
+   "nome": "Voluntario 063",
+   "historico": "10x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "COZINHA",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 107",
+   "historico": "6x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "COZINHA",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 112",
+   "historico": "10x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Lateral Altar",
+   "nome": "Voluntario 021",
+   "historico": "65x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Frente",
+   "nome": "Voluntario 043",
+   "historico": "70x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Frente",
+   "nome": "Voluntario 044",
+   "historico": "64x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Meio",
+   "nome": "Voluntario 038",
+   "historico": "75x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Meio",
+   "nome": "Voluntario 004",
+   "historico": "21x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Fundo",
+   "nome": "Voluntario 066",
+   "historico": "4x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "ESTACIONAMENTO",
+   "subfuncao": "",
+   "nome": "Voluntario 007",
+   "historico": "14x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "ESTACIONAMENTO",
+   "subfuncao": "",
+   "nome": "Voluntario 073",
+   "historico": "13x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Maior",
+   "nome": "Voluntario 064",
+   "historico": "3x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Menor",
+   "nome": "Voluntario 083",
+   "historico": "50x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Menor",
+   "nome": "Voluntario 057",
+   "historico": "9x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 033",
+   "historico": "33x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "ATALAIAS",
+   "subfuncao": "Frente da igreja",
+   "nome": "Voluntario 080",
+   "historico": "6x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "ATALAIAS",
+   "subfuncao": "Corredor Externo, kids e lanchonete",
+   "nome": "Voluntario 122",
+   "historico": "8x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "ATALAIAS",
+   "subfuncao": "Corredor Interno / Banheiros",
+   "nome": "Voluntario 041",
+   "historico": "5x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Maquina de Cartao",
+   "nome": "Voluntario 019",
+   "historico": "35x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Maquina de Cartao",
+   "nome": "Voluntario 058",
+   "historico": "5x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 104",
+   "historico": "4x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 097",
+   "historico": "8x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-24",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 090",
+   "historico": "7x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "AUXILIO PASTORAL",
+   "subfuncao": "",
+   "nome": "Voluntario 117",
+   "historico": "5x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "AUXILIO PASTORAL",
+   "subfuncao": "",
+   "nome": "Voluntario 121",
+   "historico": "5x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "COORDENACAO DO CULTO",
+   "subfuncao": "",
+   "nome": "Voluntario 105",
+   "historico": "97x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "ATALAIAS",
+   "subfuncao": "Servindo o altar",
+   "nome": "Voluntario 108",
+   "historico": "30x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "COZINHA",
+   "subfuncao": "Cozinheiro",
+   "nome": "Voluntario 026",
+   "historico": "26x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "MESA DA COMUNHAO",
+   "subfuncao": "",
+   "nome": "Voluntario 022",
+   "historico": "4x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "MESA DA COMUNHAO",
+   "subfuncao": "",
+   "nome": "Voluntario 124",
+   "historico": "4x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "CAFETERIA",
+   "subfuncao": "",
+   "nome": "Voluntario 072",
+   "historico": "11x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "CAFETERIA",
+   "subfuncao": "",
+   "nome": "Voluntario 042",
+   "historico": "11x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "COZINHA",
+   "subfuncao": "Auxiliar",
+   "nome": "Voluntario 125",
+   "historico": "15x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "COZINHA",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 035",
+   "historico": "1x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "COZINHA",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 018",
+   "historico": "6x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Lateral Altar",
+   "nome": "Voluntario 020",
+   "historico": "71x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Frente",
+   "nome": "Voluntario 102",
+   "historico": "80x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Frente",
+   "nome": "Voluntario 009",
+   "historico": "78x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Meio",
+   "nome": "Voluntario 052",
+   "historico": "17x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Meio",
+   "nome": "Voluntario 098",
+   "historico": "17x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Fundo",
+   "nome": "Voluntario 123",
+   "historico": "32x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "ESTACIONAMENTO",
+   "subfuncao": "",
+   "nome": "Voluntario 059",
+   "historico": "3x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "ESTACIONAMENTO",
+   "subfuncao": "",
+   "nome": "Voluntario 008",
+   "historico": "4x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Maior",
+   "nome": "Voluntario 062",
+   "historico": "48x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Menor",
+   "nome": "Voluntario 032",
+   "historico": "16x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Menor",
+   "nome": "Voluntario 110",
+   "historico": "14x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 046",
+   "historico": "12x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "ATALAIAS",
+   "subfuncao": "Frente da igreja",
+   "nome": "Voluntario 071",
+   "historico": "12x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "ATALAIAS",
+   "subfuncao": "Corredor Externo, kids e lanchonete",
+   "nome": "Voluntario 115",
+   "historico": "2x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "ATALAIAS",
+   "subfuncao": "Corredor Interno / Banheiros",
+   "nome": "Voluntario 094",
+   "historico": "1x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Maquina de Cartao",
+   "nome": "Voluntario 088",
+   "historico": "7x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Maquina de Cartao",
+   "nome": "Voluntario 086",
+   "historico": "23x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 048",
+   "historico": "14x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 081",
+   "historico": "5x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 049",
+   "historico": "28x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-09-27",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 074",
+   "historico": "6x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "AUXILIO PASTORAL",
+   "subfuncao": "",
+   "nome": "Voluntario 117",
+   "historico": "5x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "AUXILIO PASTORAL",
+   "subfuncao": "",
+   "nome": "Voluntario 121",
+   "historico": "5x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "COORDENACAO DO CULTO",
+   "subfuncao": "",
+   "nome": "Voluntario 105",
+   "historico": "97x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "ATALAIAS",
+   "subfuncao": "Servindo o altar",
+   "nome": "Voluntario 108",
+   "historico": "30x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "COZINHA",
+   "subfuncao": "Cozinheiro",
+   "nome": "Voluntario 026",
+   "historico": "26x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "MESA DA COMUNHAO",
+   "subfuncao": "",
+   "nome": "Voluntario 124",
+   "historico": "4x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "MESA DA COMUNHAO",
+   "subfuncao": "",
+   "nome": "Voluntario 022",
+   "historico": "4x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "CAFETERIA",
+   "subfuncao": "",
+   "nome": "Voluntario 042",
+   "historico": "11x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "CAFETERIA",
+   "subfuncao": "",
+   "nome": "Voluntario 072",
+   "historico": "11x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "COZINHA",
+   "subfuncao": "Auxiliar",
+   "nome": "Voluntario 125",
+   "historico": "15x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "COZINHA",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 035",
+   "historico": "1x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "COZINHA",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 018",
+   "historico": "6x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Lateral Altar",
+   "nome": "Voluntario 020",
+   "historico": "71x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Frente",
+   "nome": "Voluntario 102",
+   "historico": "80x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Frente",
+   "nome": "Voluntario 009",
+   "historico": "78x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Meio",
+   "nome": "Voluntario 052",
+   "historico": "17x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Meio",
+   "nome": "Voluntario 098",
+   "historico": "17x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Fundo",
+   "nome": "Voluntario 123",
+   "historico": "32x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "ESTACIONAMENTO",
+   "subfuncao": "",
+   "nome": "Voluntario 094",
+   "historico": "19x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "ESTACIONAMENTO",
+   "subfuncao": "",
+   "nome": "Voluntario 071",
+   "historico": "3x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Maior",
+   "nome": "Voluntario 062",
+   "historico": "48x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Menor",
+   "nome": "Voluntario 110",
+   "historico": "14x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Menor",
+   "nome": "Voluntario 032",
+   "historico": "16x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 046",
+   "historico": "12x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "ATALAIAS",
+   "subfuncao": "Frente da igreja",
+   "nome": "Voluntario 115",
+   "historico": "2x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "ATALAIAS",
+   "subfuncao": "Corredor Externo, kids e lanchonete",
+   "nome": "Voluntario 096",
+   "historico": "4x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "ATALAIAS",
+   "subfuncao": "Corredor Interno / Banheiros",
+   "nome": "Voluntario 104",
+   "historico": "15x no setor",
+   "obs": "repetido-sem-folga"
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Maquina de Cartao",
+   "nome": "Voluntario 086",
+   "historico": "23x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Maquina de Cartao",
+   "nome": "Voluntario 048",
+   "historico": "14x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 049",
+   "historico": "28x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 074",
+   "historico": "6x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-01",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 081",
+   "historico": "5x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "AUXILIO PASTORAL",
+   "subfuncao": "",
+   "nome": "Voluntario 001",
+   "historico": "18x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "AUXILIO PASTORAL",
+   "subfuncao": "",
+   "nome": "Voluntario 019",
+   "historico": "18x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "COORDENACAO DO CULTO",
+   "subfuncao": "",
+   "nome": "Voluntario 045",
+   "historico": "18x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "ATALAIAS",
+   "subfuncao": "Servindo o altar",
+   "nome": "Voluntario 005",
+   "historico": "7x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "COZINHA",
+   "subfuncao": "Cozinheiro",
+   "nome": "Voluntario 060",
+   "historico": "11x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "MESA DA COMUNHAO",
+   "subfuncao": "",
+   "nome": "Voluntario 054",
+   "historico": "2x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "MESA DA COMUNHAO",
+   "subfuncao": "",
+   "nome": "Voluntario 095",
+   "historico": "2x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "CAFETERIA",
+   "subfuncao": "",
+   "nome": "Voluntario 107",
+   "historico": "20x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "CAFETERIA",
+   "subfuncao": "",
+   "nome": "Voluntario 112",
+   "historico": "17x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "COZINHA",
+   "subfuncao": "Auxiliar",
+   "nome": "Voluntario 097",
+   "historico": "48x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "COZINHA",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 100",
+   "historico": "2x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "COZINHA",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 041",
+   "historico": "2x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Lateral Altar",
+   "nome": "Voluntario 021",
+   "historico": "65x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Frente",
+   "nome": "Voluntario 043",
+   "historico": "70x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Frente",
+   "nome": "Voluntario 044",
+   "historico": "64x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Meio",
+   "nome": "Voluntario 038",
+   "historico": "75x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Meio",
+   "nome": "Voluntario 004",
+   "historico": "21x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Fundo",
+   "nome": "Voluntario 111",
+   "historico": "16x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "ESTACIONAMENTO",
+   "subfuncao": "",
+   "nome": "Voluntario 058",
+   "historico": "6x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "ESTACIONAMENTO",
+   "subfuncao": "",
+   "nome": "Voluntario 104",
+   "historico": "6x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Maior",
+   "nome": "Voluntario 118",
+   "historico": "36x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Menor",
+   "nome": "Voluntario 051",
+   "historico": "8x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Menor",
+   "nome": "Voluntario 013",
+   "historico": "25x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 082",
+   "historico": "10x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "ATALAIAS",
+   "subfuncao": "Frente da igreja",
+   "nome": "Voluntario 122",
+   "historico": "8x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "ATALAIAS",
+   "subfuncao": "Corredor Externo, kids e lanchonete",
+   "nome": "Voluntario 007",
+   "historico": "8x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "ATALAIAS",
+   "subfuncao": "Corredor Interno / Banheiros",
+   "nome": "Voluntario 066",
+   "historico": "37x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Maquina de Cartao",
+   "nome": "Voluntario 057",
+   "historico": "4x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Maquina de Cartao",
+   "nome": "Voluntario 090",
+   "historico": "7x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 089",
+   "historico": "9x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 073",
+   "historico": "14x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 063",
+   "historico": "7x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-04",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 075",
+   "historico": "8x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "AUXILIO PASTORAL",
+   "subfuncao": "",
+   "nome": "Voluntario 001",
+   "historico": "18x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "AUXILIO PASTORAL",
+   "subfuncao": "",
+   "nome": "Voluntario 019",
+   "historico": "18x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "COORDENACAO DO CULTO",
+   "subfuncao": "",
+   "nome": "Voluntario 045",
+   "historico": "18x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "ATALAIAS",
+   "subfuncao": "Servindo o altar",
+   "nome": "Voluntario 005",
+   "historico": "7x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "COZINHA",
+   "subfuncao": "Cozinheiro",
+   "nome": "Voluntario 060",
+   "historico": "11x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "MESA DA COMUNHAO",
+   "subfuncao": "",
+   "nome": "Voluntario 054",
+   "historico": "2x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "MESA DA COMUNHAO",
+   "subfuncao": "",
+   "nome": "Voluntario 095",
+   "historico": "2x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "CAFETERIA",
+   "subfuncao": "",
+   "nome": "Voluntario 107",
+   "historico": "20x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "CAFETERIA",
+   "subfuncao": "",
+   "nome": "Voluntario 112",
+   "historico": "17x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "COZINHA",
+   "subfuncao": "Auxiliar",
+   "nome": "Voluntario 097",
+   "historico": "48x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "COZINHA",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 100",
+   "historico": "2x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "COZINHA",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 041",
+   "historico": "2x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Lateral Altar",
+   "nome": "Voluntario 021",
+   "historico": "65x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Frente",
+   "nome": "Voluntario 043",
+   "historico": "70x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Frente",
+   "nome": "Voluntario 044",
+   "historico": "64x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Meio",
+   "nome": "Voluntario 038",
+   "historico": "75x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Meio",
+   "nome": "Voluntario 004",
+   "historico": "21x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Fundo",
+   "nome": "Voluntario 111",
+   "historico": "16x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "ESTACIONAMENTO",
+   "subfuncao": "",
+   "nome": "Voluntario 058",
+   "historico": "6x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "ESTACIONAMENTO",
+   "subfuncao": "",
+   "nome": "Voluntario 104",
+   "historico": "6x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Maior",
+   "nome": "Voluntario 118",
+   "historico": "36x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Menor",
+   "nome": "Voluntario 051",
+   "historico": "8x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Menor",
+   "nome": "Voluntario 013",
+   "historico": "25x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 082",
+   "historico": "10x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "ATALAIAS",
+   "subfuncao": "Frente da igreja",
+   "nome": "Voluntario 122",
+   "historico": "8x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "ATALAIAS",
+   "subfuncao": "Corredor Externo, kids e lanchonete",
+   "nome": "Voluntario 007",
+   "historico": "8x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "ATALAIAS",
+   "subfuncao": "Corredor Interno / Banheiros",
+   "nome": "Voluntario 066",
+   "historico": "37x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Maquina de Cartao",
+   "nome": "Voluntario 057",
+   "historico": "4x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Maquina de Cartao",
+   "nome": "Voluntario 090",
+   "historico": "7x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 089",
+   "historico": "9x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 073",
+   "historico": "14x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-08",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 063",
+   "historico": "7x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "AUXILIO PASTORAL",
+   "subfuncao": "",
+   "nome": "Voluntario 117",
+   "historico": "5x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "AUXILIO PASTORAL",
+   "subfuncao": "",
+   "nome": "Voluntario 121",
+   "historico": "5x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "COORDENACAO DO CULTO",
+   "subfuncao": "",
+   "nome": "Voluntario 105",
+   "historico": "97x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "ATALAIAS",
+   "subfuncao": "Servindo o altar",
+   "nome": "Voluntario 108",
+   "historico": "30x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "COZINHA",
+   "subfuncao": "Cozinheiro",
+   "nome": "Voluntario 026",
+   "historico": "26x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "MESA DA COMUNHAO",
+   "subfuncao": "",
+   "nome": "Voluntario 025",
+   "historico": "2x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "MESA DA COMUNHAO",
+   "subfuncao": "",
+   "nome": "Voluntario 075",
+   "historico": "4x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "CAFETERIA",
+   "subfuncao": "",
+   "nome": "Voluntario 072",
+   "historico": "11x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "CAFETERIA",
+   "subfuncao": "",
+   "nome": "Voluntario 042",
+   "historico": "11x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "COZINHA",
+   "subfuncao": "Auxiliar",
+   "nome": "Voluntario 094",
+   "historico": "14x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "COZINHA",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 059",
+   "historico": "3x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "COZINHA",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 018",
+   "historico": "6x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Lateral Altar",
+   "nome": "Voluntario 020",
+   "historico": "71x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Frente",
+   "nome": "Voluntario 102",
+   "historico": "80x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Frente",
+   "nome": "Voluntario 009",
+   "historico": "78x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Meio",
+   "nome": "Voluntario 052",
+   "historico": "17x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Meio",
+   "nome": "Voluntario 098",
+   "historico": "17x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Fundo",
+   "nome": "Voluntario 123",
+   "historico": "32x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "ESTACIONAMENTO",
+   "subfuncao": "",
+   "nome": "Voluntario 008",
+   "historico": "4x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "ESTACIONAMENTO",
+   "subfuncao": "",
+   "nome": "Voluntario 115",
+   "historico": "5x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Maior",
+   "nome": "Voluntario 083",
+   "historico": "50x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Menor",
+   "nome": "Voluntario 046",
+   "historico": "12x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Menor",
+   "nome": "Voluntario 032",
+   "historico": "16x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 110",
+   "historico": "14x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "ATALAIAS",
+   "subfuncao": "Frente da igreja",
+   "nome": "Voluntario 080",
+   "historico": "6x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "ATALAIAS",
+   "subfuncao": "Corredor Externo, kids e lanchonete",
+   "nome": "Voluntario 071",
+   "historico": "12x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "ATALAIAS",
+   "subfuncao": "Corredor Interno / Banheiros",
+   "nome": "Voluntario 125",
+   "historico": "15x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Maquina de Cartao",
+   "nome": "Voluntario 126",
+   "historico": "10x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Maquina de Cartao",
+   "nome": "Voluntario 088",
+   "historico": "7x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 048",
+   "historico": "14x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 086",
+   "historico": "23x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 081",
+   "historico": "5x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-11",
+   "dia_semana": "DOMINGO",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 074",
+   "historico": "6x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "AUXILIO PASTORAL",
+   "subfuncao": "",
+   "nome": "Voluntario 117",
+   "historico": "5x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "AUXILIO PASTORAL",
+   "subfuncao": "",
+   "nome": "Voluntario 121",
+   "historico": "5x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "COORDENACAO DO CULTO",
+   "subfuncao": "",
+   "nome": "Voluntario 105",
+   "historico": "97x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "ATALAIAS",
+   "subfuncao": "Servindo o altar",
+   "nome": "Voluntario 108",
+   "historico": "30x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "COZINHA",
+   "subfuncao": "Cozinheiro",
+   "nome": "Voluntario 026",
+   "historico": "26x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "MESA DA COMUNHAO",
+   "subfuncao": "",
+   "nome": "Voluntario 025",
+   "historico": "2x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "MESA DA COMUNHAO",
+   "subfuncao": "",
+   "nome": "Voluntario 075",
+   "historico": "4x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "CAFETERIA",
+   "subfuncao": "",
+   "nome": "Voluntario 072",
+   "historico": "11x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "CAFETERIA",
+   "subfuncao": "",
+   "nome": "Voluntario 042",
+   "historico": "11x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "COZINHA",
+   "subfuncao": "Auxiliar",
+   "nome": "Voluntario 094",
+   "historico": "14x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "COZINHA",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 018",
+   "historico": "6x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "COZINHA",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 125",
+   "historico": "15x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Lateral Altar",
+   "nome": "Voluntario 020",
+   "historico": "71x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Frente",
+   "nome": "Voluntario 102",
+   "historico": "80x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Frente",
+   "nome": "Voluntario 009",
+   "historico": "78x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Meio",
+   "nome": "Voluntario 052",
+   "historico": "17x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Meio",
+   "nome": "Voluntario 098",
+   "historico": "17x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "INTERCESSAO",
+   "subfuncao": "Fundo",
+   "nome": "Voluntario 123",
+   "historico": "32x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "ESTACIONAMENTO",
+   "subfuncao": "",
+   "nome": "Voluntario 115",
+   "historico": "5x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "ESTACIONAMENTO",
+   "subfuncao": "",
+   "nome": "Voluntario 081",
+   "historico": "14x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Maior",
+   "nome": "Voluntario 083",
+   "historico": "50x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Menor",
+   "nome": "Voluntario 032",
+   "historico": "16x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Sala Menor",
+   "nome": "Voluntario 046",
+   "historico": "12x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "CULTO KIDS",
+   "subfuncao": "Apoio",
+   "nome": "Voluntario 110",
+   "historico": "14x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "ATALAIAS",
+   "subfuncao": "Frente da igreja",
+   "nome": "Voluntario 080",
+   "historico": "6x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "ATALAIAS",
+   "subfuncao": "Corredor Externo, kids e lanchonete",
+   "nome": "Voluntario 071",
+   "historico": "12x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "ATALAIAS",
+   "subfuncao": "Corredor Interno / Banheiros",
+   "nome": "Voluntario 035",
+   "historico": "9x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Maquina de Cartao",
+   "nome": "Voluntario 064",
+   "historico": "3x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Maquina de Cartao",
+   "nome": "Voluntario 062",
+   "historico": "3x no setor",
+   "obs": "casal"
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 048",
+   "historico": "14x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 086",
+   "historico": "23x no setor",
+   "obs": ""
+  },
+  {
+   "data": "2026-10-15",
+   "dia_semana": "QUINTA",
+   "setor": "BOAS VINDAS",
+   "subfuncao": "Recepcao",
+   "nome": "Voluntario 074",
+   "historico": "6x no setor",
+   "obs": ""
+  }
+ ],
+ "faltas": []
+}
