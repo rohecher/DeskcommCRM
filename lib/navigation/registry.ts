@@ -52,7 +52,8 @@ import {
  * Doutrina: docs/doctrine/sistema-vivo.md — "por qual porta se chega até mim?"
  */
 
-export type NavGroupId = "atendimento" | "crm" | "ia" | "canais" | "analise" | "organizacao";
+export type NavGroupId =
+  "atendimento" | "escalas" | "crm" | "ia" | "canais" | "analise" | "organizacao";
 
 export interface NavGroup {
   id: NavGroupId;
@@ -97,6 +98,15 @@ export interface NavDestination {
  */
 export const NAV_GROUPS: NavGroup[] = [
   { id: "atendimento", label: "Atendimento" },
+  // Escalas vem antes de CRM porque, nesta igreja, é o que se abre toda semana:
+  // a escala do culto de quinta e de domingo. O CRM é o acompanhamento de quem
+  // visita, que se olha em outro ritmo.
+  //
+  // SEM HUB, apesar de ter cinco telas. A regra acima é "hub só onde o grupo
+  // passa de 4", e cinco é justamente o limite: um hub aqui seria uma sexta tela
+  // existindo só para intermediar as cinco, e a porta principal (`/app/escalas`)
+  // já é a lista de cultos — a tela que responde a pergunta do dia.
+  { id: "escalas", label: "Escalas" },
   { id: "crm", label: "CRM" },
   { id: "ia", label: "Agente de IA", hub: { href: "/app/ai", label: "Ver tudo em IA" } },
   { id: "canais", label: "Canais" },
@@ -159,6 +169,58 @@ export const NAV_DESTINATIONS: NavDestination[] = [
     description: "Scripts salvos para responder mais rápido, seus ou da equipe.",
     icon: FileText,
     group: "atendimento",
+    sidebar: true,
+  },
+
+  // ---- Escalas — os Filhos que Servem ----
+  //
+  // `minRole` por tela, e não um só para o grupo: a escala do culto é para todo
+  // mundo ver (é ela que vai virar link público), mas o cadastro traz telefone e
+  // o motivo de alguém estar suspenso, e a cobertura mostra quem deixou de
+  // servir. Essas três são conversa de liderança, não mural.
+  {
+    href: "/app/escalas",
+    label: "Escalas",
+    description: "Os cultos e quem está escalado em cada setor, com as vagas que faltam.",
+    icon: ClipboardText,
+    group: "escalas",
+    sidebar: true,
+  },
+  {
+    href: "/app/escalas/voluntarios",
+    label: "Filhos que Servem",
+    description:
+      "O cadastro: status, departamento, cônjuge, liderança e há quanto tempo não serve.",
+    icon: UsersThree,
+    group: "escalas",
+    minRole: "manager",
+    sidebar: true,
+  },
+  {
+    href: "/app/escalas/cobertura",
+    label: "Cobertura",
+    description: "Quantas vezes cada um serviu por mês — e quem está ativo e ficou de fora.",
+    icon: ChartBar,
+    group: "escalas",
+    minRole: "manager",
+    sidebar: true,
+  },
+  {
+    href: "/app/escalas/setores",
+    label: "Setores",
+    description: "A estrutura do culto: subfunções, quantas pessoas e a regra de cada vaga.",
+    icon: Signpost,
+    group: "escalas",
+    minRole: "manager",
+    sidebar: true,
+  },
+  {
+    href: "/app/escalas/regras",
+    label: "Regras do motor",
+    description: "Os pesos que decidem quem é escalado, e o que cada um faz na prática.",
+    icon: ScalesSimple,
+    group: "escalas",
+    minRole: "manager",
     sidebar: true,
   },
 
