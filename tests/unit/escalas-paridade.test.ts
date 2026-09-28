@@ -120,6 +120,31 @@ describe("motor de escalas — paridade com o motor Python", () => {
     expect(gerar().map(linha)).toEqual(obtido.map(linha));
   });
 
+  it("a ordem do histórico muda a escala — por isso a 0148 guarda `ordem`", () => {
+    // Esta é a medida que justifica a coluna `escala_historico.ordem`, e ela está
+    // aqui para ninguém "simplificar" o `order by` do repo achando que ordem de
+    // leitura é detalhe de apresentação.
+    //
+    // `construirPerfis` insere as pessoas na ordem em que o histórico as
+    // apresenta, e o motor percorre os candidatos nessa ordem com ordenação
+    // ESTÁVEL: empate de nota sai na ordem de inserção. Invertendo o histórico, as
+    // MESMAS pessoas continuam escaladas (o conjunto por vaga não muda), mas a
+    // ordem dentro da vaga muda — e com ela qual linha recebe a marca "casal".
+    const invertido: DadosJson = { ...dados, historico: [...dados.historico].reverse() };
+    const m = montarMotor(regras, invertido, esperado.datas, esperado.hoje);
+    const outra = gerarLote(esperado.datas, m.entrada, m.estado).flatMap((c) => c.escala);
+
+    expect(outra.map(linha)).not.toEqual(obtido.map(linha));
+
+    // A medida que motivou a 0148 foi feita contra a ordenação REAL do `select`
+    // (cronológica), não contra esta inversão: ali as pessoas escaladas eram as
+    // mesmas em todas as 210 vagas e só a posição dentro da vaga mudava, em 56
+    // das 324 linhas. A inversão total é mais brutal e chega a trocar quem serve
+    // — ela serve para afirmar o mínimo com certeza: a ordem de leitura do
+    // histórico É insumo do resultado. Quem quiser o número exato roda
+    // `tests/prova-escalas-repo.ts`, que compara banco contra planilha.
+  });
+
   it("respeita o setor desligado no culto (17/09 sem Auxílio Pastoral)", () => {
     // Âncora de uma regra específica que a liderança ensinou pelo nome: "esqueci
     // que não vai ter cozinha e mesa dia 17/09" e o Auxílio Pastoral daquela

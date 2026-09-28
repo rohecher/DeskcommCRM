@@ -677,9 +677,13 @@ async function importar() {
   );
   const LOTE = 500; // 4.970 linhas numa tacada só estoura o limite do PostgREST
   for (let i = 0; i < dados.historico.length; i += LOTE) {
-    const lote = dados.historico.slice(i, i + LOTE).map((h) => ({
+    const lote = dados.historico.slice(i, i + LOTE).map((h, j) => ({
       organization_id: orgId,
       voluntario_id: voluntarios.get(h.nome)!,
+      // Posição na planilha (migration 0148). O motor usa a ordem de leitura do
+      // histórico como desempate entre candidatos de nota igual, então perder
+      // esta informação muda a ordem dos nomes numa escala já divulgada.
+      ordem: i + j,
       ano: h.ano,
       mes: h.mes,
       dia: h.dia,
