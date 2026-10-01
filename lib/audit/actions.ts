@@ -236,4 +236,6 @@ export type AuditAction =
   // de código próprio para não somar duas grandezas no mesmo relatório.
   | "followup.scheduled"
   | "followup.cancelled"
-  | "lead.reactivation_proposed";
+  | "lead.reactivation_proposed"
+  // Escalas (Cajado): a liderança trocou à mão quem está numa vaga do culto.
+  | "escala.vaga_alterada";

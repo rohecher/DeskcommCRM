@@ -252,6 +252,8 @@ export async function escalaDoCulto(
 }
 
 export interface VagaDoMes extends VagaNaTela {
+  /** Id do slot — é o que a janela de edição recebe. */
+  id: string;
   /** Ordem do SETOR na estrutura — a tabela do mês alinha as linhas por ela. */
   setorPosicao: number;
 }
@@ -298,6 +300,7 @@ export async function escalaDoMes(
   const ids = cultos.map((c) => c.id);
   const [slots, offs] = await Promise.all([
     todas<{
+      id: string;
       culto_id: string;
       posicao: number;
       origem: string;
@@ -311,12 +314,15 @@ export async function escalaDoMes(
         db
           .from("escala_slots")
           .select(
-            "culto_id, posicao, origem, motivo, voluntario_id, escala_setores!inner(nome, posicao), escala_subfuncoes(nome), escala_voluntarios(nome)",
+            "id, culto_id, posicao, origem, motivo, voluntario_id, escala_setores!inner(nome, posicao), escala_subfuncoes(nome), escala_voluntarios(nome)",
           )
           .eq("organization_id", organizationId)
           .in("culto_id", ids)
           .order("culto_id")
           .order("posicao")
+          // Desempate estável: sem ele, duas vagas com a mesma posição podem
+          // trocar de página entre requisições e uma delas sumir da tela.
+          .order("id")
           .range(de, ate),
       "slots do mes",
     ),
@@ -343,6 +349,7 @@ export async function escalaDoMes(
       if (!setor) continue;
       const g = grupos.get(setor.nome) ?? { off: null, posicao: setor.posicao, vagas: [] };
       g.vagas.push({
+        id: s.id,
         setor: setor.nome,
         setorPosicao: setor.posicao,
         subfuncao: um(s.escala_subfuncoes)?.nome ?? "",

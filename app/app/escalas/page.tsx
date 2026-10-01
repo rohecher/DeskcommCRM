@@ -1,3 +1,4 @@
+import { ROLE_RANK } from "@/lib/auth/types";
 import { escalaDoMes } from "@/lib/escalas/consultas";
 import { hojeIso, mesValido, nomeDoMes } from "@/lib/escalas/mes";
 
@@ -29,8 +30,11 @@ export default async function EscalasPage({
   const mes = mesValido(pedido) ? pedido : mesAtual;
   const vista: Vista = params.vista === "tabela" ? "tabela" : "cards";
 
-  const { db, orgId } = await contextoDeEscala();
+  const { db, orgId, user, activeOrg } = await contextoDeEscala();
   const cultos = await escalaDoMes(db, orgId, mes);
+  // Mesma régua da ação que grava (`_acoes.ts`): a tela só oferece o clique a
+  // quem o servidor aceitaria. Esconder o botão é conforto; a regra é lá.
+  const podeEditar = user.is_platform_admin || ROLE_RANK[activeOrg.role] >= ROLE_RANK.manager;
 
   const soCultos = cultos.filter((c) => c.tipo === "culto");
   const resumo = {
@@ -52,7 +56,7 @@ export default async function EscalasPage({
       ) : (
         <div className="grid items-start gap-5 xl:grid-cols-2">
           {cultos.map((c) => (
-            <CartaoDoCulto key={c.culto.id} item={c} hoje={hoje} />
+            <CartaoDoCulto key={c.culto.id} item={c} hoje={hoje} podeEditar={podeEditar} />
           ))}
         </div>
       )}

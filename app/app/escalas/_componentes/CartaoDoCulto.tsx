@@ -6,6 +6,8 @@ import { nomeDoCulto } from "@/lib/escalas/mes";
 import { ArrowRight } from "@/lib/ui/icons";
 import { cn } from "@/lib/utils";
 
+import { VagaEditavel } from "./VagaEditavel";
+
 const DIA_CURTO: Record<string, string> = {
   DOMINGO: "DOM",
   SEGUNDA: "SEG",
@@ -70,7 +72,16 @@ function Vaga({ vaga, rotulo }: { vaga: VagaDoMes; rotulo: string | null }) {
  * única coisa sobre a qual alguém precisa agir. A barra de progresso responde
  * "esse culto está pronto?" sem precisar contar nomes.
  */
-export function CartaoDoCulto({ item, hoje }: { item: CultoDoMes; hoje: string }) {
+export function CartaoDoCulto({
+  item,
+  hoje,
+  podeEditar,
+}: {
+  item: CultoDoMes;
+  hoje: string;
+  /** Líder de Ministério para cima: a vaga vira botão que abre a edição. */
+  podeEditar: boolean;
+}) {
   const { culto, tipo, porSetor } = item;
   const escalados = culto.vagas - culto.abertas;
   const pct = culto.vagas > 0 ? Math.round((escalados / culto.vagas) * 100) : 0;
@@ -149,9 +160,22 @@ export function CartaoDoCulto({ item, hoje }: { item: CultoDoMes; hoje: string }
             </h3>
             {vagas.length > 0 && (
               <div className="grid gap-2 sm:grid-cols-2 2xl:grid-cols-3">
-                {vagas.map((v, i) => (
-                  <Vaga key={`${v.subfuncao}-${v.posicao}-${i}`} vaga={v} rotulo={v.subfuncao ? bonito(v.subfuncao) : null} />
-                ))}
+                {vagas.map((v) => {
+                  const caixa = <Vaga vaga={v} rotulo={v.subfuncao ? bonito(v.subfuncao) : null} />;
+                  // Vaga do louvor não se edita aqui: a escala dele vem do próprio
+                  // ministério, e trocar o nome no Cajado criaria duas verdades.
+                  if (!podeEditar || v.origem === "externo") return <div key={v.id}>{caixa}</div>;
+                  return (
+                    <VagaEditavel
+                      key={v.id}
+                      slotId={v.id}
+                      culto={`${nomeDoCulto(culto.diaSemana, tipo)} · ${dataDoCulto(culto.data, culto.diaSemana, culto.hora)}`}
+                      funcao={v.subfuncao ? `${bonito(v.subfuncao)} (${bonito(setor)})` : bonito(setor)}
+                    >
+                      {caixa}
+                    </VagaEditavel>
+                  );
+                })}
               </div>
             )}
           </section>

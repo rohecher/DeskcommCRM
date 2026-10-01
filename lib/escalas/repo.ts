@@ -125,7 +125,7 @@ function ok<T>(r: { data: T | null; error: { message: string } | null }, onde: s
 }
 
 /** `escala_config` (chave → jsonb) por cima dos padrões. */
-function montarConfig(linhas: { chave: string; valor: unknown }[]): Config {
+export function montarConfig(linhas: { chave: string; valor: unknown }[]): Config {
   const c: Config = { ...CONFIG_PADRAO };
   const num = (v: unknown, atual: number) => (typeof v === "number" ? v : atual);
   for (const { chave: k, valor } of linhas) {
