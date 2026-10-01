@@ -63,3 +63,33 @@ jobs:
           cache-to: type=gha,mode=max
           # Sem build-args de segredo: a imagem é genérica (NEXT_PUBLIC_* viram
           # placeholder; valores reais entram em runtime no VPS do usuário).
+
+      # Deploy no Dokploy DEPOIS que a imagem existe — e não pelo webhook de push
+      # do Dokploy. O webhook dispara no instante do push, ~6min antes de esta
+      # imagem ficar pronta: o Dokploy puxaria a `:cajado` ANTERIOR e o deploy
+      # apareceria como sucesso sem mudar nada. Chamar daqui é a única ordem certa.
+      #
+      # Só a `cajado` vai para a produção. Sem os três segredos o passo avisa e
+      # sai limpo: o build continua valendo e o deploy segue possível na mão.
+      - name: Deploy no Dokploy (produção)
+        if: github.ref == 'refs/heads/cajado'
+        env:
+          DOKPLOY_URL: ${{ secrets.DOKPLOY_URL }}
+          DOKPLOY_API_KEY: ${{ secrets.DOKPLOY_API_KEY }}
+          DOKPLOY_COMPOSE_ID: ${{ secrets.DOKPLOY_COMPOSE_ID }}
+        run: |
+          if [ -z "$DOKPLOY_URL" ] || [ -z "$DOKPLOY_API_KEY" ] || [ -z "$DOKPLOY_COMPOSE_ID" ]; then
+            echo "::notice::Deploy automático desligado: faltam DOKPLOY_URL, DOKPLOY_API_KEY ou DOKPLOY_COMPOSE_ID nos segredos do repositório."
+            exit 0
+          fi
+          status=$(curl -sS -o resposta.json -w '%{http_code}' -X POST \
+            "${DOKPLOY_URL%/}/api/compose.deploy" \
+            -H "x-api-key: $DOKPLOY_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d "{\"composeId\":\"$DOKPLOY_COMPOSE_ID\",\"title\":\"GitHub Actions ${GITHUB_SHA::7}\"}")
+          echo "Dokploy respondeu HTTP $status"
+          if [ "$status" -lt 200 ] || [ "$status" -ge 300 ]; then
+            cat resposta.json
+            echo "::error::O Dokploy recusou o deploy (HTTP $status). A imagem foi publicada; faça o deploy pelo painel."
+            exit 1
+          fi
