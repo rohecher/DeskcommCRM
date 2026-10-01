@@ -112,4 +112,8 @@ export {
   Key,
   UserCircle,
   ClockCounterClockwise,
+  // escalas (tela mensal)
+  CalendarBlank,
+  SquaresFour,
+  Table,
 } from "@phosphor-icons/react/dist/ssr";

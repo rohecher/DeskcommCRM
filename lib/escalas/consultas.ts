@@ -13,6 +13,8 @@
  */
 import type { SupabaseClient } from "@supabase/supabase-js";
 
+import { hojeIso, limitesDoMes, tipoDoCulto, type Mes, type TipoDeCulto } from "./mes";
+
 /** Lança em erro do PostgREST — tela que erra em silêncio mostra dado incompleto. */
 function ok<T>(r: { data: T | null; error: { message: string } | null }, onde: string): T {
   if (r.error) throw new Error(`escalas/consultas ${onde}: ${r.error.message}`);
@@ -34,6 +36,30 @@ function um<T>(v: T | T[] | null | undefined): T | null {
 
 /** Relação embutida como o supabase-js a tipa sem schema. */
 type Embutido<T> = T | T[] | null;
+
+/**
+ * Lê TODAS as linhas, de 1.000 em 1.000.
+ *
+ * O PostgREST do Supabase devolve no máximo 1.000 linhas por requisição, sem
+ * erro nenhum: a resposta só vem cortada. O histórico tem mais de 5.000
+ * registros, e lê-lo numa chamada só fazia a tela de voluntários contar uma
+ * fração dele — "última vez: out/2025" para quem serviu na semana passada.
+ */
+async function todas<T>(
+  pagina: (
+    de: number,
+    ate: number,
+  ) => PromiseLike<{ data: unknown; error: { message: string } | null }>,
+  onde: string,
+): Promise<T[]> {
+  const TAM = 1000;
+  const linhas: T[] = [];
+  for (let de = 0; ; de += TAM) {
+    const lote = ok(await pagina(de, de + TAM - 1), onde) as T[];
+    linhas.push(...lote);
+    if (lote.length < TAM) return linhas;
+  }
+}
 
 export interface CultoResumo {
   id: string;
@@ -225,6 +251,144 @@ export async function escalaDoCulto(
   };
 }
 
+export interface VagaDoMes extends VagaNaTela {
+  /** Ordem do SETOR na estrutura — a tabela do mês alinha as linhas por ela. */
+  setorPosicao: number;
+}
+
+export interface CultoDoMes {
+  culto: CultoResumo;
+  tipo: TipoDeCulto;
+  /** Setor → vagas, na ordem da estrutura. Setor desligado vem com `off`. */
+  porSetor: { setor: string; off: string | null; vagas: VagaDoMes[] }[];
+}
+
+/**
+ * Os cultos de um mês, em ORDEM DE DATA, já com as vagas.
+ *
+ * É a leitura da tela mensal: cards e tabela saem da mesma resposta. Três
+ * requisições no total, não uma por culto — um mês tem de 8 a 13 encontros, e
+ * abrir um por um deixaria a tela esperando em série.
+ */
+export async function escalaDoMes(
+  db: SupabaseClient,
+  organizationId: string,
+  mes: Mes,
+): Promise<CultoDoMes[]> {
+  const { inicio, fim } = limitesDoMes(mes);
+  const cultos = ok(
+    await db
+      .from("escala_cultos")
+      .select("id, data, dia_semana, hora, rodada_data, status")
+      .eq("organization_id", organizationId)
+      .gte("data", inicio)
+      .lte("data", fim)
+      .order("data", { ascending: true }),
+    "cultos do mes",
+  ) as {
+    id: string;
+    data: string;
+    dia_semana: string;
+    hora: string | null;
+    rodada_data: string;
+    status: string;
+  }[];
+  if (cultos.length === 0) return [];
+
+  const ids = cultos.map((c) => c.id);
+  const [slots, offs] = await Promise.all([
+    todas<{
+      culto_id: string;
+      posicao: number;
+      origem: string;
+      motivo: string;
+      voluntario_id: string | null;
+      escala_setores: Embutido<{ nome: string; posicao: number }>;
+      escala_subfuncoes: Embutido<{ nome: string }>;
+      escala_voluntarios: Embutido<{ nome: string }>;
+    }>(
+      (de, ate) =>
+        db
+          .from("escala_slots")
+          .select(
+            "culto_id, posicao, origem, motivo, voluntario_id, escala_setores!inner(nome, posicao), escala_subfuncoes(nome), escala_voluntarios(nome)",
+          )
+          .eq("organization_id", organizationId)
+          .in("culto_id", ids)
+          .order("culto_id")
+          .order("posicao")
+          .range(de, ate),
+      "slots do mes",
+    ),
+    todas<{ culto_id: string; motivo: string; escala_setores: Embutido<{ nome: string; posicao: number }> }>(
+      (de, ate) =>
+        db
+          .from("escala_setor_off")
+          .select("culto_id, motivo, escala_setores!inner(nome, posicao)")
+          .eq("organization_id", organizationId)
+          .in("culto_id", ids)
+          .order("culto_id")
+          .range(de, ate),
+      "off do mes",
+    ),
+  ]);
+
+  return cultos.map((c) => {
+    const meus = slots.filter((s) => s.culto_id === c.id);
+    const meusOff = offs.filter((o) => o.culto_id === c.id);
+
+    const grupos = new Map<string, { off: string | null; posicao: number; vagas: VagaDoMes[] }>();
+    for (const s of meus) {
+      const setor = um(s.escala_setores);
+      if (!setor) continue;
+      const g = grupos.get(setor.nome) ?? { off: null, posicao: setor.posicao, vagas: [] };
+      g.vagas.push({
+        setor: setor.nome,
+        setorPosicao: setor.posicao,
+        subfuncao: um(s.escala_subfuncoes)?.nome ?? "",
+        nome: um(s.escala_voluntarios)?.nome ?? null,
+        origem: s.origem,
+        motivo: s.motivo,
+        posicao: s.posicao,
+      });
+      grupos.set(setor.nome, g);
+    }
+    // Setor desligado aparece mesmo sem vaga: a equipe dele precisa ler que não
+    // é escala dela, e não concluir que foi esquecida.
+    for (const o of meusOff) {
+      const setor = um(o.escala_setores);
+      if (!setor) continue;
+      const g = grupos.get(setor.nome) ?? { off: null, posicao: setor.posicao, vagas: [] };
+      g.off = o.motivo;
+      grupos.set(setor.nome, g);
+    }
+
+    const porSetor = [...grupos.entries()]
+      .sort((a, b) => a[1].posicao - b[1].posicao || a[0].localeCompare(b[0], "pt-BR"))
+      .map(([setor, g]) => ({
+        setor,
+        off: g.off,
+        vagas: g.vagas.sort((a, b) => a.posicao - b.posicao),
+      }));
+
+    return {
+      culto: {
+        id: c.id,
+        data: c.data,
+        diaSemana: c.dia_semana,
+        hora: c.hora,
+        rodadaData: c.rodada_data,
+        status: c.status,
+        vagas: meus.length,
+        abertas: meus.filter((s) => !s.voluntario_id).length,
+        setoresOff: meusOff.length,
+      },
+      tipo: tipoDoCulto(meus.map((s) => s.origem)),
+      porSetor,
+    };
+  });
+}
+
 export interface VoluntarioNaTela {
   id: string;
   nome: string;
@@ -257,7 +421,7 @@ export async function listarVoluntarios(
 ): Promise<VoluntarioNaTela[]> {
   // As quatro leituras em paralelo: `Promise.all` sobre as PROMESSAS, não sobre
   // `ok(await …)` — aquilo resolveria uma a uma e o paralelismo seria decorativo.
-  const [rVols, rCasais, rLideres, rHist] = await Promise.all([
+  const [rVols, rCasais, rLideres, hist, servidos] = await Promise.all([
     db
       .from("escala_voluntarios")
       .select(
@@ -273,15 +437,35 @@ export async function listarVoluntarios(
       .from("escala_lideres")
       .select("voluntario_id, papel, escala_setores(nome)")
       .eq("organization_id", organizationId),
-    db
-      .from("escala_historico")
-      .select("voluntario_id, ano, mes")
-      .eq("organization_id", organizationId),
+    todas<{ voluntario_id: string; ano: number; mes: number }>(
+      (de, ate) =>
+        db
+          .from("escala_historico")
+          .select("voluntario_id, ano, mes")
+          .eq("organization_id", organizationId)
+          .order("id")
+          .range(de, ate),
+      "historico",
+    ),
+    // Os cultos do Cajado que já aconteceram também contam para a "última vez":
+    // quem serviu na semana passada precisa aparecer assim, e não pelo mês em que
+    // o histórico importado parou.
+    todas<{ voluntario_id: string; escala_cultos: Embutido<{ data: string }> }>(
+      (de, ate) =>
+        db
+          .from("escala_slots")
+          .select("voluntario_id, escala_cultos!inner(data)")
+          .eq("organization_id", organizationId)
+          .not("voluntario_id", "is", null)
+          .lte("escala_cultos.data", hojeIso())
+          .order("id")
+          .range(de, ate),
+      "slots servidos",
+    ),
   ]);
   const vols = ok(rVols, "voluntarios");
   const casais = ok(rCasais, "casais");
   const lideres = ok(rLideres, "lideres");
-  const hist = ok(rHist, "historico");
 
   const linhas = vols as {
     id: string;
@@ -321,11 +505,20 @@ export async function listarVoluntarios(
 
   const vezes = new Map<string, number>();
   const ultima = new Map<string, string>();
-  for (const h of hist as { voluntario_id: string; ano: number; mes: number }[]) {
+  const marcar = (id: string, comp: string) => {
+    const atual = ultima.get(id);
+    if (!atual || comp > atual) ultima.set(id, comp);
+  };
+  for (const h of hist) {
     vezes.set(h.voluntario_id, (vezes.get(h.voluntario_id) ?? 0) + 1);
-    const comp = `${h.ano}-${String(h.mes).padStart(2, "0")}`;
-    const atual = ultima.get(h.voluntario_id);
-    if (!atual || comp > atual) ultima.set(h.voluntario_id, comp);
+    marcar(h.voluntario_id, `${h.ano}-${String(h.mes).padStart(2, "0")}`);
+  }
+  // Dos cultos do Cajado sai só a "última vez". `vezes` segue sendo o histórico:
+  // as escalas importadas também estão nele, e somar as duas fontes contaria o
+  // mesmo culto duas vezes.
+  for (const s of servidos) {
+    const data = um(s.escala_cultos)?.data;
+    if (data) marcar(s.voluntario_id, data.slice(0, 7));
   }
 
   return linhas.map((v) => ({
@@ -546,22 +739,26 @@ export async function cobertura(
   organizationId: string,
   quantosMeses = 6,
 ): Promise<Cobertura> {
-  const [rVols, rHist] = await Promise.all([
+  const [rVols, registros] = await Promise.all([
     db
       .from("escala_voluntarios")
       .select("id, nome, status, departamento")
       .eq("organization_id", organizationId)
       .order("nome"),
-    db
-      .from("escala_historico")
-      .select("voluntario_id, ano, mes")
-      .eq("organization_id", organizationId),
+    todas<{ voluntario_id: string; ano: number; mes: number }>(
+      (de, ate) =>
+        db
+          .from("escala_historico")
+          .select("voluntario_id, ano, mes")
+          .eq("organization_id", organizationId)
+          .order("id")
+          .range(de, ate),
+      "historico",
+    ),
   ]);
   const vols = ok(rVols, "voluntarios");
-  const hist = ok(rHist, "historico");
 
   const linhasVol = vols as { id: string; nome: string; status: string; departamento: string }[];
-  const registros = hist as { voluntario_id: string; ano: number; mes: number }[];
 
   const comp = (r: { ano: number; mes: number }) => `${r.ano}-${String(r.mes).padStart(2, "0")}`;
   const todos = [...new Set(registros.map(comp))].sort().reverse();

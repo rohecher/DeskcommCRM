@@ -35,8 +35,11 @@ export default async function CultoPage({ params }: { params: Promise<{ data: st
   return (
     <div className="flex h-full flex-col gap-6 p-6">
       <header className="space-y-1">
-        <Link href="/app/escalas" className="text-sm text-muted-foreground hover:underline">
-          ← Escalas
+        <Link
+          href={`/app/escalas?mes=${culto.data.slice(0, 7)}#culto-${culto.data}`}
+          className="text-sm text-muted-foreground hover:underline"
+        >
+          ← Escala do mês
         </Link>
         <h1 className="text-2xl font-semibold tracking-tight">
           {tituloCulto(culto.data, culto.diaSemana, culto.hora)}
