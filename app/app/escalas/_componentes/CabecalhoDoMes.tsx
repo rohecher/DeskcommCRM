@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 import { mesAnterior, mesSeguinte, nomeDoMes, type Mes } from "@/lib/escalas/mes";
 import { ROTULO_DO_STATUS, STATUS_DA_VAGA } from "@/lib/escalas/status";
@@ -28,11 +29,14 @@ export function CabecalhoDoMes({
   mesAtual,
   vista,
   resumo,
+  acao,
 }: {
   mes: Mes;
   mesAtual: Mes;
   vista: Vista;
   resumo: { cultos: number; vagas: number; abertas: number };
+  /** "Montar escala" — só chega aqui para a liderança. */
+  acao?: ReactNode;
 }) {
   const escalados = resumo.vagas - resumo.abertas;
   return (
@@ -60,8 +64,10 @@ export function CabecalhoDoMes({
           )}
         </nav>
 
+        <div className="ml-auto flex items-center gap-2">
+        {acao}
         <div
-          className="ml-auto inline-flex rounded-lg border border-border bg-surface-elevated p-1"
+          className="inline-flex rounded-lg border border-border bg-surface-elevated p-1"
           role="group"
           aria-label="Como ver a escala"
         >
@@ -83,6 +89,7 @@ export function CabecalhoDoMes({
               <Icone size={14} aria-hidden /> {rotulo}
             </Link>
           ))}
+        </div>
         </div>
       </div>
 

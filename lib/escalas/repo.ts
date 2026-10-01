@@ -49,7 +49,7 @@ import type {
   Subfuncao,
 } from "./dominio";
 import { chave, norm } from "./normalizar";
-import { equipeDoSetorNoDomingo, equipesPorRodada, vagasDoDomingo } from "./rodada";
+import { dataDoRegistro, equipeDoSetorNoDomingo, equipesPorRodada, vagasDoDomingo } from "./rodada";
 
 /** Quantas linhas por página ao ler o histórico (o PostgREST limita a resposta). */
 const PAGINA = 1000;
@@ -411,20 +411,17 @@ export async function carregarMotor(
 
   // ── Cultos já registrados: escala externa, fixados, setores OFF e vetos ──
   const cultoRows = ok(
-    await db.from("escala_cultos").select("id, data").eq("organization_id", org),
+    await db.from("escala_cultos").select("id, data, dia_semana, status").eq("organization_id", org),
     "cultos",
-  ) as { id: string; data: string }[];
+  ) as { id: string; data: string; dia_semana: string; status: string }[];
   const dataDoCulto = new Map<string, string>(cultoRows.map((c) => [c.id, c.data]));
+  const diaDoCulto = new Map<string, string>(cultoRows.map((c) => [c.id, c.dia_semana]));
+  // Rascunho não aconteceu: não conta como quem serviu.
+  const rascunho = new Set(cultoRows.filter((c) => c.status === "rascunho").map((c) => c.id));
 
-  const slotRows = ok(
-    await db
-      .from("escala_slots")
-      .select("culto_id, setor_id, subfuncao_id, voluntario_id, origem, vetados, posicao")
-      .eq("organization_id", org)
-      .order("culto_id")
-      .order("posicao"),
-    "slots",
-  ) as {
+  // Paginado: o PostgREST corta em 1.000 linhas sem erro, e cada mês acrescenta
+  // umas 400 vagas. Sem o laço, o motor perderia cultos inteiros em silêncio.
+  const slotRows: {
     culto_id: string;
     setor_id: string;
     subfuncao_id: string | null;
@@ -432,7 +429,22 @@ export async function carregarMotor(
     origem: string;
     vetados: string[];
     posicao: number;
-  }[];
+  }[] = [];
+  for (let de = 0; ; de += PAGINA) {
+    const pagina = ok(
+      await db
+        .from("escala_slots")
+        .select("id, culto_id, setor_id, subfuncao_id, voluntario_id, origem, vetados, posicao")
+        .eq("organization_id", org)
+        .order("culto_id")
+        .order("posicao")
+        .order("id")
+        .range(de, de + PAGINA - 1),
+      "slots",
+    ) as typeof slotRows;
+    slotRows.push(...pagina);
+    if (pagina.length < PAGINA) break;
+  }
 
   const externa: RegistroExterno[] = [];
   const ocupados = new Map<string, Set<string>>();
@@ -465,6 +477,46 @@ export async function carregarMotor(
       set.add(vetado);
       rejeitados.set(k, set);
     }
+  }
+
+  // ── A escala do Cajado É histórico ───────────────────────────────────────
+  // Desde out/2026 a escala é feita no Cajado: troca à mão, vaga gerada e
+  // aprovada. O histórico importado da planilha não vê nada disso, e um motor
+  // que só lê a planilha esqueceria quem serviu no mês passado e repetiria a
+  // equipe. Para toda data que tem escala no Cajado, a escala do Cajado SUBSTITUI
+  // o histórico daquela data — substitui e não soma, senão quem foi trocado à
+  // mão contaria como se tivesse servido. As datas que estão sendo geradas agora
+  // ficam de fora: elas ainda não aconteceram.
+  //
+  // Efeito colateral aceito: a ordem desses registros deixa de ser a da planilha
+  // (0148), então o desempate entre notas iguais pode mudar para essas datas. A
+  // regra continua a mesma; só o histórico ficou fiel ao que de fato aconteceu.
+  {
+    const gerando = new Set(opcoes.datas);
+    const doCajado: RegistroHistorico[] = [];
+    const datasDoCajado = new Set<string>();
+    for (const s of slotRows) {
+      if (s.origem === "externo" || !s.voluntario_id || rascunho.has(s.culto_id)) continue;
+      const data = dataDoCulto.get(s.culto_id);
+      const setor = setorDoId.get(s.setor_id);
+      const nome = nomeDoId.get(s.voluntario_id);
+      if (!data || !setor || !nome || gerando.has(data)) continue;
+      datasDoCajado.add(data);
+      doCajado.push({
+        nome,
+        ano: Number(data.slice(0, 4)),
+        mes: Number(data.slice(5, 7)),
+        dia: Number(data.slice(8, 10)),
+        diaSemana: diaDoCulto.get(s.culto_id) ?? "",
+        setor: setor.nome,
+        subfuncao: s.subfuncao_id ? (subDoId.get(s.subfuncao_id)?.nome ?? "") : "",
+      });
+    }
+    const daPlanilha = historico.filter((r) => {
+      const d = dataDoRegistro(r);
+      return !d || !datasDoCajado.has(d);
+    });
+    historico.splice(0, historico.length, ...daPlanilha, ...doCajado);
   }
 
   const offRows = ok(

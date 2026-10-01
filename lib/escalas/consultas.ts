@@ -289,16 +289,19 @@ export async function escalaDoMes(
   db: SupabaseClient,
   organizationId: string,
   mes: Mes,
+  /** Rascunho do motor só aparece para a liderança — o resto vê só o publicado. */
+  incluirRascunho = false,
 ): Promise<CultoDoMes[]> {
   const { inicio, fim } = limitesDoMes(mes);
+  let consulta = db
+    .from("escala_cultos")
+    .select("id, data, dia_semana, hora, rodada_data, status")
+    .eq("organization_id", organizationId)
+    .gte("data", inicio)
+    .lte("data", fim);
+  if (!incluirRascunho) consulta = consulta.neq("status", "rascunho");
   const cultos = ok(
-    await db
-      .from("escala_cultos")
-      .select("id, data, dia_semana, hora, rodada_data, status")
-      .eq("organization_id", organizationId)
-      .gte("data", inicio)
-      .lte("data", fim)
-      .order("data", { ascending: true }),
+    await consulta.order("data", { ascending: true }),
     "cultos do mes",
   ) as {
     id: string;

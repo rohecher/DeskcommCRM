@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ROLE_RANK } from "@/lib/auth/types";
 import { escalaDoCulto } from "@/lib/escalas/consultas";
 import { bonito, dataBr, tituloCulto } from "@/lib/escalas/formato";
 
@@ -27,9 +28,12 @@ export default async function CultoPage({ params }: { params: Promise<{ data: st
   // Só data ISO: o parâmetro vem da URL e alimenta um filtro.
   if (!/^\d{4}-\d{2}-\d{2}$/.test(data)) notFound();
 
-  const { db, orgId } = await contextoDeEscala();
+  const { db, orgId, user, activeOrg } = await contextoDeEscala();
   const detalhe = await escalaDoCulto(db, orgId, data);
   if (!detalhe) notFound();
+  // Rascunho do motor é da liderança até ser publicado — nem pelo link direto.
+  const lideranca = user.is_platform_admin || ROLE_RANK[activeOrg.role] >= ROLE_RANK.manager;
+  if (detalhe.culto.status === "rascunho" && !lideranca) notFound();
 
   const { culto, porSetor } = detalhe;
 

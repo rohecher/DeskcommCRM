@@ -7,6 +7,14 @@ import { audit } from "@/lib/audit";
 import { loadAuthUser, resolveActiveOrg } from "@/lib/auth/server";
 import { ROLE_RANK } from "@/lib/auth/types";
 import { carregarVaga, marcarStatus, trocarVoluntario, type VagaParaEditar } from "@/lib/escalas/editar";
+import { hojeIso, mesValido } from "@/lib/escalas/mes";
+import {
+  descartarRascunho,
+  montarMes,
+  previaDoMes,
+  publicarMes,
+  type ResumoDaMontagem,
+} from "@/lib/escalas/montar";
 import { obsLimpa, statusValido } from "@/lib/escalas/status";
 import { createClient } from "@/lib/supabase/server";
 
@@ -101,4 +109,89 @@ export async function salvarStatus(slotId: string, status: string, obs: string):
 
   revalidatePath("/app/escalas", "layout");
   return { ok: true };
+}
+
+export type PreviaDaMontagem =
+  | { ok: true; datas: string[]; gerar: string[]; pulados: { data: string; motivo: string }[] }
+  | { ok: false; erro: string };
+
+/** O que "Montar escala" vai fazer neste mês, antes de fazer. */
+export async function previaDaMontagem(mes: string): Promise<PreviaDaMontagem> {
+  if (!mesValido(mes)) return { ok: false, erro: "invalid_request" };
+  const quem = await quemEdita();
+  if (!quem.ok) return { ok: false, erro: quem.erro };
+  const db = await createClient();
+  return { ok: true, ...(await previaDoMes(db, quem.org.orgId, mes, hojeIso())) };
+}
+
+export type ResultadoDaMontagem = { ok: true; resumo: ResumoDaMontagem } | { ok: false; erro: string };
+
+/** Chama o motor e grava o mês como rascunho. */
+export async function montarEscala(mes: string): Promise<ResultadoDaMontagem> {
+  if (!mesValido(mes)) return { ok: false, erro: "invalid_request" };
+  const quem = await quemEdita();
+  if (!quem.ok) return { ok: false, erro: quem.erro };
+  const db = await createClient();
+  const resumo = await montarMes(db, quem.org.orgId, mes, hojeIso());
+
+  const hdrs = await headers();
+  await audit({
+    action: "escala.mes_montado",
+    actorUserId: quem.user.id,
+    organizationId: quem.org.orgId,
+    resourceType: "escala_mes",
+    resourceId: mes,
+    requestId: hdrs.get("x-request-id"),
+    metadata: {
+      cultos: resumo.gerados.length,
+      vagas: resumo.gerados.reduce((n, g) => n + g.vagas, 0),
+      abertas: resumo.gerados.reduce((n, g) => n + g.abertas, 0),
+    },
+  });
+  revalidatePath("/app/escalas", "layout");
+  return { ok: true, resumo };
+}
+
+export type ResultadoDoMes = { ok: true; cultos: number } | { ok: false; erro: string };
+
+/** O rascunho do mês vira a escala oficial. */
+export async function publicarEscala(mes: string): Promise<ResultadoDoMes> {
+  if (!mesValido(mes)) return { ok: false, erro: "invalid_request" };
+  const quem = await quemEdita();
+  if (!quem.ok) return { ok: false, erro: quem.erro };
+  const db = await createClient();
+  const cultos = await publicarMes(db, quem.org.orgId, mes);
+  const hdrs = await headers();
+  await audit({
+    action: "escala.mes_publicado",
+    actorUserId: quem.user.id,
+    organizationId: quem.org.orgId,
+    resourceType: "escala_mes",
+    resourceId: mes,
+    requestId: hdrs.get("x-request-id"),
+    metadata: { cultos },
+  });
+  revalidatePath("/app/escalas", "layout");
+  return { ok: true, cultos };
+}
+
+/** Joga fora o rascunho do mês (o publicado não é tocado). */
+export async function descartarEscala(mes: string): Promise<ResultadoDoMes> {
+  if (!mesValido(mes)) return { ok: false, erro: "invalid_request" };
+  const quem = await quemEdita();
+  if (!quem.ok) return { ok: false, erro: quem.erro };
+  const db = await createClient();
+  const cultos = await descartarRascunho(db, quem.org.orgId, mes);
+  const hdrs = await headers();
+  await audit({
+    action: "escala.rascunho_descartado",
+    actorUserId: quem.user.id,
+    organizationId: quem.org.orgId,
+    resourceType: "escala_mes",
+    resourceId: mes,
+    requestId: hdrs.get("x-request-id"),
+    metadata: { cultos },
+  });
+  revalidatePath("/app/escalas", "layout");
+  return { ok: true, cultos };
 }

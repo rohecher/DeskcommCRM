@@ -70,6 +70,21 @@ export function diaBonito(dia: string): string {
   return DIA_BONITO[dia] ?? dia;
 }
 
+const DIA_CURTO: Record<string, string> = {
+  DOMINGO: "DOM",
+  SEGUNDA: "SEG",
+  TERCA: "TER",
+  QUARTA: "QUA",
+  QUINTA: "QUI",
+  SEXTA: "SEX",
+  SABADO: "SÁB",
+};
+
+/** "QUINTA" → "QUI", como a liderança escreve a data na escala: "01/10 (QUI)". */
+export function diaCurto(dia: string): string {
+  return DIA_CURTO[dia] ?? dia;
+}
+
 /**
  * `2026-09-20` → `20/09/2026`.
  *

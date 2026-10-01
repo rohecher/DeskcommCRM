@@ -240,4 +240,8 @@ export type AuditAction =
   // Escalas (Cajado): a liderança trocou à mão quem está numa vaga do culto.
   | "escala.vaga_alterada"
   // ...e marcou o status dela (confirmado, pediu troca, presente, faltou).
-  | "escala.vaga_status_alterado";
+  | "escala.vaga_status_alterado"
+  // "Montar escala": o motor gerou o rascunho do mês, a liderança publicou ou descartou.
+  | "escala.mes_montado"
+  | "escala.mes_publicado"
+  | "escala.rascunho_descartado";

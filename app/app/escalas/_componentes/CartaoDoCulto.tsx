@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import type { CultoDoMes, VagaDoMes } from "@/lib/escalas/consultas";
-import { bonito, diaMes } from "@/lib/escalas/formato";
+import { bonito, diaCurto, diaMes } from "@/lib/escalas/formato";
 import { nomeDoCulto } from "@/lib/escalas/mes";
 import { ArrowRight } from "@/lib/ui/icons";
 import { cn } from "@/lib/utils";
@@ -9,20 +9,9 @@ import { cn } from "@/lib/utils";
 import { IconeDoStatus } from "./IconeDoStatus";
 import { VagaEditavel } from "./VagaEditavel";
 
-const DIA_CURTO: Record<string, string> = {
-  DOMINGO: "DOM",
-  SEGUNDA: "SEG",
-  TERCA: "TER",
-  QUARTA: "QUA",
-  QUINTA: "QUI",
-  SEXTA: "SEX",
-  SABADO: "SÁB",
-};
-
 /** "01/10 (QUI) · 19:20" — como a liderança escreve a data na escala. */
 export function dataDoCulto(data: string, diaSemana: string, hora: string | null): string {
-  const dia = DIA_CURTO[diaSemana] ?? diaSemana;
-  return `${diaMes(data)} (${dia})${hora ? ` · ${hora.slice(0, 5)}` : ""}`;
+  return `${diaMes(data)} (${diaCurto(diaSemana)})${hora ? ` · ${hora.slice(0, 5)}` : ""}`;
 }
 
 /** Marca colorida da vaga: a mesma cor da legenda do cabeçalho. */
@@ -107,6 +96,7 @@ export function CartaoDoCulto({
       className={cn(
         "flex flex-col rounded-xl border bg-surface shadow-xs",
         ehHoje ? "border-accent ring-1 ring-accent/40" : "border-border",
+        culto.status === "rascunho" && "border-dashed border-info-fg/60",
         passou && !ehHoje && "opacity-75",
       )}
     >
@@ -118,6 +108,9 @@ export function CartaoDoCulto({
               <span className="ml-2 rounded bg-accent px-1.5 py-0.5 text-[10px] text-accent-foreground">
                 HOJE
               </span>
+            )}
+            {culto.status === "rascunho" && (
+              <span className="ml-2 rounded bg-info-bg px-1.5 py-0.5 text-[10px] text-info-fg">RASCUNHO</span>
             )}
           </p>
           <h2 className="text-lg font-semibold">{dataDoCulto(culto.data, culto.diaSemana, culto.hora)}</h2>

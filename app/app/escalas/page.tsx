@@ -4,6 +4,7 @@ import { hojeIso, mesValido, nomeDoMes } from "@/lib/escalas/mes";
 
 import { CabecalhoDoMes, type Vista } from "./_componentes/CabecalhoDoMes";
 import { CartaoDoCulto } from "./_componentes/CartaoDoCulto";
+import { AvisoDeRascunho, BotaoMontarEscala } from "./_componentes/MontarEscala";
 import { TabelaDoMes } from "./_componentes/TabelaDoMes";
 import { contextoDeEscala } from "./_lib/contexto";
 
@@ -31,10 +32,11 @@ export default async function EscalasPage({
   const vista: Vista = params.vista === "tabela" ? "tabela" : "cards";
 
   const { db, orgId, user, activeOrg } = await contextoDeEscala();
-  const cultos = await escalaDoMes(db, orgId, mes);
   // Mesma régua da ação que grava (`_acoes.ts`): a tela só oferece o clique a
   // quem o servidor aceitaria. Esconder o botão é conforto; a regra é lá.
   const podeEditar = user.is_platform_admin || ROLE_RANK[activeOrg.role] >= ROLE_RANK.manager;
+  const cultos = await escalaDoMes(db, orgId, mes, podeEditar);
+  const rascunhos = cultos.filter((c) => c.culto.status === "rascunho").length;
 
   const soCultos = cultos.filter((c) => c.tipo === "culto");
   const resumo = {
@@ -45,7 +47,14 @@ export default async function EscalasPage({
 
   return (
     <div className="flex h-full flex-col gap-5 p-4 sm:p-6">
-      <CabecalhoDoMes mes={mes} mesAtual={mesAtual} vista={vista} resumo={resumo} />
+      <CabecalhoDoMes
+        mes={mes}
+        mesAtual={mesAtual}
+        vista={vista}
+        resumo={resumo}
+        acao={podeEditar ? <BotaoMontarEscala mes={mes} nomeDoMes={nomeDoMes(mes)} /> : null}
+      />
+      {podeEditar && rascunhos > 0 && <AvisoDeRascunho mes={mes} cultos={rascunhos} />}
 
       {cultos.length === 0 ? (
         <div className="rounded-xl border border-dashed border-border bg-surface py-12 text-center text-sm text-text-muted">

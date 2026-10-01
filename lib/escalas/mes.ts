@@ -11,6 +11,7 @@
  * vira 30/09 às 21h no Brasil. Uma escala mostrada no dia errado é pior que
  * nenhuma.
  */
+import { DIA_SEMANA } from "./dominio";
 import { diaBonito } from "./formato";
 
 /** `2026-10`. */
@@ -27,6 +28,13 @@ export function hojeIso(agora: Date = new Date()): string {
     month: "2-digit",
     day: "2-digit",
   }).format(agora);
+}
+
+/** O dia da semana de uma data ISO, no vocabulário do motor ("DOMINGO"). */
+export function diaDaSemanaIso(dataIso: string): string {
+  // getUTCDay: 0 = domingo. DIA_SEMANA começa na segunda, como no Python.
+  const d = new Date(`${dataIso}T00:00:00Z`).getUTCDay();
+  return DIA_SEMANA[(d + 6) % 7]!;
 }
 
 export function mesValido(texto: string | null | undefined): texto is Mes {
