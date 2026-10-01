@@ -6,6 +6,7 @@ import { nomeDoCulto } from "@/lib/escalas/mes";
 import { ArrowRight } from "@/lib/ui/icons";
 import { cn } from "@/lib/utils";
 
+import { IconeDoStatus } from "./IconeDoStatus";
 import { VagaEditavel } from "./VagaEditavel";
 
 const DIA_CURTO: Record<string, string> = {
@@ -54,13 +55,24 @@ function Vaga({ vaga, rotulo }: { vaga: VagaDoMes; rotulo: string | null }) {
       </div>
     );
   }
+  // Pediu troca é a vaga que precisa de gente: borda laranja e o motivo à vista.
+  const troca = vaga.status === "troca_solicitada";
   return (
-    <div className="flex items-start gap-2 rounded-lg border border-border bg-surface-elevated px-3 py-2">
+    <div
+      className={cn(
+        "flex items-start gap-2 rounded-lg border px-3 py-2",
+        troca ? "border-warning-fg/60 bg-warning-bg/30" : "border-border bg-surface-elevated",
+      )}
+    >
       <span className={cn("mt-1.5 size-2 shrink-0 rounded-full", corDaOrigem(vaga.origem))} aria-hidden />
-      <div className="min-w-0">
+      <div className="min-w-0 flex-1">
         {legenda}
-        <p className="break-words text-sm font-medium leading-snug">{vaga.nome}</p>
+        <p className={cn("break-words text-sm font-medium leading-snug", vaga.status === "faltou" && "line-through decoration-error-fg/60")}>
+          {vaga.nome}
+        </p>
+        {troca && vaga.statusObs && <p className="text-xs leading-snug text-warning-fg">{vaga.statusObs}</p>}
       </div>
+      {vaga.origem !== "externo" && <IconeDoStatus status={vaga.status} className="mt-0.5" />}
     </div>
   );
 }
@@ -110,7 +122,7 @@ export function CartaoDoCulto({
           </p>
           <h2 className="text-lg font-semibold">{dataDoCulto(culto.data, culto.diaSemana, culto.hora)}</h2>
           {!oracao && (
-            <div className="mt-2 flex items-center gap-3">
+            <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5">
               <div
                 className="h-1.5 w-28 overflow-hidden rounded-full bg-surface-elevated"
                 role="progressbar"
@@ -134,6 +146,17 @@ export function CartaoDoCulto({
               ) : (
                 <span className="rounded-full bg-success-bg px-2 py-0.5 text-xs font-medium text-success-fg">
                   completo
+                </span>
+              )}
+              {item.confirmados > 0 && (
+                <span className="inline-flex items-center gap-1 text-xs text-success-fg">
+                  <IconeDoStatus status="confirmado" size={12} /> {item.confirmados} confirmados
+                </span>
+              )}
+              {item.trocas > 0 && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-warning-bg px-2 py-0.5 text-xs font-medium text-warning-fg">
+                  <IconeDoStatus status="troca_solicitada" size={12} />
+                  {item.trocas} {item.trocas === 1 ? "pediu troca" : "pediram troca"}
                 </span>
               )}
             </div>

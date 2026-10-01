@@ -15,7 +15,9 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { RegraVoluntario } from "./dominio";
 import { bonito } from "./formato";
 import { norm } from "./normalizar";
+import { hojeIso } from "./mes";
 import { montarConfig } from "./repo";
+import { motivoParaNaoMarcar, statusPermitidos, type StatusDaVaga } from "./status";
 import { candidatosDaVaga, type CandidatosDaVaga } from "./vaga";
 
 function ok<T>(r: { data: T | null; error: { message: string } | null }, onde: string): T {
@@ -38,6 +40,10 @@ export interface VagaParaEditar {
   setor: string;
   subfuncao: string;
   origem: string;
+  status: StatusDaVaga;
+  statusObs: string;
+  /** O que a janela oferece em "Marcar como", pela data do culto. */
+  statusPermitidos: StatusDaVaga[];
   atual: { id: string; nome: string } | null;
   /** Vaga do louvor/mídia/dança: a escala vem do próprio departamento. */
   externa: boolean;
@@ -51,6 +57,8 @@ interface LinhaSlot {
   subfuncao_id: string | null;
   voluntario_id: string | null;
   origem: string;
+  status: StatusDaVaga;
+  status_obs: string;
   escala_setores: Embutido<{ nome: string; dupla_decente: boolean; externo: boolean }>;
   escala_subfuncoes: Embutido<{ nome: string; dupla_decente: boolean; time_fixo: string[] | null }>;
   escala_voluntarios: Embutido<{ nome: string }>;
@@ -71,7 +79,7 @@ export async function carregarVaga(
     await db
       .from("escala_slots")
       .select(
-        "id, culto_id, setor_id, subfuncao_id, voluntario_id, origem, escala_setores!inner(nome, dupla_decente, externo), escala_subfuncoes(nome, dupla_decente, time_fixo), escala_voluntarios(nome)",
+        "id, culto_id, setor_id, subfuncao_id, voluntario_id, origem, status, status_obs, escala_setores!inner(nome, dupla_decente, externo), escala_subfuncoes(nome, dupla_decente, time_fixo), escala_voluntarios(nome)",
       )
       .eq("organization_id", organizationId)
       .eq("id", slotId)
@@ -230,6 +238,9 @@ export async function carregarVaga(
     setor: setor.nome,
     subfuncao: sub?.nome ?? "",
     origem: slot.origem,
+    status: slot.status,
+    statusObs: slot.status_obs,
+    statusPermitidos: statusPermitidos(culto.data, hojeIso(), Boolean(slot.voluntario_id)),
     atual: slot.voluntario_id && atualNome ? { id: slot.voluntario_id, nome: atualNome } : null,
     externa: setor.externo || slot.origem === "externo",
     candidatos,
@@ -305,10 +316,74 @@ export async function trocarVoluntario(
 
   const { error } = await db
     .from("escala_slots")
-    .update({ voluntario_id: voluntarioId, origem: "manual", updated_at: new Date().toISOString() })
+    // O status volta a "escalado": a confirmação (ou o pedido de troca) era da
+    // pessoa anterior, e herdá-lo diria "confirmado" de quem nem foi avisado.
+    .update({
+      voluntario_id: voluntarioId,
+      origem: "manual",
+      status: "escalado",
+      status_em: new Date().toISOString(),
+      status_obs: "",
+      updated_at: new Date().toISOString(),
+    })
     .eq("organization_id", organizationId)
     .eq("id", slotId);
   if (error) throw new Error(`escalas/editar gravar: ${error.message}`);
 
   return { ok: true, antes: vaga.atual?.id ?? null, depois: voluntarioId };
+}
+
+export type ResultadoDoStatus =
+  | { ok: true; antes: StatusDaVaga }
+  | { ok: false; erro: "nao_encontrada" | "vaga_externa" | "nao_pode"; motivo?: string };
+
+/**
+ * Marca o status da vaga: confirmado, pediu troca, presente, faltou — ou volta a
+ * escalado. A regra de calendário (`status.ts`) é conferida AQUI, no servidor; a
+ * janela só esconde o botão que não vale.
+ */
+export async function marcarStatus(
+  db: SupabaseClient,
+  organizationId: string,
+  slotId: string,
+  status: StatusDaVaga,
+  obs: string,
+): Promise<ResultadoDoStatus> {
+  const slot = (
+    await db
+      .from("escala_slots")
+      .select("id, voluntario_id, origem, status, escala_cultos!inner(data), escala_setores!inner(externo)")
+      .eq("organization_id", organizationId)
+      .eq("id", slotId)
+      .maybeSingle()
+  ).data as {
+    id: string;
+    voluntario_id: string | null;
+    origem: string;
+    status: StatusDaVaga;
+    escala_cultos: Embutido<{ data: string }>;
+    escala_setores: Embutido<{ externo: boolean }>;
+  } | null;
+  if (!slot) return { ok: false, erro: "nao_encontrada" };
+  const data = um(slot.escala_cultos)?.data;
+  if (!data) return { ok: false, erro: "nao_encontrada" };
+  if (slot.origem === "externo" || um(slot.escala_setores)?.externo) return { ok: false, erro: "vaga_externa" };
+
+  const motivo = motivoParaNaoMarcar(status, data, hojeIso(), Boolean(slot.voluntario_id));
+  if (motivo) return { ok: false, erro: "nao_pode", motivo };
+
+  const { error } = await db
+    .from("escala_slots")
+    .update({
+      status,
+      status_em: new Date().toISOString(),
+      // Só a troca guarda motivo; os outros status limpam o texto antigo para
+      // não ficar um "viagem a trabalho" pendurado numa vaga confirmada.
+      status_obs: status === "troca_solicitada" ? obs : "",
+      updated_at: new Date().toISOString(),
+    })
+    .eq("organization_id", organizationId)
+    .eq("id", slotId);
+  if (error) throw new Error(`escalas/editar status: ${error.message}`);
+  return { ok: true, antes: slot.status };
 }

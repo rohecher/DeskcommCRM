@@ -15,10 +15,12 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import type { VagaParaEditar } from "@/lib/escalas/editar";
+import { ROTULO_DO_STATUS, type StatusDaVaga } from "@/lib/escalas/status";
 import type { Candidato } from "@/lib/escalas/vaga";
 import { cn } from "@/lib/utils";
 
-import { opcoesDaVaga, salvarVaga } from "../_acoes";
+import { opcoesDaVaga, salvarStatus, salvarVaga } from "../_acoes";
+import { IconeDoStatus } from "./IconeDoStatus";
 
 const ERROS: Record<string, string> = {
   forbidden_role: "Só a liderança pode trocar nomes na escala.",
@@ -93,6 +95,8 @@ export function VagaEditavel({
   const [erro, setErro] = useState<string | null>(null);
   const [busca, setBusca] = useState("");
   const [escolhido, setEscolhido] = useState<string | null>(null);
+  const [pedindoTroca, setPedindoTroca] = useState(false);
+  const [motivoTroca, setMotivoTroca] = useState("");
   const [carregando, iniciarCarga] = useTransition();
   const [salvando, iniciarSalvar] = useTransition();
 
@@ -102,6 +106,8 @@ export function VagaEditavel({
     setErro(null);
     setBusca("");
     setEscolhido(null);
+    setPedindoTroca(false);
+    setMotivoTroca("");
     iniciarCarga(async () => {
       const r = await opcoesDaVaga(slotId);
       if (r.ok) setVaga(r.vaga);
@@ -123,6 +129,19 @@ export function VagaEditavel({
         return;
       }
       toast.success(voluntarioId ? "Escala atualizada." : "Vaga deixada em aberto.");
+      setAberta(false);
+      router.refresh();
+    });
+  }
+
+  function gravarStatus(status: StatusDaVaga, obs: string) {
+    iniciarSalvar(async () => {
+      const r = await salvarStatus(slotId, status, obs);
+      if (!r.ok) {
+        toast.error(r.motivo ? `Não dá: ${r.motivo}.` : (ERROS[r.erro] ?? "Não deu para salvar. Tente de novo."));
+        return;
+      }
+      toast.success(`Marcado como ${ROTULO_DO_STATUS[status].toLocaleLowerCase("pt-BR")}.`);
       setAberta(false);
       router.refresh();
     });
@@ -160,6 +179,54 @@ export function VagaEditavel({
               <Button variant="ghost" size="sm" disabled={salvando} onClick={() => gravar(null)}>
                 Deixar vaga aberta
               </Button>
+            </div>
+          )}
+
+          {/* "Marcar como": só os status que valem para a data deste culto
+              (confirmar é antes, presença é no dia ou depois). */}
+          {vaga?.atual && vaga.statusPermitidos.length > 1 && (
+            <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-wide text-text-muted">Marcar como</p>
+              <div className="flex flex-wrap gap-2">
+                {vaga.statusPermitidos.map((s) => {
+                  const atual = vaga.status === s;
+                  return (
+                    <button
+                      key={s}
+                      type="button"
+                      disabled={salvando || atual}
+                      aria-pressed={atual}
+                      onClick={() => (s === "troca_solicitada" ? setPedindoTroca(true) : gravarStatus(s, ""))}
+                      className={cn(
+                        "inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs transition-colors",
+                        atual
+                          ? "border-accent bg-accent-soft text-text"
+                          : "border-border text-text-muted hover:border-accent hover:text-text",
+                      )}
+                    >
+                      <IconeDoStatus status={s} size={12} /> {ROTULO_DO_STATUS[s]}
+                    </button>
+                  );
+                })}
+              </div>
+              {vaga.status === "troca_solicitada" && vaga.statusObs && !pedindoTroca && (
+                <p className="text-xs text-warning-fg">Motivo da troca: {vaga.statusObs}</p>
+              )}
+              {pedindoTroca && (
+                <div className="flex gap-2">
+                  <Input
+                    autoFocus
+                    placeholder="Motivo (opcional) — ex.: viagem a trabalho"
+                    value={motivoTroca}
+                    maxLength={200}
+                    onChange={(e) => setMotivoTroca(e.target.value)}
+                    aria-label="Motivo do pedido de troca"
+                  />
+                  <Button size="sm" disabled={salvando} onClick={() => gravarStatus("troca_solicitada", motivoTroca)}>
+                    Registrar
+                  </Button>
+                </div>
+              )}
             </div>
           )}
 

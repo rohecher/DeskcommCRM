@@ -6,6 +6,7 @@ import { chavesDoCulto, linhasDaTabela, nomeDoCulto } from "@/lib/escalas/mes";
 import { cn } from "@/lib/utils";
 
 import { dataDoCulto } from "./CartaoDoCulto";
+import { IconeDoStatus } from "./IconeDoStatus";
 
 /**
  * O mês inteiro numa grade: uma coluna por culto, uma linha por função.
@@ -89,12 +90,18 @@ export function TabelaDoMes({ cultos, hoje }: { cultos: CultoDoMes[]; hoje: stri
                           vaga.nome ? (
                             <span
                               className={cn(
+                                "inline-flex items-center gap-1",
                                 vaga.origem === "fixado" && "text-info-fg",
                                 vaga.origem === "manual" && "text-warning-fg",
                                 vaga.origem === "externo" && "text-text-muted",
                               )}
+                              title={vaga.status === "troca_solicitada" && vaga.statusObs ? vaga.statusObs : undefined}
                             >
                               {vaga.nome}
+                              {/* Escalado é o normal: só os outros quatro ganham ícone na grade. */}
+                              {vaga.origem !== "externo" && vaga.status !== "escalado" && (
+                                <IconeDoStatus status={vaga.status} size={12} />
+                              )}
                             </span>
                           ) : (
                             <span className="italic text-warning-fg">vaga aberta</span>

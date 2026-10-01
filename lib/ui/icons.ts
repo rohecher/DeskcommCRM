@@ -116,4 +116,7 @@ export {
   CalendarBlank,
   SquaresFour,
   Table,
+  // escalas (status da vaga)
+  ThumbsUp,
+  XCircle,
 } from "@phosphor-icons/react/dist/ssr";

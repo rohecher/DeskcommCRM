@@ -6,7 +6,8 @@ import { headers } from "next/headers";
 import { audit } from "@/lib/audit";
 import { loadAuthUser, resolveActiveOrg } from "@/lib/auth/server";
 import { ROLE_RANK } from "@/lib/auth/types";
-import { carregarVaga, trocarVoluntario, type VagaParaEditar } from "@/lib/escalas/editar";
+import { carregarVaga, marcarStatus, trocarVoluntario, type VagaParaEditar } from "@/lib/escalas/editar";
+import { obsLimpa, statusValido } from "@/lib/escalas/status";
 import { createClient } from "@/lib/supabase/server";
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -67,6 +68,35 @@ export async function salvarVaga(slotId: string, voluntarioId: string | null): P
     requestId: hdrs.get("x-request-id"),
     // Ids, não nomes: o log de auditoria guarda por anos e não é lugar de dado pessoal.
     metadata: { voluntario_antes: r.antes, voluntario_depois: r.depois },
+  });
+
+  revalidatePath("/app/escalas", "layout");
+  return { ok: true };
+}
+
+/** Marca o status da vaga. A regra de calendário é conferida em `marcarStatus`. */
+export async function salvarStatus(slotId: string, status: string, obs: string): Promise<ResultadoDeSalvar> {
+  if (typeof slotId !== "string" || !UUID.test(slotId) || !statusValido(status)) {
+    return { ok: false, erro: "invalid_request" };
+  }
+  const quem = await quemEdita();
+  if (!quem.ok) return { ok: false, erro: quem.erro };
+
+  const db = await createClient();
+  const r = await marcarStatus(db, quem.org.orgId, slotId, status, obsLimpa(obs));
+  if (!r.ok) return { ok: false, erro: r.erro, motivo: r.motivo };
+
+  const hdrs = await headers();
+  await audit({
+    action: "escala.vaga_status_alterado",
+    actorUserId: quem.user.id,
+    organizationId: quem.org.orgId,
+    resourceType: "escala_slot",
+    resourceId: slotId,
+    requestId: hdrs.get("x-request-id"),
+    // A observação fica na vaga, não aqui: pode trazer motivo pessoal ("cirurgia
+    // da mãe"), e o log de auditoria guarda por anos.
+    metadata: { status_antes: r.antes, status_depois: status },
   });
 
   revalidatePath("/app/escalas", "layout");

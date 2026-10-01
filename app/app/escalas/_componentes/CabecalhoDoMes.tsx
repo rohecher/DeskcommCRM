@@ -1,8 +1,11 @@
 import Link from "next/link";
 
 import { mesAnterior, mesSeguinte, nomeDoMes, type Mes } from "@/lib/escalas/mes";
+import { ROTULO_DO_STATUS, STATUS_DA_VAGA } from "@/lib/escalas/status";
 import { CalendarBlank, CaretLeft, CaretRight, SquaresFour, Table } from "@/lib/ui/icons";
 import { cn } from "@/lib/utils";
+
+import { IconeDoStatus } from "./IconeDoStatus";
 
 export type Vista = "cards" | "tabela";
 
@@ -85,20 +88,28 @@ export function CabecalhoDoMes({
 
       <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-border pt-3 text-xs text-text-muted">
         <span className="font-medium uppercase tracking-wide">Legenda</span>
-        <span className="inline-flex items-center gap-1.5">
-          <span className="size-2.5 rounded-sm bg-accent" aria-hidden /> Escalado
-        </span>
+        {STATUS_DA_VAGA.map((s) => (
+          <span key={s} className="inline-flex items-center gap-1.5">
+            <IconeDoStatus status={s} /> {ROTULO_DO_STATUS[s]}
+          </span>
+        ))}
         <span className="inline-flex items-center gap-1.5">
           <span className="size-2.5 rounded-sm border border-dashed border-warning-fg" aria-hidden /> Vaga aberta
         </span>
-        <span className="inline-flex items-center gap-1.5">
-          <span className="size-2.5 rounded-sm bg-info-fg" aria-hidden /> Fixado pela liderança
-        </span>
-        <span className="inline-flex items-center gap-1.5">
-          <span className="size-2.5 rounded-sm bg-warning-fg" aria-hidden /> Trocado à mão
-        </span>
-        <span className="inline-flex items-center gap-1.5">
-          <span className="size-2.5 rounded-sm bg-text-muted" aria-hidden /> Escala do louvor
+        {/* A cor do ponto diz de ONDE veio o nome, não o status dele. */}
+        <span className="inline-flex items-center gap-3 border-l border-border pl-4">
+          <span className="inline-flex items-center gap-1.5">
+            <span className="size-2 rounded-full bg-accent" aria-hidden /> Motor
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="size-2 rounded-full bg-info-fg" aria-hidden /> Fixado
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="size-2 rounded-full bg-warning-fg" aria-hidden /> Trocado à mão
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="size-2 rounded-full bg-text-muted" aria-hidden /> Louvor
+          </span>
         </span>
         {resumo.cultos > 0 && (
           <span className="ml-auto">

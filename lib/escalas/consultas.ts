@@ -14,6 +14,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 import { hojeIso, limitesDoMes, tipoDoCulto, type Mes, type TipoDeCulto } from "./mes";
+import type { StatusDaVaga } from "./status";
 
 /** Lança em erro do PostgREST — tela que erra em silêncio mostra dado incompleto. */
 function ok<T>(r: { data: T | null; error: { message: string } | null }, onde: string): T {
@@ -143,6 +144,10 @@ export interface VagaNaTela {
   nome: string | null;
   origem: string;
   motivo: string;
+  /** escalado | confirmado | troca_solicitada | presente | faltou (migration 0149). */
+  status: StatusDaVaga;
+  /** O motivo de quem pediu troca, por exemplo. */
+  statusObs: string;
   posicao: number;
 }
 
@@ -179,7 +184,7 @@ export async function escalaDoCulto(
     await db
       .from("escala_slots")
       .select(
-        "posicao, origem, motivo, voluntario_id, escala_setores!inner(nome, posicao), escala_subfuncoes(nome), escala_voluntarios(nome)",
+        "posicao, origem, motivo, status, status_obs, voluntario_id, escala_setores!inner(nome, posicao), escala_subfuncoes(nome), escala_voluntarios(nome)",
       )
       .eq("organization_id", organizationId)
       .eq("culto_id", culto.id)
@@ -189,6 +194,8 @@ export async function escalaDoCulto(
     posicao: number;
     origem: string;
     motivo: string;
+    status: StatusDaVaga;
+    status_obs: string;
     voluntario_id: string | null;
     escala_setores: Embutido<{ nome: string; posicao: number }>;
     escala_subfuncoes: Embutido<{ nome: string }>;
@@ -223,6 +230,8 @@ export async function escalaDoCulto(
       nome: um(s.escala_voluntarios)?.nome ?? null,
       origem: s.origem,
       motivo: s.motivo,
+      status: s.status,
+      statusObs: s.status_obs,
       posicao: s.posicao,
     });
     grupos.set(setor, lista);
@@ -261,6 +270,10 @@ export interface VagaDoMes extends VagaNaTela {
 export interface CultoDoMes {
   culto: CultoResumo;
   tipo: TipoDeCulto;
+  /** Vagas com nome cuja pessoa confirmou (ou já serviu: presente). */
+  confirmados: number;
+  /** Vagas em que a pessoa pediu troca — o que a liderança precisa resolver. */
+  trocas: number;
   /** Setor → vagas, na ordem da estrutura. Setor desligado vem com `off`. */
   porSetor: { setor: string; off: string | null; vagas: VagaDoMes[] }[];
 }
@@ -305,6 +318,8 @@ export async function escalaDoMes(
       posicao: number;
       origem: string;
       motivo: string;
+      status: StatusDaVaga;
+      status_obs: string;
       voluntario_id: string | null;
       escala_setores: Embutido<{ nome: string; posicao: number }>;
       escala_subfuncoes: Embutido<{ nome: string }>;
@@ -314,7 +329,7 @@ export async function escalaDoMes(
         db
           .from("escala_slots")
           .select(
-            "id, culto_id, posicao, origem, motivo, voluntario_id, escala_setores!inner(nome, posicao), escala_subfuncoes(nome), escala_voluntarios(nome)",
+            "id, culto_id, posicao, origem, motivo, status, status_obs, voluntario_id, escala_setores!inner(nome, posicao), escala_subfuncoes(nome), escala_voluntarios(nome)",
           )
           .eq("organization_id", organizationId)
           .in("culto_id", ids)
@@ -356,6 +371,8 @@ export async function escalaDoMes(
         nome: um(s.escala_voluntarios)?.nome ?? null,
         origem: s.origem,
         motivo: s.motivo,
+        status: s.status,
+        statusObs: s.status_obs,
         posicao: s.posicao,
       });
       grupos.set(setor.nome, g);
@@ -391,6 +408,9 @@ export async function escalaDoMes(
         setoresOff: meusOff.length,
       },
       tipo: tipoDoCulto(meus.map((s) => s.origem)),
+      confirmados: meus.filter((s) => s.voluntario_id && (s.status === "confirmado" || s.status === "presente"))
+        .length,
+      trocas: meus.filter((s) => s.voluntario_id && s.status === "troca_solicitada").length,
       porSetor,
     };
   });

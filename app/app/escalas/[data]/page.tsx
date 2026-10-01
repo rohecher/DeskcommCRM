@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { escalaDoCulto } from "@/lib/escalas/consultas";
 import { bonito, dataBr, tituloCulto } from "@/lib/escalas/formato";
 
+import { IconeDoStatus } from "../_componentes/IconeDoStatus";
 import { contextoDeEscala } from "../_lib/contexto";
 
 export const dynamic = "force-dynamic";
@@ -77,7 +78,13 @@ export default async function CultoPage({ params }: { params: Promise<{ data: st
                   </span>
                   {v.nome ? (
                     <span className="text-right text-sm">
+                      {v.origem !== "externo" && v.status !== "escalado" && (
+                        <IconeDoStatus status={v.status} size={12} className="mr-1 inline align-[-1px]" />
+                      )}
                       {v.nome}
+                      {v.status === "troca_solicitada" && v.statusObs && (
+                        <span className="block text-xs text-warning-fg">{v.statusObs}</span>
+                      )}
                       {v.origem === "fixado" && (
                         <Badge variant="info" className="ml-2 align-middle text-[10px]">
                           fixado
