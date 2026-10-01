@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { hrefAtivo } from "@/lib/navigation/ativo";
 import {
   Gauge,
   ChatsCircle,
@@ -41,6 +42,10 @@ interface AdminSidebarProps {
 
 export function AdminSidebar({ userEmail }: AdminSidebarProps) {
   const pathname = usePathname();
+  const ativo = hrefAtivo(
+    pathname,
+    NAV_ITEMS.map((i) => i.href),
+  );
 
   return (
     <aside className="flex w-60 shrink-0 flex-col border-r bg-card">
@@ -54,8 +59,7 @@ export function AdminSidebar({ userEmail }: AdminSidebarProps) {
       </div>
       <nav className="flex-1 space-y-1 overflow-y-auto p-2" aria-label="Navegação plataforma">
         {NAV_ITEMS.map((item) => {
-          const isActive =
-            pathname === item.href || pathname.startsWith(item.href + "/");
+          const isActive = item.href === ativo;
           const Icon = item.icon;
           return (
             <Link

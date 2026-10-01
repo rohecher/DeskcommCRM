@@ -9,6 +9,7 @@ import { useAuth } from "@/hooks/auth/AuthProvider";
 import { ConnectionHealthDot } from "@/components/connections/ConnectionHealthDot";
 import { VersionFooter } from "@/components/shell/VersionFooter";
 import { branding } from "@/lib/branding";
+import { hrefAtivo } from "@/lib/navigation/ativo";
 import { GRUPO_NO_RODAPE, NAV_GROUPS, sidebarGroups } from "@/lib/navigation/registry";
 
 /**
@@ -28,6 +29,12 @@ export function Sidebar({ collapsed }: { collapsed: boolean }) {
   // 1280x768, ele caía fora da dobra mesmo em telas de 1080px.
   const grupos = todos.filter((g) => g.group.id !== GRUPO_NO_RODAPE);
   const rodape = NAV_GROUPS.find((g) => g.id === GRUPO_NO_RODAPE)?.hub;
+  // Um item ativo só: o link mais específico. Sem isso, "Escalas" ficava marcado
+  // junto de todo item cujo link começa com `/app/escalas/`.
+  const ativo = hrefAtivo(
+    pathname,
+    grupos.flatMap((g) => g.items.map((i) => i.href)),
+  );
 
   const brand = branding();
 
@@ -81,7 +88,7 @@ export function Sidebar({ collapsed }: { collapsed: boolean }) {
               )}
               <ul aria-labelledby={collapsed ? undefined : tituloId} aria-label={collapsed ? group.label : undefined} className="space-y-1">
                 {items.map((item) => {
-                  const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+                  const isActive = item.href === ativo;
                   const Icon = item.icon;
                   return (
                     <li key={item.href}>
