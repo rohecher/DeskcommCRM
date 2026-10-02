@@ -49,6 +49,8 @@ const ACENTO: Record<string, string> = {
   "Voz guia celebracao": "Voz Guia - Celebração",
   "Voz guia adoracao": "Voz Guia - Adoração",
   "Sala pastoral": "Sala Pastoral",
+  "Sala de oracao": "Sala de Oração",
+  Violao: "Violão",
 };
 
 /** O rótulo como a igreja lê. Texto sem entrada no mapa sai como está. */

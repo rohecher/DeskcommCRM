@@ -4,6 +4,7 @@ import { hojeIso, mesValido, nomeDoMes } from "@/lib/escalas/mes";
 
 import { CabecalhoDoMes, type Vista } from "./_componentes/CabecalhoDoMes";
 import { CartaoDoCulto } from "./_componentes/CartaoDoCulto";
+import { EscalaDoLouvor } from "./_componentes/EscalaDoLouvor";
 import { AvisoDeRascunho, BotaoMontarEscala } from "./_componentes/MontarEscala";
 import { TabelaDoMes } from "./_componentes/TabelaDoMes";
 import { contextoDeEscala } from "./_lib/contexto";
@@ -52,7 +53,14 @@ export default async function EscalasPage({
         mesAtual={mesAtual}
         vista={vista}
         resumo={resumo}
-        acao={podeEditar ? <BotaoMontarEscala mes={mes} nomeDoMes={nomeDoMes(mes)} /> : null}
+        acao={
+          podeEditar ? (
+            <>
+              <EscalaDoLouvor mes={mes} nomeDoMes={nomeDoMes(mes)} />
+              <BotaoMontarEscala mes={mes} nomeDoMes={nomeDoMes(mes)} />
+            </>
+          ) : null
+        }
       />
       {podeEditar && rascunhos > 0 && <AvisoDeRascunho mes={mes} cultos={rascunhos} />}
 

@@ -7,6 +7,7 @@ import { audit } from "@/lib/audit";
 import { loadAuthUser, resolveActiveOrg } from "@/lib/auth/server";
 import { ROLE_RANK } from "@/lib/auth/types";
 import { carregarVaga, marcarStatus, trocarVoluntario, type VagaParaEditar } from "@/lib/escalas/editar";
+import { gravarLouvor, louvorLancado, previaDoLouvor, type PreviaDoLouvor } from "@/lib/escalas/louvor-banco";
 import { hojeIso, mesValido } from "@/lib/escalas/mes";
 import {
   descartarRascunho,
@@ -17,6 +18,7 @@ import {
 } from "@/lib/escalas/montar";
 import { obsLimpa, statusValido } from "@/lib/escalas/status";
 import { createClient } from "@/lib/supabase/server";
+import { z } from "zod";
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -112,7 +114,14 @@ export async function salvarStatus(slotId: string, status: string, obs: string):
 }
 
 export type PreviaDaMontagem =
-  | { ok: true; datas: string[]; gerar: string[]; pulados: { data: string; motivo: string }[] }
+  | {
+      ok: true;
+      datas: string[];
+      gerar: string[];
+      pulados: { data: string; motivo: string }[];
+      /** Sem louvor lançado, o motor pode escalar no setor geral quem vai tocar. */
+      louvorLancado: boolean;
+    }
   | { ok: false; erro: string };
 
 /** O que "Montar escala" vai fazer neste mês, antes de fazer. */
@@ -121,7 +130,8 @@ export async function previaDaMontagem(mes: string): Promise<PreviaDaMontagem> {
   const quem = await quemEdita();
   if (!quem.ok) return { ok: false, erro: quem.erro };
   const db = await createClient();
-  return { ok: true, ...(await previaDoMes(db, quem.org.orgId, mes, hojeIso())) };
+  const previa = await previaDoMes(db, quem.org.orgId, mes, hojeIso());
+  return { ok: true, ...previa, louvorLancado: await louvorLancado(db, quem.org.orgId, previa.gerar) };
 }
 
 export type ResultadoDaMontagem = { ok: true; resumo: ResumoDaMontagem } | { ok: false; erro: string };
@@ -194,4 +204,61 @@ export async function descartarEscala(mes: string): Promise<ResultadoDoMes> {
   });
   revalidatePath("/app/escalas", "layout");
   return { ok: true, cultos };
+}
+
+export type ResultadoDaPreviaDoLouvor = { ok: true; previa: PreviaDoLouvor } | { ok: false; erro: string };
+
+/** Lê a mensagem do louvor colada e devolve a prévia — sem gravar nada. */
+export async function lerLouvor(mes: string, texto: string): Promise<ResultadoDaPreviaDoLouvor> {
+  if (!mesValido(mes) || typeof texto !== "string" || texto.length > 20_000) {
+    return { ok: false, erro: "invalid_request" };
+  }
+  const quem = await quemEdita();
+  if (!quem.ok) return { ok: false, erro: quem.erro };
+  const db = await createClient();
+  return { ok: true, previa: await previaDoLouvor(db, quem.org.orgId, texto, mes) };
+}
+
+const DATA_ISO = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
+const louvorSchema = z.object({
+  blocos: z
+    .array(
+      z.object({
+        datas: z.array(DATA_ISO).min(1).max(10),
+        paleta: z.string().max(120).nullable(),
+        itens: z
+          .array(z.object({ funcao: z.string().trim().min(1).max(60), pessoas: z.array(z.string().uuid()).max(10) }))
+          .max(30),
+      }),
+    )
+    .min(1)
+    .max(20),
+  apelidos: z.array(z.object({ apelido: z.string().trim().min(1).max(60), voluntarioId: z.string().uuid() })).max(50),
+});
+
+export type ResultadoDoLouvor =
+  | { ok: true; cultos: number; vagas: number; apelidos: number }
+  | { ok: false; erro: string };
+
+/** Grava a escala do louvor conferida na prévia. */
+export async function salvarLouvor(mes: string, entrada: unknown): Promise<ResultadoDoLouvor> {
+  const dados = louvorSchema.safeParse(entrada);
+  if (!mesValido(mes) || !dados.success) return { ok: false, erro: "invalid_request" };
+  const quem = await quemEdita();
+  if (!quem.ok) return { ok: false, erro: quem.erro };
+  const db = await createClient();
+  const r = await gravarLouvor(db, quem.org.orgId, dados.data);
+
+  const hdrs = await headers();
+  await audit({
+    action: "escala.louvor_registrado",
+    actorUserId: quem.user.id,
+    organizationId: quem.org.orgId,
+    resourceType: "escala_mes",
+    resourceId: mes,
+    requestId: hdrs.get("x-request-id"),
+    metadata: r,
+  });
+  revalidatePath("/app/escalas", "layout");
+  return { ok: true, ...r };
 }

@@ -244,4 +244,6 @@ export type AuditAction =
   // "Montar escala": o motor gerou o rascunho do mês, a liderança publicou ou descartou.
   | "escala.mes_montado"
   | "escala.mes_publicado"
-  | "escala.rascunho_descartado";
+  | "escala.rascunho_descartado"
+  // A escala do louvor colada como texto e conferida na prévia.
+  | "escala.louvor_registrado";

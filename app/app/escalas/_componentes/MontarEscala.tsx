@@ -104,6 +104,13 @@ export function BotaoMontarEscala({ mes, nomeDoMes }: { mes: string; nomeDoMes: 
             <p className="py-4 text-center text-sm text-error-fg">Não deu para conferir o mês agora.</p>
           )}
 
+          {previa?.ok && !resumo && !previa.louvorLancado && previa.gerar.length > 0 && (
+            <p className="rounded-md border border-warning-fg/50 bg-warning-bg/30 p-2.5 text-sm text-warning-fg">
+              O louvor deste mês ainda não foi lançado. Sem ele, o motor pode escalar em outro setor quem vai
+              tocar. Se já tiver a mensagem do louvor, feche e use “Escala do louvor” antes de montar.
+            </p>
+          )}
+
           {previa?.ok && !resumo && (
             <ul className="grid grid-cols-2 gap-2 text-sm sm:grid-cols-3">
               {previa.datas.map((d) => {
