@@ -150,9 +150,10 @@ export async function montarEscala(mes: string): Promise<ResultadoDaMontagem> {
     actorUserId: quem.user.id,
     organizationId: quem.org.orgId,
     resourceType: "escala_mes",
-    resourceId: mes,
+    resourceId: null,
     requestId: hdrs.get("x-request-id"),
     metadata: {
+      mes,
       cultos: resumo.gerados.length,
       vagas: resumo.gerados.reduce((n, g) => n + g.vagas, 0),
       abertas: resumo.gerados.reduce((n, g) => n + g.abertas, 0),
@@ -177,9 +178,9 @@ export async function publicarEscala(mes: string): Promise<ResultadoDoMes> {
     actorUserId: quem.user.id,
     organizationId: quem.org.orgId,
     resourceType: "escala_mes",
-    resourceId: mes,
+    resourceId: null,
     requestId: hdrs.get("x-request-id"),
-    metadata: { cultos },
+    metadata: { mes, cultos },
   });
   revalidatePath("/app/escalas", "layout");
   return { ok: true, cultos };
@@ -198,9 +199,9 @@ export async function descartarEscala(mes: string): Promise<ResultadoDoMes> {
     actorUserId: quem.user.id,
     organizationId: quem.org.orgId,
     resourceType: "escala_mes",
-    resourceId: mes,
+    resourceId: null,
     requestId: hdrs.get("x-request-id"),
-    metadata: { cultos },
+    metadata: { mes, cultos },
   });
   revalidatePath("/app/escalas", "layout");
   return { ok: true, cultos };
@@ -255,9 +256,9 @@ export async function salvarLouvor(mes: string, entrada: unknown): Promise<Resul
     actorUserId: quem.user.id,
     organizationId: quem.org.orgId,
     resourceType: "escala_mes",
-    resourceId: mes,
+    resourceId: null,
     requestId: hdrs.get("x-request-id"),
-    metadata: r,
+    metadata: { mes, ...r },
   });
   revalidatePath("/app/escalas", "layout");
   return { ok: true, ...r };

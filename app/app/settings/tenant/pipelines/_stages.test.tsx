@@ -433,7 +433,7 @@ describe("StagesSection — arquivar", () => {
     await user.click(screen.getByTestId("arquivar-confirmar-e1"));
 
     expect(await screen.findByTestId("arquivar-pergunta-e1")).toHaveTextContent(
-      "38 negócios estão nesta etapa. Para onde eles vão?",
+      "38 acompanhamentos estão nesta etapa. Para onde eles vão?",
     );
     // ⭐ Sem destino escolhido, arquivar NÃO é oferecido: perder o rastro de 38
     // negócios não pode ser um clique de distância.
@@ -549,8 +549,8 @@ describe("StagesSection — arquivar", () => {
     await user.click(screen.getByTestId("arquivar-e1"));
     await user.click(screen.getByTestId("arquivar-confirmar-e1"));
     const pergunta = await screen.findByTestId("arquivar-pergunta-e1");
-    expect(pergunta).toHaveTextContent("1 negócio está nesta etapa. Para onde ele vai?");
-    expect(pergunta).not.toHaveTextContent("1 negócios");
+    expect(pergunta).toHaveTextContent("1 acompanhamento está nesta etapa. Para onde ele vai?");
+    expect(pergunta).not.toHaveTextContent("1 acompanhamentos");
   });
 
   /**
