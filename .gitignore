@@ -111,3 +111,7 @@ evidence/.sonda-score-residuo.json
 
 # store local do pnpm (conteúdo endereçável, recriável)
 .pnpm-store/
+
+# Motor Python legado (Filhos que Servem): contem nomes reais de voluntarios e o fork e publico.
+# Ver docs/decisoes-escalas.md. Nunca versionar.
+/motor-legado/
