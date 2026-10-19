@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   classificarArquivo,
+  exigePortarAMao,
   precisaRenumerar,
   zonaDoPR,
 } from "@/scripts/upstream-garimpo/zonas";
@@ -24,9 +25,6 @@ describe("classificarArquivo", () => {
     ["docs/agents/domain.md"],
     ["CLAUDE.md"],
     ["AGENTS.md"],
-    ["supabase/baseline.sql"],
-    ["supabase/migrations/MANIFEST.md"],
-    ["supabase/migrations/20260921180000_0145_motor_de_escalas.sql"],
   ])("%s é vermelha mesmo que o fork nem tenha modificado", (caminho) => {
     expect(classificarArquivo(caminho, new Set())).toBe("vermelha");
   });
@@ -34,6 +32,26 @@ describe("classificarArquivo", () => {
   it("arquivo do upstream que o fork já modificou é amarela", () => {
     expect(classificarArquivo("lib/audit/actions.ts", MODIFICADOS)).toBe("amarela");
     expect(classificarArquivo("components/kanban/KanbanBoard.tsx", MODIFICADOS)).toBe("amarela");
+  });
+
+  it("baseline.sql e MANIFEST.md são amarelos (portar à mão), não vermelhos", () => {
+    expect(classificarArquivo("supabase/baseline.sql", new Set())).toBe("amarela");
+    expect(classificarArquivo("supabase/migrations/MANIFEST.md", new Set())).toBe("amarela");
+    expect(exigePortarAMao("supabase/baseline.sql")).toBe(true);
+    expect(exigePortarAMao("lib/audit/actions.ts")).toBe(false);
+  });
+
+  it("PR de schema com 50 arquivos verdes e o baseline não vira vermelho", () => {
+    const zonas = ["supabase/baseline.sql", "lib/ai/x.ts", "workers/y.ts"].map((f) =>
+      classificarArquivo(f, new Set()),
+    );
+    expect(zonaDoPR(zonas)).toBe("amarela");
+  });
+
+  it("migration com 'escala' no nome não é vermelha por isso ('escalação' é do upstream)", () => {
+    expect(
+      classificarArquivo("supabase/migrations/20261001000000_0600_escalacao_do_turno.sql", new Set()),
+    ).toBe("verde");
   });
 
   it("arquivo que o fork não tocou é verde", () => {

@@ -31,4 +31,5 @@ O cron só dispara pela branch padrão do repo. Hoje a padrão é `main`, parada
 
 ## Comments
 
-- 2026-10-19: `scripts/upstream-garimpo/zonas.ts` pronto (passo 4) e testado. Aplicado aos 288 arquivos que o upstream mexeu em 2026-10-16: 278 verdes, 9 amarelas, 1 vermelha (`supabase/baseline.sql`). Falta o coletor (passos 1 a 3 e 5) e o workflow.
+- 2026-10-19: `scripts/upstream-garimpo/zonas.ts` pronto (passo 4) e testado. Aplicado aos 288 arquivos que o upstream mexeu em 2026-10-16: 278 verdes, 9 amarelas, 1 vermelha (`supabase/baseline.sql`). Coletor (`coletar.ts`, `coleta.ts`) e workflow (`.github/workflows/upstream-garimpo.yml`) escritos. Prova local de 2026-10-16: 37 itens em 1 s (25 verdes, 12 amarelas, 0 vermelhas). **Falta:** primeira execução no GitHub (`workflow_dispatch`) e o caveat abaixo.
+- Caveat: PR aberta com o `GITHUB_TOKEN` não dispara outros workflows, então o `verify` não roda nela. Se a `cajado` exigir `verify` para mesclar, a PR do garimpo fica bloqueada. Conferir em Settings → Branches; saída: PAT do Roberto num segredo, ou dispensar o check para `tasks/**`.

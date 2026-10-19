@@ -32,25 +32,34 @@ const VERMELHAS_EXATAS = new Set([
   "docs/dominio-nao-e-venda.md",
   "CLAUDE.md",
   "AGENTS.md",
-  // O baseline do upstream nunca é importado: o do fork tem apêndice próprio e o bloco
-  // `VARREDURA anon` precisa ser o último (decisão de 2026-10-19). Portar à mão.
-  "supabase/baseline.sql",
-  // Numeração do fork diverge da do upstream (0144–0149 são migrations diferentes).
-  "supabase/migrations/MANIFEST.md",
+  // `supabase/baseline.sql` e `supabase/migrations/MANIFEST.md` NÃO estão aqui: todo PR de
+  // schema do upstream os toca, e vermelho esconderia correção valiosa. Eles são amarelos
+  // (ver PORTAR_A_MAO) — o conteúdo do upstream nunca é importado, é portado.
 ]);
 
+/**
+ * Arquivos que o upstream muda e que o fork NÃO pode receber por cherry-pick: o baseline do
+ * fork tem apêndice próprio e o bloco `VARREDURA anon` tem de ser o último (decisão de
+ * 2026-10-19); a numeração de migrations do fork diverge da do upstream (0144–0149 são
+ * outras). A mudança útil é portada à mão: o bloco da migration escolhida, renumerado.
+ */
+const PORTAR_A_MAO = new Set(["supabase/baseline.sql", "supabase/migrations/MANIFEST.md"]);
+
 const MIGRATION = /^supabase\/migrations\/\d{14}_\d{4}_[^/]+\.sql$/;
-const MIGRATION_DE_ESCALAS = /^supabase\/migrations\/\d{14}_\d{4}_[^/]*escala[^/]*\.sql$/;
 
 export function classificarArquivo(caminho: string, modificadosPeloFork: ReadonlySet<string>): Zona {
   if (
     VERMELHAS_EXATAS.has(caminho) ||
-    MIGRATION_DE_ESCALAS.test(caminho) ||
     VERMELHAS_PREFIXO.some((p) => caminho.startsWith(p))
   ) {
     return "vermelha";
   }
-  return modificadosPeloFork.has(caminho) ? "amarela" : "verde";
+  return modificadosPeloFork.has(caminho) || PORTAR_A_MAO.has(caminho) ? "amarela" : "verde";
+}
+
+/** O PR traz mudança de baseline/MANIFEST que precisa ser portada à mão (spec §6.3). */
+export function exigePortarAMao(caminho: string): boolean {
+  return PORTAR_A_MAO.has(caminho);
 }
 
 const GRAVIDADE: Record<Zona, number> = { verde: 0, amarela: 1, vermelha: 2 };

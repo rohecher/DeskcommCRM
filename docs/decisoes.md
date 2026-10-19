@@ -22,10 +22,12 @@ Spec: `tasks/upstream-garimpo/spec.md`. Medido em 2026-10-19, merge-base `48e517
   (2026-08-10, ancestral do upstream). A `cajado` é a branch de produção. Efeito: PRs novas
   abrem contra ela por padrão.
 - **DECISÃO — zonas, calculadas e não escolhidas à mão.** Vermelha: `lib/escalas/`,
-  `app/app/escalas/`, `lib/branding.ts`, docs de domínio, `CLAUDE.md`/`AGENTS.md`, o bloco
-  `VARREDURA anon` do baseline; a rotina nunca propõe tocar. Amarela: arquivo que o fork já
-  modificou contra o merge-base; o ganho funcional entra e o texto de tela volta ao
-  vocabulário pastoral. Verde: arquivo que o fork não tocou.
+  `app/app/escalas/`, `lib/branding.ts`, docs de domínio, `CLAUDE.md`/`AGENTS.md`; a rotina
+  nunca propõe tocar. Amarela: arquivo que o fork já modificou contra o merge-base, mais
+  `supabase/baseline.sql` e `MANIFEST.md` (todo PR de schema os toca; o conteúdo do upstream
+  é portado à mão, nunca importado, e o bloco `VARREDURA anon` segue como o último). O ganho
+  funcional entra e o texto de tela volta ao vocabulário pastoral. Ajuste de 2026-10-19:
+  `baseline.sql` nascera vermelho, o que reprovava 8 de 37 PRs reais por esse único arquivo. Verde: arquivo que o fork não tocou.
 - **DECISÃO — migration do upstream nunca entra com o número original.** As `0144` a `0149`
   do upstream são outras que as do fork (`0144_followup_timing_plan` contra
   `0144_organizacao_nova_nasce_igreja`), e o upstream já está na `0683`. Renumera para depois
