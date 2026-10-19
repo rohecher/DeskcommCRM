@@ -1,5 +1,54 @@
 # Decisões
 
+## 2026-10-19 — Garimpo diário do upstream: a rotina propõe, a pessoa aprova
+
+Spec: `tasks/upstream-garimpo/spec.md`. Medido em 2026-10-19, merge-base `48e517070`.
+
+- **DECISÃO — o upstream (`melgarafael/DeskcommCRM`) não é mesclado na `cajado`. Nunca.** O
+  fork está 10.545 commits atrás e tem 25 próprios; o upstream fez 285 merges em uma semana.
+  O Cajado trocou o vocabulário em 65 arquivos que o upstream também altera e tem domínio
+  próprio (escalas). O que entra vem por `git cherry-pick -x`, item a item, com aprovação.
+- **DECISÃO — a rotina diária só lê e propõe.** Um workflow agendado do GitHub Actions no
+  fork faz `git fetch upstream`, lista os PRs novos, classifica cada arquivo por zona
+  (vermelha, amarela, verde) e abre uma **PR** com o relatório bruto em
+  `tasks/upstream-garimpo/`. Não aplica código, não dá push na `cajado`, não dá merge. O
+  workflow tem só `contents` e `pull-requests` e nenhum segredo. A classificação de valor
+  (ajuda o bot, segurança/LGPD, confiabilidade, só vendas) fica numa sessão do Claude, à
+  parte. Alternativa descartada: schedule do Dokploy. O contêiner do app roda um comando
+  de shell, não tem IA, e não foi confirmado que tenha `git`, `gh` ou rede para o GitHub;
+  a rotina também não precisa da VPS.
+- **DECISÃO — a branch padrão do fork passa a ser a `cajado`** (2026-10-19). O cron do
+  GitHub só dispara pela branch padrão, e a `main` do fork está parada em `48e517070`
+  (2026-08-10, ancestral do upstream). A `cajado` é a branch de produção. Efeito: PRs novas
+  abrem contra ela por padrão.
+- **DECISÃO — zonas, calculadas e não escolhidas à mão.** Vermelha: `lib/escalas/`,
+  `app/app/escalas/`, `lib/branding.ts`, docs de domínio, `CLAUDE.md`/`AGENTS.md`, o bloco
+  `VARREDURA anon` do baseline; a rotina nunca propõe tocar. Amarela: arquivo que o fork já
+  modificou contra o merge-base; o ganho funcional entra e o texto de tela volta ao
+  vocabulário pastoral. Verde: arquivo que o fork não tocou.
+- **DECISÃO — migration do upstream nunca entra com o número original.** As `0144` a `0149`
+  do upstream são outras que as do fork (`0144_followup_timing_plan` contra
+  `0144_organizacao_nova_nasce_igreja`), e o upstream já está na `0683`. Renumera para depois
+  da última do fork, entra como apêndice no `baseline.sql` ANTES do bloco `VARREDURA anon`,
+  com linha no `MANIFEST.md`. O `baseline.sql` do upstream não é importado.
+- **DECISÃO — todo texto de tela trazido do upstream passa por tradução e por
+  `humanizer-pt-br`.** Termo comercial (`negócio`, `venda`, `lead`, `cliente`, `Ganho`,
+  `Perdido`, `pedido`, `carrinho`) vira o termo de `docs/dominio-nao-e-venda.md`. PR que só
+  serve ao produto de vendas (Nuvemshop, pedido, cobrança, planos) é descartado e listado em
+  uma linha.
+- **PENDÊNCIA — o que a liderança considera "valor" além do bot** (divulgação e auditoria da
+  escala). Resposta do Roberto em 2026-10-19: "não sei". Até lá o critério é bot,
+  segurança/LGPD e confiabilidade. `needs-info` na spec.
+- **PENDÊNCIA — ritmo de aplicação** (teto de itens por semana) e **quem além do Roberto
+  aprova** um candidato. Sem resposta.
+- **PENDÊNCIA — centralizar o vocabulário pastoral em um módulo** reduziria o conflito a
+  cada cherry-pick nos 65 arquivos. É mudança estrutural e pede decisão própria; não está
+  decidida aqui.
+- **RISCO — a `cajado` faz deploy automático.** Item trazido do upstream que toca schema,
+  RLS ou worker chega a produção no merge. Antes de abrir a PR: `pnpm gov:verify` e
+  `pnpm test:db`, ambos com o `.env` fora do caminho (ele carrega credenciais reais do
+  Upstash e deixa 6 testes vermelhos que o CI não vê).
+
 ## 2026-10-16 — Escalas: o TypeScript é o produto, o Python é histórico
 
 - **DECISÃO — `lib/escalas/` é o motor; o Python deixa de receber regra nova.** O
