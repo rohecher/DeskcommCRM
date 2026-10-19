@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { fragmentosDeRelease, lerMerge, sinaisDe } from "@/scripts/upstream-garimpo/coleta";
+import { fragmentosDeRelease, lerMerge, montarAviso, sinaisDe, type ItemDoAviso } from "@/scripts/upstream-garimpo/coleta";
 
 describe("lerMerge", () => {
   it("PR: número do assunto, título da primeira linha do corpo", () => {
@@ -52,5 +52,55 @@ describe("fragmentosDeRelease", () => {
     expect(
       fragmentosDeRelease(["docs/release/teto-de-orcamento.md", "docs/release/x/y.md", "docs/other.md"]),
     ).toEqual(["docs/release/teto-de-orcamento.md"]);
+  });
+});
+
+const SEM_SINAIS = { bot: false, vendas: false, schema: false, tela: false };
+const item = (o: Partial<ItemDoAviso>): ItemDoAviso => ({
+  numero: 1,
+  titulo: "t",
+  zona: "verde",
+  sinais: SEM_SINAIS,
+  renumerar: [],
+  ...o,
+});
+
+describe("montarAviso", () => {
+  it("resumo do dia: contagens, migration, destaques com bot na frente e o link", () => {
+    const itens = [
+      item({ numero: 10, titulo: "ajuste de tela", zona: "amarela" }),
+      item({ numero: 2865, titulo: "atribuição respeita visibilidade", sinais: { ...SEM_SINAIS, bot: true } }),
+      item({ numero: 11, zona: "verde", renumerar: ["supabase/migrations/x_0683_y.sql"] }),
+    ];
+    expect(montarAviso("2026-10-16", itens, "https://github.com/x/pull/9")).toBe(
+      [
+        "Garimpo de 16/10: 3 itens novos no upstream.",
+        "2 entram limpos, 1 pede cuidado.",
+        "1 traz migration.",
+        "Para olhar primeiro: #2865 atribuição respeita visibilidade; #10 ajuste de tela; #11 t.",
+        "Decida aqui: https://github.com/x/pull/9",
+      ].join("\n"),
+    );
+  });
+
+  it("singular e sem linhas zeradas", () => {
+    const txt = montarAviso("2026-10-17", [item({ numero: 5, titulo: "x" })], "u");
+    expect(txt).toContain("1 item novo no upstream.");
+    expect(txt).not.toContain("migration");
+    expect(txt).not.toContain("Cajado");
+  });
+
+  it("vermelho aparece na contagem mas nunca nos destaques", () => {
+    const txt = montarAviso("2026-10-17", [item({ numero: 7, titulo: "mexe em escala", zona: "vermelha" })], "u");
+    expect(txt).toContain("1 mexe em área do Cajado");
+    expect(txt).not.toContain("Para olhar primeiro");
+  });
+
+  it("título do upstream é cortado, sem quebra de linha e sem virar marcação", () => {
+    const longo = `fix: ${"a".repeat(200)}\ninjetado *negrito*`;
+    const txt = montarAviso("2026-10-17", [item({ numero: 8, titulo: longo })], "u");
+    const destaque = txt.split("\n").find((l) => l.startsWith("Para olhar primeiro"))!;
+    expect(destaque.length).toBeLessThan(120);
+    expect(txt.split("\n")).toHaveLength(4);
   });
 });

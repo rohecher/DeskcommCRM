@@ -66,6 +66,7 @@ jobs:
         run: pnpm exec tsx scripts/upstream-garimpo/coletar.ts
 
       - name: Abrir a PR do relatório
+        id: pr
         if: steps.aberta.outputs.abertas == '0' && steps.coleta.outputs.novo == 'true'
         env:
           DATA: ${{ steps.coleta.outputs.data }}
@@ -87,6 +88,29 @@ jobs:
             printf 'Só coleta mecânica. Mexe apenas em `tasks/upstream-garimpo/`. Mesclar isto **move o marcador** (`ultimo-analisado.txt`); não aplica nada do upstream.\n\n'
             printf 'Vermelhos hoje: %s. Depois do merge, a sessão do Claude classifica o valor de cada item e abre os tickets.\n' "$VERMELHOS"
           } > "$RUNNER_TEMP/corpo.md"
-          gh pr create --base "$BASE" --head "$branch" \
+          url="$(gh pr create --base "$BASE" --head "$branch" \
             --title "docs(garimpo): upstream de ${DATA} (${TOTAL} itens)" \
-            --body-file "$RUNNER_TEMP/corpo.md"
+            --body-file "$RUNNER_TEMP/corpo.md")"
+          echo "pr_url=$url" >> "$GITHUB_OUTPUT"
+
+      # Aviso no Telegram. Só avisa: a decisão de mesclar fica no GitHub, onde você já é
+      # autenticado (decisão de 2026-10-19). Sem os segredos, pula sem falhar; se o Telegram
+      # recusar, vira aviso no log — o relatório e a PR já existem.
+      - name: Avisar no Telegram
+        if: steps.aberta.outputs.abertas == '0' && steps.coleta.outputs.novo == 'true'
+        env:
+          DATA: ${{ steps.coleta.outputs.data }}
+          PR_URL: ${{ steps.pr.outputs.pr_url }}
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "${TG_TOKEN:-}" ] || [ -z "${TG_CHAT:-}" ]; then
+            echo "::notice::TELEGRAM_BOT_TOKEN/TELEGRAM_CHAT_ID não configurados; sem aviso."
+            exit 0
+          fi
+          pnpm exec tsx scripts/upstream-garimpo/avisar.ts "$DATA" "$PR_URL" "$RUNNER_TEMP/aviso.txt"
+          curl -sS --fail-with-body -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TG_CHAT}" \
+            --data-urlencode "text@${RUNNER_TEMP}/aviso.txt" \
+            --data-urlencode "disable_web_page_preview=true" >/dev/null \
+            || echo "::warning::O Telegram recusou o aviso; a PR do relatório já foi aberta."

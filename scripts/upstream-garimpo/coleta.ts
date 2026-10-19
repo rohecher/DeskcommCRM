@@ -53,3 +53,54 @@ export function sinaisDe(arquivos: readonly string[]): Sinais {
 export function fragmentosDeRelease(arquivos: readonly string[]): string[] {
   return arquivos.filter((f) => /^docs\/release\/[^/]+\.md$/.test(f));
 }
+
+// ---- Aviso no Telegram ------------------------------------------------------------
+
+export interface ItemDoAviso {
+  numero: number | null;
+  titulo: string;
+  zona: "verde" | "amarela" | "vermelha";
+  sinais: Sinais;
+  renumerar: readonly string[];
+}
+
+const MAX_DESTAQUES = 3;
+const MAX_TITULO = 70;
+
+function plural(n: number, um: string, varios: string): string {
+  return `${n} ${n === 1 ? um : varios}`;
+}
+
+function limpaTitulo(t: string): string {
+  const s = t.replace(/\s+/g, " ").trim();
+  return s.length > MAX_TITULO ? `${s.slice(0, MAX_TITULO - 1)}…` : s;
+}
+
+/**
+ * Texto puro (sem parse_mode) do aviso diário: o título do PR vem do upstream, então não
+ * pode ser interpretado como marcação. Itens vermelhos nunca entram nos destaques — a
+ * rotina não propõe tocar neles.
+ */
+export function montarAviso(data: string, itens: readonly ItemDoAviso[], urlDaPR: string): string {
+  const [, mes, dia] = data.split("-");
+  const n = (z: ItemDoAviso["zona"]) => itens.filter((i) => i.zona === z).length;
+  const migrations = itens.filter((i) => i.renumerar.length > 0).length;
+
+  const linhas = [`Garimpo de ${dia}/${mes}: ${plural(itens.length, "item novo", "itens novos")} no upstream.`];
+  const faixas = [
+    plural(n("verde"), "entra limpo", "entram limpos"),
+    plural(n("amarela"), "pede cuidado", "pedem cuidado"),
+  ];
+  if (n("vermelha") > 0) faixas.push(plural(n("vermelha"), "mexe em área do Cajado", "mexem em área do Cajado"));
+  linhas.push(`${faixas.join(", ")}.`);
+  if (migrations > 0) linhas.push(`${plural(migrations, "traz migration", "trazem migration")}.`);
+
+  const candidatos = itens.filter((i) => i.zona !== "vermelha");
+  const destaques = [...candidatos.filter((i) => i.sinais.bot), ...candidatos.filter((i) => !i.sinais.bot)]
+    .slice(0, MAX_DESTAQUES)
+    .map((i) => `${i.numero !== null ? `#${i.numero} ` : ""}${limpaTitulo(i.titulo)}`);
+  if (destaques.length > 0) linhas.push(`Para olhar primeiro: ${destaques.join("; ")}.`);
+
+  linhas.push(`Decida aqui: ${urlDaPR}`);
+  return linhas.join("\n");
+}
