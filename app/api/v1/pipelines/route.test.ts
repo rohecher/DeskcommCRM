@@ -4,7 +4,6 @@ import { NextRequest } from "next/server";
 import { audit } from "@/lib/audit";
 import { fail } from "@/lib/api/wrappers";
 import { requireRole } from "@/lib/auth/require-role";
-import { ETAPAS_INICIAIS } from "@/lib/pipelines/pipeline-editing";
 
 vi.mock("@/lib/auth/require-role", () => ({ requireRole: vi.fn() }));
 vi.mock("@/lib/supabase/server", () => ({ createClient: vi.fn() }));
@@ -80,7 +79,7 @@ describe("POST /api/v1/pipelines", () => {
     const stagesInsert = db.escritas.find((e) => e.table === "crm_stages");
     const etapas = stagesInsert?.patch as Record<string, unknown>[];
     expect(etapas).toHaveLength(4);
-    expect(etapas.map((e) => e.name)).toEqual(ETAPAS_INICIAIS.map((s) => s.name));
+    expect(etapas.map((e) => e.name)).toEqual(["Visitante", "Em acompanhamento", "Membro", "Afastado"]);
     expect(etapas.filter((e) => e.is_won)).toHaveLength(1);
     expect(etapas.every((e) => e.organization_id === ORG_ID)).toBe(true);
   });

@@ -27,7 +27,6 @@ vi.mock("sonner", () => ({
 
 import { apiClient } from "@/lib/api/client";
 import { toast } from "sonner";
-import { ROLE_LABELS } from "@/lib/schemas/team";
 import { TeamMembersClient } from "./TeamMembersClient";
 
 // Polyfills que o Radix Select exige e o jsdom não tem.
@@ -92,7 +91,7 @@ describe("TeamMembersClient — seletor de papel (G2-02)", () => {
     renderClient({ canManage: false });
     expect(await screen.findByText("agente@example.com")).toBeInTheDocument();
     expect(screen.queryByRole("combobox")).not.toBeInTheDocument();
-    expect(screen.getByText(ROLE_LABELS.agent)).toBeInTheDocument();
+    expect(screen.getByText("Secretaria")).toBeInTheDocument();
   });
 
   it("admin seleciona novo papel → PATCH /api/v1/team/[user_id] com estado otimista", async () => {
@@ -105,12 +104,12 @@ describe("TeamMembersClient — seletor de papel (G2-02)", () => {
     renderClient();
 
     const trigger = await screen.findByRole("combobox", { name: /Papel de Agente/i });
-    expect(trigger).toHaveTextContent(ROLE_LABELS.agent);
+    expect(trigger).toHaveTextContent("Secretaria");
     await user.click(trigger);
-    await user.click(await screen.findByRole("option", { name: ROLE_LABELS.manager }));
+    await user.click(await screen.findByRole("option", { name: "Líder de Ministério" }));
 
     // Otimista: UI já mostra o novo papel ANTES da resposta do PATCH.
-    await waitFor(() => expect(trigger).toHaveTextContent(ROLE_LABELS.manager));
+    await waitFor(() => expect(trigger).toHaveTextContent("Líder de Ministério"));
     expect(apiClient.patch).toHaveBeenCalledWith(`/api/v1/team/${AGENT_ID}`, {
       role: "manager",
     });
@@ -135,10 +134,10 @@ describe("TeamMembersClient — seletor de papel (G2-02)", () => {
 
     const trigger = await screen.findByRole("combobox", { name: /Papel de Agente/i });
     await user.click(trigger);
-    await user.click(await screen.findByRole("option", { name: ROLE_LABELS.viewer }));
+    await user.click(await screen.findByRole("option", { name: "Leitura" }));
 
     // Rollback: volta ao papel original após o erro.
-    await waitFor(() => expect(trigger).toHaveTextContent(ROLE_LABELS.agent));
+    await waitFor(() => expect(trigger).toHaveTextContent("Secretaria"));
     await waitFor(() => expect(toast.error).toHaveBeenCalled());
     expect(toast.success).not.toHaveBeenCalled();
   });

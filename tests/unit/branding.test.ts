@@ -11,7 +11,7 @@ describe("resolveBranding", () => {
     expect(resolveBranding(undefined, undefined)).toEqual({
       name: DEFAULT_APP_NAME,
       logoUrl: null,
-      initial: DEFAULT_APP_NAME[0],
+      initial: "C",
     });
   });
 
