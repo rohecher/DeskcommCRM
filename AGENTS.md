@@ -192,3 +192,17 @@ que é `INFERIDO`.
 **Tarefa atual**
 
 O escopo da fase em andamento vive em `docs/[tarefa-atual.md](http://tarefa-atual.md)`. Ler esse arquivo **antes** de começar qualquer trabalho — ele define o que fazer e o que fica fora nesta fase. O conteúdo desse arquivo muda a cada fase do roadmap (ver `docs/[decisoes.md](http://decisoes.md)` pro roadmap completo); este [AGENTS.md](http://AGENTS.md) não muda. Se `docs/[tarefa-atual.md](http://tarefa-atual.md)` não existir ou estiver vazio, parar e sinalizar antes de prosseguir — não assumir escopo.
+
+## Agent skills
+
+### Issue tracker
+
+Markdown local: specs e tickets em `tasks/<feature-slug>/` (`spec.md` e `issues/NN-slug.md`); `plan/` é do gov-loop e fica intocado. As issues do GitHub ficam no fork público e não entram no fluxo. Nada em `tasks/` contém nome real de voluntário (o fork é público e commit é para sempre): fixtures e exemplos só com pseudônimos (`Voluntario 001`). Ver `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Vocabulário padrão (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`), gravado na linha `Status:` de cada ticket. Ver `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context. O glossário é `docs/escalas-glossario.md` e as decisões ficam em `docs/decisoes.md` (no lugar de `GLOSSARY.md` e `docs/adr/`). Termo novo e decisão nova entram nesses docs antes do código. Ver `docs/agents/domain.md`.

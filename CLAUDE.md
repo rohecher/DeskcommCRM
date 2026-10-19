@@ -351,3 +351,16 @@ Um staff engineer aprovaria? Se não, itera.
 6. Schema e políticas de RLS do domínio novo (ministérios, escalas, jornada, EAD) vivem em `docs/[schema.md](http://schema.md)`, seguindo as mesmas convenções não-negociáveis de multi-tenancy já descritas acima nesse arquivo (organization_id obrigatório, RLS via fn_user_org_ids, nunca confiar em organization_id vindo do body).
 7. Escopo da tarefa em andamento vive em `docs/[tarefa-atual.md](http://tarefa-atual.md)` — ler antes de começar qualquer trabalho de código.
 
+## Agent skills
+
+### Issue tracker
+
+Markdown local: specs e tickets em `tasks/<feature-slug>/` (`spec.md` e `issues/NN-slug.md`); `plan/` é do gov-loop e fica intocado. As issues do GitHub ficam no fork público e não entram no fluxo. Nada em `tasks/` contém nome real de voluntário (o fork é público e commit é para sempre): fixtures e exemplos só com pseudônimos (`Voluntario 001`). Ver `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Vocabulário padrão (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`), gravado na linha `Status:` de cada ticket. Ver `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context. O glossário é `docs/escalas-glossario.md` e as decisões ficam em `docs/decisoes.md` (no lugar de `GLOSSARY.md` e `docs/adr/`). Termo novo e decisão nova entram nesses docs antes do código. Ver `docs/agents/domain.md`.

@@ -1,5 +1,30 @@
 # Decisões
 
+## 2026-10-16 — Escalas: o TypeScript é o produto, o Python é histórico
+
+- **DECISÃO — `lib/escalas/` é o motor; o Python deixa de receber regra nova.** O
+  `gerar.py` (1.030 linhas) foi ensinado pela liderança uma escala errada por vez, e o
+  porte para TypeScript foi provado por paridade estrita (`tests/unit/escalas-paridade.test.ts`)
+  nas dez escalas aprovadas de 13/09 a 15/10. Regra nova entra no TS, com teste. O Python
+  só roda para regenerar o `esperado.json` da paridade, e só até o TS cobrir o fluxo mensal
+  inteiro (lista abaixo).
+- **DECISÃO — o Python mora em `motor-legado/`, ignorado pelo git.** O `gerar.py` tem nomes
+  reais de voluntários fixos no código (`TIME_FIXO`, `RESERVA`) e este fork é público.
+  Commit é para sempre. Os fixtures versionados usam pseudônimos (`Voluntario 001`), e
+  o glossário está em `docs/escalas-glossario.md`.
+- **PENDÊNCIA — o que o app ainda não faz e o Python faz** (verificado em 2026-10-16: não
+  há `xlsx`/`exceljs` no `package.json`, nem extração de histórico em `lib/escalas/`):
+  1. `exportar.py` — planilha de divulgação a partir da escala aprovada.
+  2. `extrair.py` + `perfil.py` — histórico a partir das planilhas antigas de escala.
+  3. `consolidar.py` / `importar.py` — ida e volta com o Excel do cadastro. No app o
+     cadastro passa a ser a tela `/app/escalas/voluntarios`.
+  4. `auditar.py` — conflito com louvor, repetição, decência, carga, contra a escala fechada.
+  Quando 1 e 4 existirem no app, o fluxo mensal não depende mais do Python e o
+  `motor-legado/` pode ser arquivado.
+- **RISCO — a `cajado` faz deploy automático** (`publish-image.yml` + Dokploy). Mudança em
+  `lib/escalas/` ou em migration `escala_*` chega a produção no push. `gov:verify` não cobre
+  `test:db` nem `test:e2e` (`docs/harness-audit.md`): rode ambos antes de mergear.
+
 ## 2026-09-11 — Organização nova nasce igreja (resolve pendência do gatilho)
 
 - **DECISÃO — o gatilho de seed deixa de semear e-commerce (migration 0144):** a
