@@ -1,8 +1,8 @@
 # 01 — Coletor diário do upstream em GitHub Actions
 
-Status: needs-info
+Status: ready-for-agent
 Type: task
-Blocked by: decisão do Roberto sobre a branch padrão (abaixo)
+Blocked by: nada. Decisão A aplicada em 2026-10-19 (branch padrão do fork = `cajado`).
 
 ## O que fazer
 
@@ -17,7 +17,7 @@ Passos (spec §5.1 a 5.4):
 
 Permissões mínimas do workflow: `contents: write` e `pull-requests: write`, nada além. Sem segredos.
 
-## Decisão pendente (Roberto)
+## Decisão (resolvida em 2026-10-19: opção A)
 
 O cron só dispara pela branch padrão do repo. Hoje a padrão é `main`, parada em `48e517070`. Opções:
 - **A (recomendada):** mudar a branch padrão do fork para `cajado`. É a branch de produção, então faz sentido. Efeito: PRs novas passam a abrir contra `cajado` por padrão, e os workflows de `main` (`ci.yml` roda em `push` para `main`) continuam como estão.
@@ -30,3 +30,5 @@ O cron só dispara pela branch padrão do repo. Hoje a padrão é `main`, parada
 - Nenhum nome real de voluntário no relatório (regra do fork público).
 
 ## Comments
+
+- 2026-10-19: `scripts/upstream-garimpo/zonas.ts` pronto (passo 4) e testado. Aplicado aos 288 arquivos que o upstream mexeu em 2026-10-16: 278 verdes, 9 amarelas, 1 vermelha (`supabase/baseline.sql`). Falta o coletor (passos 1 a 3 e 5) e o workflow.
