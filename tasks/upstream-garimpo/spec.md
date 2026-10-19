@@ -86,9 +86,9 @@ Só roda para ticket com `Status: ready-for-agent`, ou seja, aprovado.
 ## 8. Perguntas abertas (`needs-info` — responder "não sei" é aceito)
 
 1. **Quem aprova um candidato?** Só o Roberto, ou a liderança técnica também?
-2. **O que "agrega valor" além do bot?** A lista do §5.5 foi inferida. Falta confirmar o que a liderança realmente usa na divulgação e na auditoria.
+2. **O que "agrega valor" além do bot?** A lista do §5.5 foi inferida. Falta confirmar o que a liderança realmente usa na divulgação e na auditoria. **Resposta (2026-10-19): "não sei". `needs-info`**: até a liderança dizer, o critério fica só com bot, segurança/LGPD e confiabilidade.
 3. **Frequência.** Diário todo dia, ou só em dia útil? Resumo semanal para a liderança?
-4. **Onde roda a rotina?** Sessão manual do Claude Code, agendamento (`/schedule`) ou CI no fork? Muda quem tem acesso à rede e ao `gh`.
+4. **Onde roda a rotina?** Sessão manual do Claude Code, agendamento (`/schedule`) ou CI no fork? Muda quem tem acesso à rede e ao `gh`. **Resposta (2026-10-19): agendar diariamente no Dokploy.** Ele roda só o coletor (§5.1 a 5.4, sem IA). A classificação fica numa sessão do Claude. `needs-info`: o contêiner do Dokploy tem `git`, `gh` e rede para o GitHub?
 5. **Ritmo de aplicação.** Teto de PRs aplicados por semana, para não virar a fonte de instabilidade da produção?
 6. **Registro de decisão.** Esta rotina é decisão estrutural nova. Pela regra do `CLAUDE.md`, ela entra em `docs/decisoes.md` **antes** de qualquer código. Quer que eu proponha o texto da entrada?
 7. **Estrutura para diminuir conflito futuro.** Hoje o vocabulário pastoral está espalhado em 65 arquivos do upstream. Centralizar em um único módulo de vocabulário reduziria o conflito a cada cherry-pick, mas é mudança estrutural. Vale abrir como decisão separada?
