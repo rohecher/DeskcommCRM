@@ -36,7 +36,7 @@ jobs:
       - name: PR do garimpo em aberto?
         id: aberta
         run: |
-          n="$(gh pr list --state open --json headRefName --jq '[.[] | select(.headRefName | startswith("garimpo/"))] | length')"
+          n="$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --json headRefName --jq '[.[] | select(.headRefName | startswith("garimpo/"))] | length')"
           echo "abertas=$n" >> "$GITHUB_OUTPUT"
           if [ "$n" != "0" ]; then echo "::notice::Há $n PR(s) do garimpo em aberto; nada a fazer hoje."; fi
 
@@ -90,7 +90,9 @@ jobs:
             printf 'Só coleta mecânica. Mexe apenas em `tasks/upstream-garimpo/`. Mesclar isto **move o marcador** (`ultimo-analisado.txt`); não aplica nada do upstream.\n\n'
             printf 'Vermelhos hoje: %s. Depois do merge, a sessão do Claude classifica o valor de cada item e abre os tickets.\n' "$VERMELHOS"
           } > "$RUNNER_TEMP/corpo.md"
-          url="$(gh pr create --base "$BASE" --head "$branch" \
+          # `--repo` é obrigatório: num fork, o `gh pr create` aponta por padrão para o repositório
+          # PAI (o upstream). Sem isto a PR iria para o projeto deles, não para o nosso.
+          url="$(gh pr create --repo "$GITHUB_REPOSITORY" --base "$BASE" --head "$branch" \
             --title "docs(garimpo): upstream de ${DATA} (${TOTAL} itens)" \
             --body-file "$RUNNER_TEMP/corpo.md")" || {
             echo "::error::Não consegui abrir a PR. Se a mensagem for 'Resource not accessible by integration', ligue Settings > Actions > General > Workflow permissions > 'Allow GitHub Actions to create and approve pull requests'."
