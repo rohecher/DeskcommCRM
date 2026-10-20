@@ -16,7 +16,7 @@ import { execFileSync } from "node:child_process";
 import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
-import { fragmentosDeRelease, lerMerge, sinaisDe, type Sinais } from "./coleta";
+import { conflitosDoMergeTree, fragmentosDeRelease, lerMerge, sinaisDe, type Sinais } from "./coleta";
 import { classificarArquivo, exigePortarAMao, precisaRenumerar, zonaDoPR, type Zona } from "./zonas";
 
 const PASTA = "tasks/upstream-garimpo";
@@ -26,6 +26,28 @@ const MAX_FRAGMENTO = 400;
 
 function git(...args: string[]): string {
   return execFileSync("git", args, { encoding: "utf8", maxBuffer: 256 * 1024 * 1024 }).trim();
+}
+
+/**
+ * "Esse PR aplica limpo no fork?" Mesma conta de um cherry-pick (a base é o pai do PR), feita
+ * em memória. Mede o que a zona não mede: o fork está a milhares de commits do upstream, e um
+ * arquivo que o fork NUNCA tocou (verde) pode estar numa versão que o conserto não reconhece,
+ * ou nem existir. Medido em 2026-10-20: 2 dos 3 itens "verdes e pequenos" do primeiro lote.
+ */
+function simularCherryPick(sha: string): { limpo: boolean; conflitos: string[] } {
+  try {
+    execFileSync("git", ["merge-tree", "--write-tree", "--name-only", `--merge-base=${sha}^1`, "HEAD", sha], {
+      encoding: "utf8",
+      maxBuffer: 64 * 1024 * 1024,
+      stdio: ["ignore", "pipe", "ignore"],
+    });
+    return { limpo: true, conflitos: [] };
+  } catch (e) {
+    // Saída 1 = há conflito (a lista vem no stdout). Qualquer outra coisa é falha de verdade.
+    const err = e as { status?: number; stdout?: string };
+    if (err.status !== 1) throw e;
+    return { limpo: false, conflitos: conflitosDoMergeTree(err.stdout ?? "").slice(0, MAX_ARQUIVOS_LISTADOS) };
+  }
 }
 
 function linhas(s: string): string[] {
@@ -42,6 +64,8 @@ interface Item {
   arquivos: string[];
   renumerar: string[];
   portar_a_mao: string[];
+  /** Simulação do cherry-pick sobre o fork de hoje (`git merge-tree`), sem tocar a árvore. */
+  cherry_pick: { limpo: boolean; conflitos: string[] };
   sinais: Sinais;
   fragmentos: { arquivo: string; trecho: string }[];
 }
@@ -59,12 +83,12 @@ function saidaDoWorkflow(chave: string, valor: string): void {
 }
 
 function tabela(itens: Item[]): string {
-  const cab = "| PR | Zona | Título | Arquivos | Sinais |\n|---|---|---|---|---|";
+  const cab = "| PR | Zona | Título | Arquivos | Aplica limpo? | Sinais |\n|---|---|---|---|---|---|";
   const rows = itens.map((i) => {
     const sinais = Object.entries(i.sinais).filter(([, v]) => v).map(([k]) => k).join(", ") || "—";
     const pr = i.numero !== null ? `#${i.numero}` : i.sha.slice(0, 9);
     const titulo = i.titulo.replace(/\|/g, "\\|");
-    return `| ${pr} | ${i.zona} | ${titulo} | ${i.arquivos_total} | ${sinais} |`;
+    return `| ${pr} | ${i.zona} | ${titulo} | ${i.arquivos_total} | ${i.cherry_pick.limpo ? "sim" : `não (${i.cherry_pick.conflitos.length})`} | ${sinais} |`;
   });
   return [cab, ...rows].join("\n");
 }
@@ -97,6 +121,9 @@ function main(): void {
       const [sha = "", assunto = "", corpo = ""] = registro.split("\x1f");
       const arquivos = linhas(git("diff", "--name-only", `${sha}^1`, sha));
       const zonas = arquivos.map((f) => classificarArquivo(f, modificados));
+      const cherryPick = simularCherryPick(sha);
+      // Conflito é, no mínimo, amarelo: "verde" prometeria um cherry-pick limpo que não existe.
+      if (!cherryPick.limpo) zonas.push("amarela");
       const porZona: Record<Zona, number> = { verde: 0, amarela: 0, vermelha: 0 };
       for (const z of zonas) porZona[z] += 1;
       const { numero, titulo } = lerMerge(assunto, corpo);
@@ -110,6 +137,7 @@ function main(): void {
         arquivos: arquivos.slice(0, MAX_ARQUIVOS_LISTADOS),
         renumerar: arquivos.filter(precisaRenumerar),
         portar_a_mao: arquivos.filter(exigePortarAMao),
+        cherry_pick: cherryPick,
         sinais: sinaisDe(arquivos),
         fragmentos: fragmentosDeRelease(arquivos).map((arquivo) => ({
           arquivo,
