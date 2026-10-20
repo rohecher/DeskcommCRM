@@ -1,6 +1,6 @@
 # 04 — Link «Ver conversa» no detalhe do caso
 
-Status: ready-for-agent
+Status: done
 Type: task
 Origem: https://github.com/melgarafael/DeskcommCRM/pull/3082 (merge `0f1d33344`), relatório de 2026-10-20
 Zona: verde
@@ -31,3 +31,5 @@ O rótulo «Ver conversa» já é neutro. A nota do upstream diz "conversa do cl
 5. Gates, com o `.env` fora do caminho: `pnpm gov:verify`. PR para a `cajado`; o merge faz deploy.
 
 ## Comments
+
+- 2026-10-20: **aplicado por porte manual** (`fcd84e991`, branch `upstream/lote-1-3092-3077-3082`). O cherry-pick deu conflito só de tradução: o upstream usa `t("Ver conversa")` (i18n que o fork não tem) e o fork usa texto direto. O link entrou com texto direto, no estilo do arquivo. O teste do upstream passa sem mudança; typecheck limpo.

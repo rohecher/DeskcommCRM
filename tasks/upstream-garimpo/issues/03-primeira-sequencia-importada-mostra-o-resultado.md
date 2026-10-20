@@ -1,6 +1,6 @@
 # 03 — Importar a primeira sequência de follow-up mostra o que resolver antes de publicar
 
-Status: ready-for-agent
+Status: needs-info
 Type: task
 Origem: https://github.com/melgarafael/DeskcommCRM/pull/3077 (merge `fe8c5bfdc`), relatório de 2026-10-20
 Zona: verde
@@ -31,3 +31,5 @@ Texto de tela dentro de `FlowsList.tsx` (aviso do resultado da importação): co
 5. Gates, com o `.env` fora do caminho: `pnpm gov:verify`. PR para a `cajado`; o merge faz deploy.
 
 ## Comments
+
+- 2026-10-20 (tentativa de aplicar): **conflito em `FlowsList.tsx` e causa de fundo maior.** O conserto pressupõe a janela "Importar fluxo" (`ImportFlowDialog`), os modelos de follow-up e o i18n (`useT`), tudo criado no upstream depois da base do fork (14 commits no arquivo, nenhum no fork). Resolver o conflito à mão geraria código que depende de arquivos que o Cajado não tem. Decisão do Roberto: o Cajado quer importar fluxos e usar modelos? Se sim, o ticket vira "trazer a funcionalidade", maior que o previsto.

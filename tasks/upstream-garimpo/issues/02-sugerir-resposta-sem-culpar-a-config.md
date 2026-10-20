@@ -1,6 +1,6 @@
 # 02 — Sugerir resposta não culpa a configuração quando o agente decide não responder
 
-Status: ready-for-agent
+Status: needs-info
 Type: task
 Origem: https://github.com/melgarafael/DeskcommCRM/pull/3092 (merge `e4060c03f`), relatório de 2026-10-20
 Zona: verde
@@ -31,3 +31,5 @@ A mensagem nova do painel é texto de tela. Conferir o tom e que não cita "empr
 5. Gates, com o `.env` fora do caminho: `pnpm gov:verify`. PR para a `cajado`; o merge faz deploy.
 
 ## Comments
+
+- 2026-10-20 (tentativa de aplicar): **não aplica por cherry-pick, e o ticket estava errado em chamá-lo de "verde, pequeno".** `lib/agent-engine/agent/sugestao-de-resposta.ts`, `lib/i18n/dicionario.ts` e o teste **não existem no fork**: foram criados no upstream depois da base de 2026-08-10. O "Sugerir resposta" nem existe no Cajado. Para trazer o conserto seria preciso trazer a funcionalidade inteira (e o i18n que o fork não tem). Decisão do Roberto: o Cajado quer o "Sugerir resposta"? Se não, `wontfix`.
