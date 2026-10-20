@@ -27,3 +27,7 @@ Médio: salto de duas minors. Quebras possíveis em build, no Turbopack e nos te
 Gates, com o `.env` fora do caminho: `pnpm gov:verify` e `pnpm build`; o `e2e` roda no CI. PR para a `cajado`; o merge faz deploy.
 
 ## Comments
+
+- 2026-10-20: **a subida do Next não é só pelo aviso de 14/10.** Ao ligar o Dependabot no fork (alertas e atualizações de segurança), o GitHub listou **8 alertas abertos só do `next`** na 16.2.12: 3 críticos (RCE em `next/og` ImageResponse, corrigido na 16.3.6; RCE na otimização de imagem com AVIF e RCE em servidores Windows, ambos na 16.3.3), 1 alto (SSRF na otimização de imagem, 16.3.8) e 4 médios/baixos (envenenamento de cache SSG/ISR, vazamento de metadados, endpoint MCP de dev). A 16.4.1 cobre todos. **Alcançabilidade não avaliada** item a item: o fork tem `images.unoptimized: true` e roda em Linux, o que provavelmente tira do alcance parte dos de imagem e o de Windows, mas isso é inferência.
+- 2026-10-20: tentativa de aplicar localmente falhou por timeout do `pnpm` na rede desta máquina (Node 26 e Node 22, com uma conexão por vez, com `--lockfile-only`). Nada foi alterado em `package.json` nem no lock. Caminho: PR do Dependabot (segurança ligada em 2026-10-20) ou rodar o `pnpm update next@16.4.1` em outra rede.
+
