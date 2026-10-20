@@ -81,7 +81,9 @@ jobs:
           git switch -c "$branch"
           git add tasks/upstream-garimpo
           git commit -m "docs(garimpo): relatório do upstream de ${DATA} (${TOTAL} itens)"
-          git push origin "$branch"
+          # Força de propósito: `garimpo/*` é branch DO BOT. Se uma execução anterior abriu o
+          # branch e falhou antes da PR, a de hoje o reescreve em vez de ser recusada.
+          git push --force origin "$branch"
           {
             head -c 60000 "tasks/upstream-garimpo/relatorios/${DATA}.md"
             printf '\n\n---\n'
@@ -90,7 +92,10 @@ jobs:
           } > "$RUNNER_TEMP/corpo.md"
           url="$(gh pr create --base "$BASE" --head "$branch" \
             --title "docs(garimpo): upstream de ${DATA} (${TOTAL} itens)" \
-            --body-file "$RUNNER_TEMP/corpo.md")"
+            --body-file "$RUNNER_TEMP/corpo.md")" || {
+            echo "::error::Não consegui abrir a PR. Se a mensagem for 'Resource not accessible by integration', ligue Settings > Actions > General > Workflow permissions > 'Allow GitHub Actions to create and approve pull requests'."
+            exit 1
+          }
           echo "pr_url=$url" >> "$GITHUB_OUTPUT"
 
       # Aviso no Telegram. Só avisa: a decisão de mesclar fica no GitHub, onde você já é
