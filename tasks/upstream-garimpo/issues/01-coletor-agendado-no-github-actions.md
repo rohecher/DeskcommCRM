@@ -1,8 +1,8 @@
 # 01 — Coletor diário do upstream em GitHub Actions
 
-Status: needs-info
+Status: ready-for-agent
 Type: task
-Blocked by: decisão do Roberto sobre a branch padrão (abaixo)
+Blocked by: nada. Decisão A aplicada em 2026-10-19 (branch padrão do fork = `cajado`).
 
 ## O que fazer
 
@@ -17,7 +17,7 @@ Passos (spec §5.1 a 5.4):
 
 Permissões mínimas do workflow: `contents: write` e `pull-requests: write`, nada além. Sem segredos.
 
-## Decisão pendente (Roberto)
+## Decisão (resolvida em 2026-10-19: opção A)
 
 O cron só dispara pela branch padrão do repo. Hoje a padrão é `main`, parada em `48e517070`. Opções:
 - **A (recomendada):** mudar a branch padrão do fork para `cajado`. É a branch de produção, então faz sentido. Efeito: PRs novas passam a abrir contra `cajado` por padrão, e os workflows de `main` (`ci.yml` roda em `push` para `main`) continuam como estão.
@@ -30,3 +30,7 @@ O cron só dispara pela branch padrão do repo. Hoje a padrão é `main`, parada
 - Nenhum nome real de voluntário no relatório (regra do fork público).
 
 ## Comments
+
+- 2026-10-19: `scripts/upstream-garimpo/zonas.ts` pronto (passo 4) e testado. Aplicado aos 288 arquivos que o upstream mexeu em 2026-10-16: 278 verdes, 9 amarelas, 1 vermelha (`supabase/baseline.sql`). Coletor (`coletar.ts`, `coleta.ts`) e workflow (`.github/workflows/upstream-garimpo.yml`) escritos. Prova local de 2026-10-16: 37 itens em 1 s (25 verdes, 12 amarelas, 0 vermelhas). **Falta:** primeira execução no GitHub (`workflow_dispatch`) e o caveat abaixo.
+- Caveat: PR aberta com o `GITHUB_TOKEN` não dispara outros workflows, então o `verify` não roda nela. Se a `cajado` exigir `verify` para mesclar, a PR do garimpo fica bloqueada. Conferir em Settings → Branches; saída: PAT do Roberto num segredo, ou dispensar o check para `tasks/**`.
+- 2026-10-19: aviso no Telegram (`avisar.ts` + passo "Avisar no Telegram" do workflow). Só avisa, com resumo e o link da PR; a decisão de mesclar fica no GitHub. Segredos do repositório: `TELEGRAM_BOT_TOKEN` e `TELEGRAM_CHAT_ID`. Sem eles o passo pula sem falhar. Prova local com os dados de 2026-10-16: texto de 5 linhas, destaques começando pelo PR de WAHA (#2987).

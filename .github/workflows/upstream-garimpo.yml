@@ -1,0 +1,116 @@
+name: upstream-garimpo
+
+# Garimpo diário do upstream (melgarafael/DeskcommCRM). Spec: tasks/upstream-garimpo/spec.md.
+# Decisão: docs/decisoes.md (2026-10-19). A rotina SÓ LÊ o upstream e abre uma PR com o
+# relatório bruto em tasks/upstream-garimpo/. Não aplica código e não mexe em nada fora dali.
+#
+# O cron só dispara pela branch PADRÃO do repositório, que é a `cajado` desde 2026-10-19.
+
+on:
+  schedule:
+    # 10:00 UTC = 07:00 em Brasília.
+    - cron: "0 10 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: upstream-garimpo
+  cancel-in-progress: false
+
+jobs:
+  coletar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      # Se a PR de ontem ainda não foi mesclada, o marcador não andou: rodar de novo
+      # geraria um relatório que repete o anterior. Espera a revisão.
+      - name: PR do garimpo em aberto?
+        id: aberta
+        run: |
+          n="$(gh pr list --state open --json headRefName --jq '[.[] | select(.headRefName | startswith("garimpo/"))] | length')"
+          echo "abertas=$n" >> "$GITHUB_OUTPUT"
+          if [ "$n" != "0" ]; then echo "::notice::Há $n PR(s) do garimpo em aberto; nada a fazer hoje."; fi
+
+      - uses: pnpm/action-setup@v6
+        if: steps.aberta.outputs.abertas == '0'
+
+      - uses: actions/setup-node@v7
+        if: steps.aberta.outputs.abertas == '0'
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+        if: steps.aberta.outputs.abertas == '0'
+
+      # Só commits e árvores do upstream: o coletor lê nomes de arquivo e uns poucos
+      # fragmentos de release (git show busca só esses blobs).
+      - name: Buscar o upstream
+        if: steps.aberta.outputs.abertas == '0'
+        run: |
+          git remote add upstream https://github.com/melgarafael/DeskcommCRM.git
+          git fetch --no-tags --filter=blob:none upstream main
+
+      - name: Coletar
+        id: coleta
+        if: steps.aberta.outputs.abertas == '0'
+        run: pnpm exec tsx scripts/upstream-garimpo/coletar.ts
+
+      - name: Abrir a PR do relatório
+        id: pr
+        if: steps.aberta.outputs.abertas == '0' && steps.coleta.outputs.novo == 'true'
+        env:
+          DATA: ${{ steps.coleta.outputs.data }}
+          TOTAL: ${{ steps.coleta.outputs.total }}
+          VERMELHOS: ${{ steps.coleta.outputs.vermelhos }}
+          BASE: ${{ github.event.repository.default_branch }}
+        run: |
+          set -euo pipefail
+          branch="garimpo/${DATA}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add tasks/upstream-garimpo
+          git commit -m "docs(garimpo): relatório do upstream de ${DATA} (${TOTAL} itens)"
+          git push origin "$branch"
+          {
+            head -c 60000 "tasks/upstream-garimpo/relatorios/${DATA}.md"
+            printf '\n\n---\n'
+            printf 'Só coleta mecânica. Mexe apenas em `tasks/upstream-garimpo/`. Mesclar isto **move o marcador** (`ultimo-analisado.txt`); não aplica nada do upstream.\n\n'
+            printf 'Vermelhos hoje: %s. Depois do merge, a sessão do Claude classifica o valor de cada item e abre os tickets.\n' "$VERMELHOS"
+          } > "$RUNNER_TEMP/corpo.md"
+          url="$(gh pr create --base "$BASE" --head "$branch" \
+            --title "docs(garimpo): upstream de ${DATA} (${TOTAL} itens)" \
+            --body-file "$RUNNER_TEMP/corpo.md")"
+          echo "pr_url=$url" >> "$GITHUB_OUTPUT"
+
+      # Aviso no Telegram. Só avisa: a decisão de mesclar fica no GitHub, onde você já é
+      # autenticado (decisão de 2026-10-19). Sem os segredos, pula sem falhar; se o Telegram
+      # recusar, vira aviso no log — o relatório e a PR já existem.
+      - name: Avisar no Telegram
+        if: steps.aberta.outputs.abertas == '0' && steps.coleta.outputs.novo == 'true'
+        env:
+          DATA: ${{ steps.coleta.outputs.data }}
+          PR_URL: ${{ steps.pr.outputs.pr_url }}
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "${TG_TOKEN:-}" ] || [ -z "${TG_CHAT:-}" ]; then
+            echo "::notice::TELEGRAM_BOT_TOKEN/TELEGRAM_CHAT_ID não configurados; sem aviso."
+            exit 0
+          fi
+          pnpm exec tsx scripts/upstream-garimpo/avisar.ts "$DATA" "$PR_URL" "$RUNNER_TEMP/aviso.txt"
+          curl -sS --fail-with-body -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TG_CHAT}" \
+            --data-urlencode "text@${RUNNER_TEMP}/aviso.txt" \
+            --data-urlencode "disable_web_page_preview=true" >/dev/null \
+            || echo "::warning::O Telegram recusou o aviso; a PR do relatório já foi aberta."

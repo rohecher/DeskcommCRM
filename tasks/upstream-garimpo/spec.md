@@ -37,15 +37,15 @@ Uma rotina diária que (a) lê o que entrou no upstream desde a última análise
 
 A zona de cada arquivo é **calculada**, não decidida à mão.
 
-- **Vermelha — a rotina nunca propõe tocar.** `lib/escalas/**`, `app/app/escalas/**`, `scripts/importar-escalas.ts`, `supabase/migrations/*_01(4[5-9]|[5-9]\d)_*escala*`, `lib/branding.ts`, `docs/decisoes.md`, `docs/escalas-glossario.md`, `docs/dominio-nao-e-venda.md`, `docs/agents/**`, `CLAUDE.md`, `AGENTS.md`, o bloco `VARREDURA anon` do `baseline.sql`. Se um PR do upstream toca nisso, o relatório marca "conflita com zona vermelha" e para.
-- **Amarela — aplica, mas com tradução.** Arquivos que o fork já modificou em relação ao merge-base: `git diff --name-only <merge-base> HEAD` menos as vermelhas (hoje 65). O ganho funcional entra; as strings de UI voltam ao vocabulário pastoral.
+- **Vermelha — a rotina nunca propõe tocar.** `lib/escalas/**`, `app/app/escalas/**`, `scripts/importar-escalas.ts`, `lib/branding.ts`, `docs/decisoes.md`, `docs/escalas-glossario.md`, `docs/dominio-nao-e-venda.md`, `docs/agents/**`, `CLAUDE.md`, `AGENTS.md`, o bloco `VARREDURA anon` do `baseline.sql` (que o upstream não tem). Se um PR do upstream toca nisso, o relatório marca "conflita com zona vermelha" e para.
+- **Amarela — aplica, mas com cuidado.** Inclui `supabase/baseline.sql` e `supabase/migrations/MANIFEST.md`: todo PR de schema os toca, então vermelho esconderia correção valiosa (medido em 2026-10-16: 8 de 37 PRs ficariam vermelhos só por isso). O conteúdo do upstream nunca é importado, é **portado à mão** (§6.3). Também: Arquivos que o fork já modificou em relação ao merge-base: `git diff --name-only <merge-base> HEAD` menos as vermelhas (hoje 65). O ganho funcional entra; as strings de UI voltam ao vocabulário pastoral.
 - **Verde — cherry-pick limpo.** Arquivo que o fork não tocou. É onde mora o grosso do valor (workers, agent-engine, WAHA, rotas de API, segurança).
 
 ## 5. A rotina diária (só leitura)
 
 Roda uma vez por dia, de manhã. Cada passo é um comando ou um prompt pequeno, para a outra IA não precisar de contexto da sessão.
 
-1. **Marcador.** Lê `tasks/upstream-garimpo/ultimo-analisado.txt` (SHA do último `upstream/main` analisado). Primeira execução: começa na tag mais recente, não na base de 2026-08-10 (que são 10 mil commits).
+1. **Marcador.** Lê `tasks/upstream-garimpo/ultimo-analisado.txt` (SHA do último `upstream/main` analisado). Primeira execução: começa nas últimas 24h do upstream, não na base de 2026-08-10 (que são 10 mil commits).
 2. **Fetch.** `git fetch upstream` (pode demorar; precisa de timeout largo).
 3. **Lista.** PRs mesclados no intervalo: `git log <marcador>..upstream/main --merges`. Para cada um: número, título, arquivos, e o fragmento `docs/release/*.md` se existir.
 4. **Zona.** Classifica cada arquivo do PR em verde, amarela ou vermelha (§4). O PR herda a **pior** zona.
@@ -80,7 +80,7 @@ Só roda para ticket com `Status: ready-for-agent`, ou seja, aprovado.
 - Nenhum PR de zona vermelha aparece como "aplicar".
 - Toda string comercial nova aparece com tradução proposta.
 - Toda migration aparece com número novo e posição no baseline.
-- Um dia sem PR gera relatório vazio de uma linha, não erro.
+- Um dia sem item novo não gera erro nem PR vazia: o coletor avisa no log. O workflow também não roda se já há PR `garimpo/*` em aberto.
 - Nenhum nome real de voluntário em `tasks/` (regra do fork público).
 
 ## 8. Perguntas abertas (`needs-info` — responder "não sei" é aceito)
