@@ -1,6 +1,7 @@
 "use client";
 import { formatDistanceToNowStrict } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -36,6 +37,12 @@ export function CaseDetail({ caseId }: { caseId: string | null }) {
         <div>
           <h2 className="text-base font-semibold">{data.contact_name ?? "Contato sem nome"}</h2>
           <p className="text-xs text-muted-foreground">{data.contact_phone ?? "Sem telefone"}</p>
+          <Link
+            className="text-xs underline underline-offset-4"
+            href={`/app/inbox/${data.conversation_id}`}
+          >
+            Ver conversa
+          </Link>
         </div>
         <div className="flex items-center gap-2">
           {data.source === "guardrail_autofallback" ? (
