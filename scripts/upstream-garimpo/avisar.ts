@@ -16,6 +16,8 @@ if (!data || !url || !saida || !/^\d{4}-\d{2}-\d{2}$/.test(data)) {
 }
 
 const relatorio = JSON.parse(readFileSync(`tasks/upstream-garimpo/relatorios/${data}.json`, "utf8")) as {
-  itens: ItemDoAviso[];
+  total: number;
+  itens: (ItemDoAviso & { candidato: boolean })[];
 };
-writeFileSync(saida, `${montarAviso(data, relatorio.itens, url)}\n`);
+const candidatos = relatorio.itens.filter((i) => i.candidato);
+writeFileSync(saida, `${montarAviso(data, candidatos, url, relatorio.total)}\n`);

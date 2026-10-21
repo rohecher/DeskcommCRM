@@ -104,3 +104,8 @@ Só roda para ticket com `Status: ready-for-agent`, ou seja, aprovado.
 4. Gerador do relatório e dos tickets (§5.8).
 5. Procedimento de aplicação (§6) como skill ou runbook em `docs/runbooks/`.
 6. Primeira execução supervisionada com os PRs de 2026-10-16.
+
+## Revisão de 2026-10-21
+
+O garimpo deixou de ser diário e de listar tudo. Agora é **semanal** (segunda, 07:17 em Brasília) e **filtrado**: só correção, segurança e mudança pequena (`ehCandidato` em `scripts/upstream-garimpo/coleta.ts`). Motivo e números: `docs/decisoes.md`, entrada de 2026-10-21. Aplicado ao relatório real de 21/10, o filtro reduz 34 itens a 13 candidatos.
+

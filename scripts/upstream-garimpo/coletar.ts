@@ -16,7 +16,7 @@ import { execFileSync } from "node:child_process";
 import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
-import { conflitosDoMergeTree, fragmentosDeRelease, lerMerge, sinaisDe, type Sinais } from "./coleta";
+import { conflitosDoMergeTree, ehCandidato, fragmentosDeRelease, lerMerge, sinaisDe, type Sinais } from "./coleta";
 import { classificarArquivo, exigePortarAMao, precisaRenumerar, zonaDoPR, type Zona } from "./zonas";
 
 const PASTA = "tasks/upstream-garimpo";
@@ -55,6 +55,8 @@ function linhas(s: string): string[] {
 }
 
 interface Item {
+  /** Correção, segurança ou mudança pequena (`ehCandidato`). Só estes vão para o relatório e o aviso. */
+  candidato: boolean;
   sha: string;
   numero: number | null;
   titulo: string;
@@ -128,6 +130,7 @@ function main(): void {
       for (const z of zonas) porZona[z] += 1;
       const { numero, titulo } = lerMerge(assunto, corpo);
       return {
+        candidato: ehCandidato({ titulo, arquivos_total: arquivos.length }),
         sha,
         numero,
         titulo,
@@ -152,20 +155,30 @@ function main(): void {
     return;
   }
 
+  const candidatos = itens.filter((i) => i.candidato);
+  if (candidatos.length === 0) {
+    // Sem correção nem segurança no intervalo: nenhuma PR, nenhum aviso. O marcador fica onde
+    // está e o próximo intervalo simplesmente inclui estes itens de novo (sem custo).
+    console.info(`${itens.length} itens novos no upstream, nenhum é correção, segurança ou mudança pequena.`);
+    saidaDoWorkflow("novo", "false");
+    return;
+  }
+
   mkdirSync(path.join(PASTA, "relatorios"), { recursive: true });
-  const json = { data, de, ate: tip, total: itens.length, itens };
+  // O JSON guarda TODOS os itens, com o campo `candidato`: quem quiser auditar o filtro vê o que ficou de fora.
+  const json = { data, de, ate: tip, total: itens.length, total_candidatos: candidatos.length, itens };
   writeFileSync(`${PASTA}/relatorios/${data}.json`, `${JSON.stringify(json, null, 2)}\n`);
 
-  const contagem = (z: Zona) => itens.filter((i) => i.zona === z).length;
+  const contagem = (z: Zona) => candidatos.filter((i) => i.zona === z).length;
   const md = [
     `# Garimpo do upstream — ${data}`,
     "",
-    `${itens.length} itens em \`${de.slice(0, 9)}..${tip.slice(0, 9)}\`: ` +
-      `${contagem("verde")} verdes, ${contagem("amarela")} amarelas, ${contagem("vermelha")} vermelhas.`,
+    `${candidatos.length} correções pequenas entre ${itens.length} itens novos em \`${de.slice(0, 9)}..${tip.slice(0, 9)}\`: ` +
+      `${contagem("verde")} aplicam limpas, ${contagem("amarela")} pedem cuidado, ${contagem("vermelha")} mexem em área do Cajado.`,
     "",
-    "Coleta mecânica (spec §5.1 a 5.4). **Falta** a classificação de valor (§5.5 a 5.7) e a varredura de vocabulário (§5.6): é a sessão do Claude, à parte.",
+    "Só entram correção de defeito, segurança e mudança pequena (decisão de 2026-10-21). Funcionalidade, documento, teste isolado e i18n ficam de fora; o JSON guarda todos, com `candidato: false`.",
     "",
-    tabela(itens),
+    tabela(candidatos),
     "",
   ].join("\n");
   writeFileSync(`${PASTA}/relatorios/${data}.md`, md);
@@ -173,10 +186,10 @@ function main(): void {
   // Por último: se qualquer passo acima falhar, o marcador fica onde estava.
   writeFileSync(MARCADOR, `${tip}\n`);
 
-  console.info(`Relatório de ${data}: ${itens.length} itens.`);
+  console.info(`Relatório de ${data}: ${candidatos.length} candidatos de ${itens.length} itens.`);
   saidaDoWorkflow("novo", "true");
   saidaDoWorkflow("data", data);
-  saidaDoWorkflow("total", String(itens.length));
+  saidaDoWorkflow("total", String(candidatos.length));
   saidaDoWorkflow("vermelhos", String(contagem("vermelha")));
 }
 
