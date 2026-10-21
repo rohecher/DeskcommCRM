@@ -1,0 +1,93 @@
+name: atualizar-dependencia
+
+# Sobe UMA dependência para UMA versão exata e abre a PR. Disparo manual.
+#
+# Por que existe: o aviso de segurança do Next de 14/10 (16.4.1) não chegou ao Dependabot, e
+# quem mantém o fork nem sempre consegue rodar `pnpm update` na própria máquina (a rede
+# deixou o pnpm expirar o dia inteiro). O runner do GitHub tem rede boa e o `pnpm` do
+# projeto, na versão do `packageManager`.
+#
+# Faz só isto: `pnpm update <pacote>@<versão>`, confirma que a versão instalada é a pedida,
+# confirma que só `package.json` e `pnpm-lock.yaml` mudaram e abre a PR. NÃO mescla.
+#
+# Atenção: PR aberta com o `GITHUB_TOKEN` não dispara os checks (verify, invariants,
+# build-and-push), e a `cajado` os exige. Depois de abrir, FECHE e REABRA a PR com a sua conta
+# (`gh pr close N && gh pr reopen N`): o evento `reopened` feito por uma pessoa dispara tudo.
+
+on:
+  workflow_dispatch:
+    inputs:
+      pacote:
+        description: "Nome do pacote (ex.: next ou @modelcontextprotocol/sdk)"
+        required: true
+        default: "next"
+      versao:
+        description: "Versão EXATA (ex.: 16.4.1)"
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: atualizar-dependencia
+  cancel-in-progress: false
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PACOTE: ${{ inputs.pacote }}
+      VERSAO: ${{ inputs.versao }}
+      BASE: ${{ github.event.repository.default_branch }}
+    steps:
+      # Entradas viram parte de nome de branch e de comando: só formato conhecido passa.
+      - name: Validar as entradas
+        run: |
+          set -euo pipefail
+          [[ "$PACOTE" =~ ^(@[a-z0-9._-]+/)?[a-z0-9._-]+$ ]] || { echo "::error::Pacote inválido: $PACOTE"; exit 1; }
+          [[ "$VERSAO" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "::error::Versão precisa ser exata (X.Y.Z): $VERSAO"; exit 1; }
+
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Atualizar
+        run: pnpm update "${PACOTE}@${VERSAO}"
+
+      - name: Conferir o que mudou
+        run: |
+          set -euo pipefail
+          instalada="$(node -p "JSON.parse(require('fs').readFileSync('node_modules/${PACOTE}/package.json','utf8')).version")"
+          [ "$instalada" = "$VERSAO" ] || { echo "::error::Pedi $VERSAO e ficou $instalada"; exit 1; }
+          fora="$(git diff --name-only | grep -vE '^(package\.json|pnpm-lock\.yaml)$' || true)"
+          [ -z "$fora" ] || { echo "::error::Mudou arquivo além de package.json e do lock: $fora"; exit 1; }
+          git diff --stat | tail -3
+
+      - name: Abrir a PR
+        run: |
+          set -euo pipefail
+          branch="bump/$(echo "$PACOTE" | tr '/@' '--')-${VERSAO}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add package.json pnpm-lock.yaml
+          git commit -m "build(deps): ${PACOTE} para ${VERSAO}"
+          # Branch do bot: se uma execução anterior deixou o branch, esta o reescreve.
+          git push --force origin "$branch"
+          {
+            printf 'Sobe `%s` para `%s`. Só `package.json` e `pnpm-lock.yaml` mudam.\n\n' "$PACOTE" "$VERSAO"
+            printf 'Aberta pelo workflow `atualizar-dependencia`. **Os checks não rodaram** (PR do `GITHUB_TOKEN`). Feche e reabra esta PR com a sua conta para disparar `verify`, `invariants` e `build-and-push`.\n'
+          } > "$RUNNER_TEMP/corpo.md"
+          # `--repo` é obrigatório: num fork, o padrão do gh é o repositório PAI.
+          gh pr create --repo "$GITHUB_REPOSITORY" --base "$BASE" --head "$branch" \
+            --title "build(deps): ${PACOTE} para ${VERSAO}" --body-file "$RUNNER_TEMP/corpo.md"
