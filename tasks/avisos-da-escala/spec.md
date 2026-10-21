@@ -71,7 +71,8 @@ Cada seção nasce **junto com o aviso que a lê**, nunca antes (configuração 
 2. **Domingo:** sim, aviso de troca **urgente do próprio dia** pode sair no domingo, entre 7h e 22h.
 3. **Lembrete parametrizável:** um dia antes, no dia, e **pesquisa pós-culto**. Cada um liga e desliga, com a antecedência configurável.
 4. **Sem resposta:** **dois cultos seguidos sem resposta** abrem um **atendimento no kanban** (não só um aviso na Central).
-5. **Pergunta 5 da seção abaixo (telefones):** ainda sem contagem (ticket 01 da lista antiga).
+5. **Consentimento (pergunta 8):** sim, os voluntários **já concordaram** em receber aviso por WhatsApp. A primeira mensagem é a própria convocação, sem pedir permissão antes. O `PARAR` continua valendo.
+6. **Pergunta 5 da seção abaixo (telefones):** ainda sem contagem (ticket 01 da lista antiga).
 
 ## 5. Perguntas abertas (`needs-info`; "não sei" é aceito)
 
