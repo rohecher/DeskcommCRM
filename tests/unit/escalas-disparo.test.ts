@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { capacidadePorHora, planejarDisparo } from "@/lib/escalas/disparo";
+import { abreEmDoCulto, capacidadePorHora, planejarDisparo, prazoDoCulto } from "@/lib/escalas/disparo";
 
 /** Horário de Brasília (UTC-3, sem horário de verão desde 2019). 2 e 3 de novembro de 2026 são segunda e terça. */
 const nov = (dia: number, hora: number) => new Date(`2026-11-${String(dia).padStart(2, "0")}T${String(hora).padStart(2, "0")}:00:00-03:00`);
@@ -81,3 +81,41 @@ describe("planejarDisparo: quando começa, em que blocos e quando termina", () =
     expect(() => planejarDisparo({ total: 10, abreEm: nov(2, 7), prazo: nov(4, 22), capacidade: 0, ...REGRA })).toThrow(/capacidade/);
   });
 });
+
+describe("quando o aviso de um culto abre: a antecedência é por culto e parametrizável", () => {
+  it("culto de quinta, 2 dias antes: o aviso abre na terça, às 7h", () => {
+    expect(abreEmDoCulto({ data: "2026-11-05", antecedenciaDias: 2, horaAbertura: 7 })).toEqual(nov(3, 7));
+  });
+
+  it("culto de domingo, 2 dias antes: o aviso abre na sexta, às 7h", () => {
+    expect(abreEmDoCulto({ data: "2026-11-08", antecedenciaDias: 2, horaAbertura: 7 })).toEqual(nov(6, 7));
+  });
+
+  it("a antecedência é do culto: com 3 dias, o de quinta abre na segunda", () => {
+    expect(abreEmDoCulto({ data: "2026-11-05", antecedenciaDias: 3, horaAbertura: 7 })).toEqual(nov(2, 7));
+  });
+
+  it("antecedência zero abre no próprio dia", () => {
+    expect(abreEmDoCulto({ data: "2026-11-05", antecedenciaDias: 0, horaAbertura: 7 })).toEqual(nov(5, 7));
+  });
+
+  it("antecedência negativa ou quebrada é recusada", () => {
+    expect(() => abreEmDoCulto({ data: "2026-11-05", antecedenciaDias: -1, horaAbertura: 7 })).toThrow(/antecedência/);
+    expect(() => abreEmDoCulto({ data: "2026-11-05", antecedenciaDias: 1.5, horaAbertura: 7 })).toThrow(/antecedência/);
+  });
+});
+
+describe("prazoDoCulto: até quando o aviso deveria terminar", () => {
+  it("por padrão, 24 horas antes da hora do culto", () => {
+    expect(prazoDoCulto({ data: "2026-11-05", hora: "19:20", horasAntes: 24 })).toEqual(new Date("2026-11-04T19:20:00-03:00"));
+  });
+
+  it("culto de domingo às 19h com 24 horas antes: sábado às 19h", () => {
+    expect(prazoDoCulto({ data: "2026-11-08", hora: "19:00", horasAntes: 24 })).toEqual(new Date("2026-11-07T19:00:00-03:00"));
+  });
+
+  it("hora que não é HH:MM é recusada", () => {
+    expect(() => prazoDoCulto({ data: "2026-11-05", hora: "tarde", horasAntes: 24 })).toThrow(/hora/);
+  });
+});
+

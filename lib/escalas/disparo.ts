@@ -78,3 +78,28 @@ export function planejarDisparo(e: EntradaDoDisparo): PlanoDeDisparo {
   const terminaEm = new Date(blocos[blocos.length - 1]!.inicio.getTime() + UMA_HORA);
   return { blocos, terminaEm, horasNecessarias: blocos.length, cabeNoPrazo: terminaEm.getTime() <= e.prazo.getTime() };
 }
+
+const UM_DIA = 24 * UMA_HORA;
+
+/**
+ * Quando o aviso de UM culto abre: `antecedenciaDias` antes, na hora de abertura da janela.
+ *
+ * A antecedência é por culto (padrão 2 dias): o de quinta avisa na terça, o de domingo na sexta. É
+ * parâmetro, e não regra fixa, porque cada igreja tem o seu ritmo. Se cair num dia sem envio
+ * (domingo), `planejarDisparo` empurra para o próximo dia livre.
+ */
+export function abreEmDoCulto(p: { data: string; antecedenciaDias: number; horaAbertura: number }): Date {
+  if (!Number.isInteger(p.antecedenciaDias) || p.antecedenciaDias < 0) {
+    throw new Error(`antecedência inválida: ${p.antecedenciaDias}`);
+  }
+  const hh = String(p.horaAbertura).padStart(2, "0");
+  const doCulto = new Date(`${p.data}T${hh}:00:00-03:00`);
+  return new Date(doCulto.getTime() - p.antecedenciaDias * UM_DIA);
+}
+
+/** Até quando o aviso deveria terminar: `horasAntes` da hora do culto (padrão 24). */
+export function prazoDoCulto(p: { data: string; hora: string; horasAntes: number }): Date {
+  if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(p.hora)) throw new Error(`hora inválida: ${p.hora}`);
+  return new Date(new Date(`${p.data}T${p.hora}:00-03:00`).getTime() - p.horasAntes * UMA_HORA);
+}
+
