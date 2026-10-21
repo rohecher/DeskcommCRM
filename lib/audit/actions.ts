@@ -246,4 +246,6 @@ export type AuditAction =
   | "escala.mes_publicado"
   | "escala.rascunho_descartado"
   // A escala do louvor colada como texto e conferida na prévia.
-  | "escala.louvor_registrado";
+  | "escala.louvor_registrado"
+  /** A liderança escolheu o número de WhatsApp que manda os avisos da escala. */
+  | "escala.canal_de_aviso_definido";

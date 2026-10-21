@@ -37,6 +37,24 @@ Marcação: **CONFIRMADO** = lido no repositório; **INFERIDO** = dedução; **D
 
 **Fase 4: push de verdade (PWA).** Só depois, e só se a Fase 1 e a 3 não bastarem. Custo alto e sem base no fork.
 
+### 3b. Pesquisa pós-culto (decisão de 2026-10-21)
+
+Desenho-base: `cajado-arquitetura.md` §4.2. Decidido com o Roberto:
+
+- **Uma pergunta só**, com resposta por número (regra simples, sem IA): "Deu tudo certo no seu serviço de domingo? 1 (sim, tudo certo), 2 (tive dificuldade) ou 3 (não consegui ir)."
+- **1** marca a vaga como `presente`. **3** marca `faltou`. Hoje a liderança marca isso à mão.
+- **2** pede uma segunda mensagem: "O que aconteceu? Pode escrever do seu jeito." A resposta em texto livre **só é registrada**, a conversa **termina** e as **pessoas escolhidas são avisadas**. Sem pontuação por IA.
+- **Sem resposta em 48 horas:** o silêncio é registrado (é dado).
+- **Dois cultos seguidos** sem resposta, ou duas faltas seguidas, abrem um **atendimento no kanban** (regra do Roberto de 2026-10-21 e do desenho original).
+- Dispara algumas horas depois do culto (padrão: 2 h, parametrizável).
+
+### 3c. Configurações dos avisos (uma tela só: `/app/escalas/avisos`)
+
+Cada seção nasce **junto com o aviso que a lê**, nunca antes (configuração sem consumidor engana). Tudo em `escala_config`, chave `avisos`, validado com Zod, com padrões que funcionam sem configurar, só gerente ou mais edita, com auditoria e "voltar ao padrão".
+
+- **Número** (feito). **Quando avisar**: convocação, lembretes (um dia antes, no dia), pesquisa pós-culto, troca urgente no dia. **Por onde**: WhatsApp; push desabilitado ("em breve"). **Quando ninguém responde**: quantos cultos seguidos. **Quem é avisado**: escolhido **pelo cadastro** (ver ticket 11).
+- **Textos fixos e humanizados** no começo; editáveis só se a liderança pedir. O ritmo de envio, a janela de 7h a 22h e o `PARAR` **não** são configuráveis: protegem o número da igreja.
+
 ## 4. Restrições que valem para tudo
 
 - **Trigger nunca faz HTTP.** O aprovar do mês emite linha em `event_log`; um worker consome e envia (doutrina do `CLAUDE.md`).
@@ -46,6 +64,15 @@ Marcação: **CONFIRMADO** = lido no repositório; **INFERIDO** = dedução; **D
 - **Texto de tela e de mensagem** passa pelo `humanizer-pt-br`, com o vocabulário de igreja (`docs/escalas-glossario.md`). Nome de pessoa nunca é reescrito.
 - **Sistema vivo.** Voluntário que não responde em N dias não some: aparece na Central da liderança com o próximo passo.
 - **Nada de nome real** em fixture ou teste (fork público).
+
+## 4b. Respostas do Roberto (2026-10-21)
+
+1. **Número do aviso:** uma **tela para vincular o número** usado nos avisos. Feita: `/app/escalas/avisos` (ticket 01, abaixo).
+2. **Domingo:** sim, aviso de troca **urgente do próprio dia** pode sair no domingo, entre 7h e 22h.
+3. **Lembrete parametrizável:** um dia antes, no dia, e **pesquisa pós-culto**. Cada um liga e desliga, com a antecedência configurável.
+4. **Sem resposta:** **dois cultos seguidos sem resposta** abrem um **atendimento no kanban** (não só um aviso na Central).
+5. **Consentimento (pergunta 8):** sim, os voluntários **já concordaram** em receber aviso por WhatsApp. A primeira mensagem é a própria convocação, sem pedir permissão antes. O `PARAR` continua valendo.
+6. **Pergunta 5 da seção abaixo (telefones):** ainda sem contagem (ticket 01 da lista antiga).
 
 ## 5. Perguntas abertas (`needs-info`; "não sei" é aceito)
 
@@ -70,3 +97,9 @@ Marcação: **CONFIRMADO** = lido no repositório; **INFERIDO** = dedução; **D
 ## 7. Laço de retorno (invariante 7)
 
 Se o aviso sai errado ou não chega, a liderança volta a avisar no grupo à mão. O sinal é a Central: aviso que falhou ou voluntário sem resposta aparece lá, com o motivo.
+
+## Progresso
+
+- **Número dos avisos (decisão 1): feito** em `feat/aviso-numero-da-escala`. Guarda o id da sessão em `escala_config.aviso_canal_id`, sem migration. `lib/escalas/aviso.ts`, ação `salvarCanalDeAviso`, tela `/app/escalas/avisos`. Falta provar **pela tela** com Playwright num banco fresco (doutrina de QA visual).
+- Próximo: convocação ao aprovar o mês (ticket 02), que **lê esse número** e não envia nada se ele não estiver escolhido.
+
