@@ -1,0 +1,411 @@
+{
+  "data": "2026-10-20",
+  "de": "d1dc8525bf17accf5dfcd895ebb15a964fa4f56b",
+  "ate": "e4060c03f5acc53d9a7ad4e4c405568e5cb56251",
+  "total": 11,
+  "itens": [
+    {
+      "sha": "8ae22330d58aa6d4274753d983c62a3a661a4ea1",
+      "numero": 2638,
+      "titulo": "feat(banco-externo): dialeto MySQL (Spec 23, fatia 4a-2a)",
+      "zona": "amarela",
+      "arquivos_total": 24,
+      "por_zona": {
+        "verde": 23,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/banco-externo-motor-e-aviso-2637.md",
+        ".changes/banco-externo-mysql-api-2638.md",
+        "app/api/v1/external-db/connections/route.test.ts",
+        "docs/specs/20-spec-banco-de-dados-externo.md",
+        "lib/external-db/dialeto.test.ts",
+        "lib/external-db/dialeto.ts",
+        "lib/external-db/dialetos/mysql/conexao.test.ts",
+        "lib/external-db/dialetos/mysql/conexao.ts",
+        "lib/external-db/dialetos/mysql/dialeto.ts",
+        "lib/external-db/dialetos/mysql/grants.test.ts",
+        "lib/external-db/dialetos/mysql/grants.ts",
+        "lib/external-db/dialetos/mysql/introspeccao.test.ts",
+        "lib/external-db/dialetos/mysql/introspeccao.ts",
+        "lib/external-db/dialetos/mysql/leitura.test.ts",
+        "lib/external-db/dialetos/mysql/leitura.ts",
+        "lib/external-db/drivers.test.ts",
+        "lib/external-db/drivers.ts",
+        "lib/external-db/leitura.ts",
+        "lib/external-db/montagem.test.ts",
+        "lib/external-db/montagem.ts",
+        "lib/external-db/schemas.test.ts",
+        "lib/external-db/schemas.ts",
+        "package.json",
+        "pnpm-lock.yaml"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": false
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "9f61de8d2661632b65d8b3610e7576254f2ba178",
+      "numero": 3060,
+      "titulo": "fix(single-server): o convite volta a criar conta quando o e-mail é só pela Resend",
+      "zona": "amarela",
+      "arquivos_total": 8,
+      "por_zona": {
+        "verde": 7,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/gotrue-envia-pela-resend.md",
+        "app/actions/auth/signUp.test.ts",
+        "app/actions/auth/signUp.ts",
+        "components/auth/SignupForm.tsx",
+        "hostgator-setup-kit/_common.sh",
+        "lib/i18n/dicionario.ts",
+        "lib/i18n/traducoes/en.json",
+        "tests/shell/single-server-operacao.test.sh"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "c2c3416a09d861d8fef10d762f2f84916386ed42",
+      "numero": 2640,
+      "titulo": "test(banco-externo): MySQL 8 de verdade num workflow informativo (Spec 23, fatia 4a-2b)",
+      "zona": "amarela",
+      "arquivos_total": 9,
+      "por_zona": {
+        "verde": 8,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".github/workflows/mysql-integracao.yml",
+        "package.json",
+        "scripts/verificar-standalone-mysql.mjs",
+        "tests/mysql/ajudante.ts",
+        "tests/mysql/dialeto.test.ts",
+        "tests/mysql/medicoes.test.ts",
+        "tests/unit/gatilho-dos-jobs-de-entrega.test.ts",
+        "vitest.config.ts",
+        "vitest.mysql.config.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": false
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "7eb61b97ad64dbf54c0f2e971c47f40b20be304a",
+      "numero": 3079,
+      "titulo": "feat(ia): Gemini 4 Argon no catálogo de modelos, com a virada de preço de 01/12/2026",
+      "zona": "amarela",
+      "arquivos_total": 9,
+      "por_zona": {
+        "verde": 8,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/catalogo-gemini-4-argon.md",
+        "lib/agent-engine/edge/llm/pricing.test.ts",
+        "lib/agent-engine/edge/llm/pricing.ts",
+        "lib/ai/cost.ts",
+        "supabase/baseline.sql",
+        "supabase/migrations/20261021120000_0703_catalogo_gemini_4_argon.sql",
+        "tests/invariants/catalogo-gemini-4-argon.test.ts",
+        "tests/unit/compute-cost-respeita-a-virada-do-gemini-flash.test.ts",
+        "tests/unit/preco-do-catalogo-tem-linha-no-motor.test.ts"
+      ],
+      "renumerar": [
+        "supabase/migrations/20261021120000_0703_catalogo_gemini_4_argon.sql"
+      ],
+      "portar_a_mao": [
+        "supabase/baseline.sql"
+      ],
+      "sinais": {
+        "bot": true,
+        "vendas": false,
+        "schema": true,
+        "tela": false
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "e593c58b05f6a4d6de1141f1e9da3d3cc156f066",
+      "numero": 2439,
+      "titulo": "A inbox usa o nome salvo no celular",
+      "zona": "amarela",
+      "arquivos_total": 38,
+      "por_zona": {
+        "verde": 35,
+        "amarela": 3,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/nome-da-agenda-do-celular.md",
+        "app/api/v1/contacts/_handler.ts",
+        "app/api/v1/conversations/_handler.ts",
+        "app/api/v1/cron/contact-names/route.ts",
+        "app/api/v1/lgpd/requests/[id]/preview/route.ts",
+        "app/app/contacts/[id]/_client.tsx",
+        "components/contacts/ContactsTable.tsx",
+        "components/inbox/CRMSidePanel.tsx",
+        "components/inbox/ConversationHeader.tsx",
+        "components/inbox/ConversationListItem.tsx",
+        "docker/scheduler/entrypoint.sh",
+        "hooks/inbox/useConversationsRealtime.ts",
+        "lib/audit/actions.ts",
+        "lib/automation/template.ts",
+        "lib/channels/adapters/waha.ts",
+        "lib/channels/meta/ingest.ts",
+        "lib/channels/types.ts",
+        "lib/contacts/nome-da-agenda.test.ts",
+        "lib/contacts/nome-da-agenda.ts",
+        "lib/contacts/rotulo-do-contato.ts",
+        "lib/database.types.ts",
+        "lib/i18n/dicionario.ts",
+        "lib/lgpd/export-collector.ts",
+        "lib/types/contacts.ts",
+        "lib/waha/client.ts",
+        "supabase/baseline.sql",
+        "supabase/migrations/20261007205228_0593_nome_da_agenda.sql",
+        "tests/invariants/lgpd-anonimizar-esquece-a-agenda.test.ts",
+        "tests/unit/busca-de-contatos-normaliza-termo.test.ts",
+        "tests/unit/contatos-busca-por-nome-visivel.test.ts",
+        "tests/unit/cron-contact-names.test.ts",
+        "tests/unit/inbox-busca-acha-pelo-contato.test.ts",
+        "tests/unit/lgpd-export-nome-da-agenda.test.ts",
+        "tests/unit/lgpd-exporta-o-que-redige.test.ts",
+        "tests/unit/lgpd-pdf-campos-personalizados.test.ts",
+        "tests/unit/lgpd-pdf-cpf-mascarado.test.ts",
+        "tests/unit/meta-coexistencia-contato-do-app.test.ts",
+        "tests/unit/nome-da-agenda-nunca-vai-ao-cliente.test.ts"
+      ],
+      "renumerar": [
+        "supabase/migrations/20261007205228_0593_nome_da_agenda.sql"
+      ],
+      "portar_a_mao": [
+        "supabase/baseline.sql"
+      ],
+      "sinais": {
+        "bot": true,
+        "vendas": false,
+        "schema": true,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "0f1d3334445fb837a8e520ad8c7398d30a2d267d",
+      "numero": 3082,
+      "titulo": "feat(casos): link 'Ver conversa' no detalhe do caso",
+      "zona": "verde",
+      "arquivos_total": 3,
+      "por_zona": {
+        "verde": 3,
+        "amarela": 0,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/caso-link-ver-conversa-3082.md",
+        "app/app/ai/cases/_components/CaseDetail.tsx",
+        "tests/unit/case-detail.test.tsx"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "sinais": {
+        "bot": true,
+        "vendas": false,
+        "schema": false,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "fe8c5bfdc88199cee8125e201f7103cf03d0f61b",
+      "numero": 3077,
+      "titulo": "fix(followup): a primeira sequência importada mostra o que resolver antes de publicar",
+      "zona": "verde",
+      "arquivos_total": 3,
+      "por_zona": {
+        "verde": 3,
+        "amarela": 0,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/primeira-sequencia-importada-mostra-o-resultado.md",
+        "app/app/ai/followups/_components/FlowsList.tsx",
+        "tests/unit/importar-a-primeira-sequencia-mostra-o-resultado.test.tsx"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "sinais": {
+        "bot": true,
+        "vendas": false,
+        "schema": false,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "70a8c2775567f7daea721c77d34a9881190397bc",
+      "numero": 3085,
+      "titulo": "Release 1.86.0",
+      "zona": "verde",
+      "arquivos_total": 26,
+      "por_zona": {
+        "verde": 26,
+        "amarela": 0,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/anuncio-na-conversa-e-no-painel.md",
+        ".changes/banco-externo-drivers.md",
+        ".changes/banco-externo-motor-e-aviso-2637.md",
+        ".changes/banco-externo-mysql-api-2638.md",
+        ".changes/campo-do-contato-ou-do-negocio-2791.md",
+        ".changes/campo-lista-pesquisavel-2521.md",
+        ".changes/caso-link-ver-conversa-3082.md",
+        ".changes/catalogo-gemini-4-argon.md",
+        ".changes/exemplo-para-a-ia-na-lista-de-conversas-3006.md",
+        ".changes/followup-importar-erros-em-portugues-3056.md",
+        ".changes/followup-publicar-confere-modelo-3056.md",
+        ".changes/followup-silencio-nao-cobra-quem-espera-resposta.md",
+        ".changes/gatilho-por-data-so-campos-do-negocio-2791.md",
+        ".changes/gotrue-envia-pela-resend.md",
+        ".changes/importar-exportar-fluxos.md",
+        ".changes/janela-do-lote-pela-elegibilidade-3044.md",
+        ".changes/lembrete-de-prazo-da-tarefa-2529.md",
+        ".changes/motivo-da-passagem-pelo-agente.md",
+        ".changes/next-16-4-1-correcao-de-seguranca-3053.md",
+        ".changes/nome-da-agenda-do-celular.md",
+        ".changes/primeira-sequencia-importada-mostra-o-resultado.md",
+        ".changes/reacao-do-cliente-nao-reabre-a-conversa-2797.md",
+        ".changes/rodizio-de-atendentes-na-acao-atribuir-2041.md",
+        ".changes/seletor-resiste-traducao-do-navegador.md",
+        ".changes/whatsapp-resposta-caso-humano.md",
+        "CHANGELOG.md"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": false
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "393e93a0d8128c33ac7d74ba74ef29c8bf2b1549",
+      "numero": 2639,
+      "titulo": "feat(banco-externo): tela do motor e do aviso de privilégio (Spec 23, fatia 4b)",
+      "zona": "verde",
+      "arquivos_total": 17,
+      "por_zona": {
+        "verde": 17,
+        "amarela": 0,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/banco-externo-mysql.md",
+        ".github/workflows/e2e.yml",
+        "app/app/integracao-dados/_components/AvisoDoTeste.test.tsx",
+        "app/app/integracao-dados/_components/AvisoDoTeste.tsx",
+        "app/app/integracao-dados/_components/ComoCriarAcesso.test.tsx",
+        "app/app/integracao-dados/_components/ComoCriarAcesso.tsx",
+        "app/app/integracao-dados/_components/FormularioDeConexao.tsx",
+        "app/app/integracao-dados/_components/ListaDeConexoes.tsx",
+        "app/app/integracao-dados/page.tsx",
+        "docs/architecture/banco-de-dados-externo.architecture.json",
+        "evidence/2026-10-19-banco-externo-mysql-na-tela/README.md",
+        "evidence/2026-10-19-banco-externo-mysql-na-tela/aviso-de-usuario-que-escreve.png",
+        "evidence/2026-10-19-banco-externo-mysql-na-tela/grade-le-o-mysql.png",
+        "lib/external-db/guia-de-acesso.test.ts",
+        "lib/external-db/guia-de-acesso.ts",
+        "lib/i18n/dicionario.ts",
+        "tests/e2e/integracao-dados-mysql-na-tela.spec.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "4271269649cfe9fc3774138fffc33f5cf84482cc",
+      "numero": 3086,
+      "titulo": "docs(changelog): crédito e entrada do #3052 na 1.86.0",
+      "zona": "verde",
+      "arquivos_total": 1,
+      "por_zona": {
+        "verde": 1,
+        "amarela": 0,
+        "vermelha": 0
+      },
+      "arquivos": [
+        "CHANGELOG.md"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": false
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "e4060c03f5acc53d9a7ad4e4c405568e5cb56251",
+      "numero": 3092,
+      "titulo": "fix(inbox): \"Sugerir resposta\" não culpa a configuração quando o agente decide não responder",
+      "zona": "verde",
+      "arquivos_total": 4,
+      "por_zona": {
+        "verde": 4,
+        "amarela": 0,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/sugestao-sem-resposta-nao-e-erro.md",
+        "lib/agent-engine/agent/sugestao-de-resposta.ts",
+        "lib/i18n/dicionario.ts",
+        "tests/unit/sugestao-de-resposta.test.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": false
+      },
+      "fragmentos": []
+    }
+  ]
+}
