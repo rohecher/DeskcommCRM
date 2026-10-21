@@ -37,6 +37,24 @@ Marcação: **CONFIRMADO** = lido no repositório; **INFERIDO** = dedução; **D
 
 **Fase 4: push de verdade (PWA).** Só depois, e só se a Fase 1 e a 3 não bastarem. Custo alto e sem base no fork.
 
+### 3b. Pesquisa pós-culto (decisão de 2026-10-21)
+
+Desenho-base: `cajado-arquitetura.md` §4.2. Decidido com o Roberto:
+
+- **Uma pergunta só**, com resposta por número (regra simples, sem IA): "Deu tudo certo no seu serviço de domingo? 1 (sim, tudo certo), 2 (tive dificuldade) ou 3 (não consegui ir)."
+- **1** marca a vaga como `presente`. **3** marca `faltou`. Hoje a liderança marca isso à mão.
+- **2** pede uma segunda mensagem: "O que aconteceu? Pode escrever do seu jeito." A resposta em texto livre **só é registrada**, a conversa **termina** e as **pessoas escolhidas são avisadas**. Sem pontuação por IA.
+- **Sem resposta em 48 horas:** o silêncio é registrado (é dado).
+- **Dois cultos seguidos** sem resposta, ou duas faltas seguidas, abrem um **atendimento no kanban** (regra do Roberto de 2026-10-21 e do desenho original).
+- Dispara algumas horas depois do culto (padrão: 2 h, parametrizável).
+
+### 3c. Configurações dos avisos (uma tela só: `/app/escalas/avisos`)
+
+Cada seção nasce **junto com o aviso que a lê**, nunca antes (configuração sem consumidor engana). Tudo em `escala_config`, chave `avisos`, validado com Zod, com padrões que funcionam sem configurar, só gerente ou mais edita, com auditoria e "voltar ao padrão".
+
+- **Número** (feito). **Quando avisar**: convocação, lembretes (um dia antes, no dia), pesquisa pós-culto, troca urgente no dia. **Por onde**: WhatsApp; push desabilitado ("em breve"). **Quando ninguém responde**: quantos cultos seguidos. **Quem é avisado**: escolhido **pelo cadastro** (ver ticket 11).
+- **Textos fixos e humanizados** no começo; editáveis só se a liderança pedir. O ritmo de envio, a janela de 7h a 22h e o `PARAR` **não** são configuráveis: protegem o número da igreja.
+
 ## 4. Restrições que valem para tudo
 
 - **Trigger nunca faz HTTP.** O aprovar do mês emite linha em `event_log`; um worker consome e envia (doutrina do `CLAUDE.md`).
