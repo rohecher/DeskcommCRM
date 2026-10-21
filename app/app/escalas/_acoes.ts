@@ -6,6 +6,7 @@ import { headers } from "next/headers";
 import { audit } from "@/lib/audit";
 import { loadAuthUser, resolveActiveOrg } from "@/lib/auth/server";
 import { ROLE_RANK } from "@/lib/auth/types";
+import { gravarCanalDeAviso } from "@/lib/escalas/aviso";
 import { carregarVaga, marcarStatus, trocarVoluntario, type VagaParaEditar } from "@/lib/escalas/editar";
 import { gravarLouvor, louvorLancado, previaDoLouvor, type PreviaDoLouvor } from "@/lib/escalas/louvor-banco";
 import { hojeIso, mesValido } from "@/lib/escalas/mes";
@@ -262,4 +263,29 @@ export async function salvarLouvor(mes: string, entrada: unknown): Promise<Resul
   });
   revalidatePath("/app/escalas", "layout");
   return { ok: true, ...r };
+}
+
+export type ResultadoDoCanalDeAviso = { ok: true } | { ok: false; erro: string };
+
+/** Escolhe o número de WhatsApp que manda os avisos da escala. Líder de Ministério para cima. */
+export async function salvarCanalDeAviso(canalId: string): Promise<ResultadoDoCanalDeAviso> {
+  if (typeof canalId !== "string" || !UUID.test(canalId)) return { ok: false, erro: "invalid_request" };
+  const quem = await quemEdita();
+  if (!quem.ok) return { ok: false, erro: quem.erro };
+  const db = await createClient();
+  const r = await gravarCanalDeAviso(db, quem.org.orgId, canalId);
+  if (!r.ok) return { ok: false, erro: r.erro };
+
+  const hdrs = await headers();
+  await audit({
+    action: "escala.canal_de_aviso_definido",
+    actorUserId: quem.user.id,
+    organizationId: quem.org.orgId,
+    resourceType: "escala_config",
+    resourceId: null,
+    requestId: hdrs.get("x-request-id"),
+    metadata: { canal_id: canalId },
+  });
+  revalidatePath("/app/escalas/avisos");
+  return { ok: true };
 }
