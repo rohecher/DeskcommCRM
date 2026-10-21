@@ -1,0 +1,1759 @@
+{
+  "data": "2026-10-21",
+  "de": "e4060c03f5acc53d9a7ad4e4c405568e5cb56251",
+  "ate": "9756b6df4434143ad295aad8f2bdba025d290bfc",
+  "total": 34,
+  "itens": [
+    {
+      "sha": "b89b5a085462737ef776b53be8a11433f367dd5c",
+      "numero": 3094,
+      "titulo": "fix(funis): o seletor de tipo de campo fala a língua de quem configura (#3037)",
+      "zona": "amarela",
+      "arquivos_total": 5,
+      "por_zona": {
+        "verde": 4,
+        "amarela": 2,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/rotulo-do-tipo-de-campo-3037.md",
+        "app/app/settings/tenant/pipelines/_client.test.tsx",
+        "app/app/settings/tenant/pipelines/_client.tsx",
+        "lib/i18n/dicionario.ts",
+        "lib/i18n/traducoes/en.json"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "app/app/settings/tenant/pipelines/_client.test.tsx",
+          "app/app/settings/tenant/pipelines/_client.tsx",
+          "lib/i18n/dicionario.ts",
+          "lib/i18n/traducoes/en.json"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "ff5b55c0a007a28637b3c7a348534decad31d3ed",
+      "numero": 3100,
+      "titulo": "fix(i18n): o cadastro e o login seguem o idioma do navegador; as telas de sequência deixam de escrever português cru",
+      "zona": "amarela",
+      "arquivos_total": 15,
+      "por_zona": {
+        "verde": 13,
+        "amarela": 3,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/textos-fora-da-traducao-e-idioma-das-telas-de-acesso.md",
+        "app/(public)/layout.tsx",
+        "app/app/ai/followups/_components/DeleteFollowupFlowButton.tsx",
+        "app/app/ai/followups/_components/FlowsList.tsx",
+        "app/app/ai/followups/_components/ModelosDialog.tsx",
+        "app/app/ai/followups/_components/NewFlowDialog.tsx",
+        "app/app/settings/tenant/pipelines/_client.tsx",
+        "app/app/templates/_components/TemplateFormDialog.tsx",
+        "components/auth/ForgotPasswordForm.tsx",
+        "components/auth/SignupForm.tsx",
+        "lib/i18n/dicionario.ts",
+        "tests/unit/fachada-segue-o-idioma-do-visitante.test.tsx",
+        "tests/unit/marca-na-fachada-de-acesso.test.tsx",
+        "tests/unit/recuperacao-de-senha-no-idioma.test.tsx",
+        "tests/unit/textos-fora-da-traducao-nas-sequencias.test.tsx"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "app/(public)/layout.tsx",
+          "app/app/ai/followups/_components/DeleteFollowupFlowButton.tsx",
+          "app/app/ai/followups/_components/FlowsList.tsx",
+          "app/app/ai/followups/_components/ModelosDialog.tsx",
+          "lib/i18n/dicionario.ts",
+          "tests/unit/marca-na-fachada-de-acesso.test.tsx"
+        ]
+      },
+      "sinais": {
+        "bot": true,
+        "vendas": false,
+        "schema": false,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "0945958404c3ca91a76ab5ab1e8f87f64be3a6c5",
+      "numero": 3107,
+      "titulo": "fix(campanhas): campanha parada pelo próprio ritmo não ocupa o número (#3102)",
+      "zona": "amarela",
+      "arquivos_total": 3,
+      "por_zona": {
+        "verde": 3,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/campanha-no-teto-nao-trava-a-seguinte-3102.md",
+        "lib/campanhas/ocupa-o-numero.test.ts",
+        "lib/campanhas/rodada.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "lib/campanhas/rodada.ts"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": false
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "f691b915eac249fbc52df380b2287d1e01089fc2",
+      "numero": 3108,
+      "titulo": "fix(followup): passo de IA adiado pela janela anti-ban avisa o enrollment (#3103)",
+      "zona": "amarela",
+      "arquivos_total": 3,
+      "por_zona": {
+        "verde": 3,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/passo-de-ia-fora-da-janela-nao-morre-3103.md",
+        "lib/agent-engine/agent/followup-turn.ts",
+        "tests/unit/followup-passo-de-ia-adiado-pela-janela.test.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "lib/agent-engine/agent/followup-turn.ts"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": false
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "e27da9b60b0784aa4ebb19646a3ccab4f86e4844",
+      "numero": 3110,
+      "titulo": "fix(avatares): a foto do contato vem da conexão da conversa dele",
+      "zona": "amarela",
+      "arquivos_total": 5,
+      "por_zona": {
+        "verde": 5,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/foto-pela-conexao-do-contato.md",
+        "app/api/v1/cron/contact-avatars/route.ts",
+        "tests/unit/cron-contact-avatars-chatid.test.ts",
+        "tests/unit/cron-contact-avatars-conexao-do-contato.test.ts",
+        "tests/unit/cron-contact-avatars-corrida.test.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "app/api/v1/cron/contact-avatars/route.ts",
+          "tests/unit/cron-contact-avatars-chatid.test.ts"
+        ]
+      },
+      "sinais": {
+        "bot": true,
+        "vendas": false,
+        "schema": false,
+        "tela": false
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "ecb5c95339f0287d2d13917bee06e8ac91a7a245",
+      "numero": 3119,
+      "titulo": "fix(custo-ia): a gravação de cache cobrada pelo TTL que a Anthropic informa, não toda a 1 hora",
+      "zona": "amarela",
+      "arquivos_total": 5,
+      "por_zona": {
+        "verde": 5,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/custo-de-ia-com-o-cache-de-verdade.md",
+        "lib/agent-engine/edge/llm/pricing-gravacao-por-ttl.test.ts",
+        "lib/agent-engine/edge/llm/pricing.ts",
+        "lib/agent-engine/edge/llm/run-model-call.test.ts",
+        "lib/agent-engine/edge/llm/run-model-call.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "lib/agent-engine/edge/llm/pricing.ts",
+          "lib/agent-engine/edge/llm/run-model-call.test.ts",
+          "lib/agent-engine/edge/llm/run-model-call.ts"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": false
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "53cb978de71928e4a7b1bec63468d120030d03b6",
+      "numero": 3113,
+      "titulo": "feat(notificacoes): avisos fora do app com opção da empresa, saída que encerra e plantão",
+      "zona": "amarela",
+      "arquivos_total": 55,
+      "por_zona": {
+        "verde": 53,
+        "amarela": 3,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/push-avisos-certos.md",
+        ".github/workflows/e2e.yml",
+        "app/actions/settings/definirConteudoNaTelaBloqueada.test.ts",
+        "app/actions/settings/definirConteudoNaTelaBloqueada.ts",
+        "app/actions/settings/signOutEverywhere.test.ts",
+        "app/actions/settings/signOutEverywhere.ts",
+        "app/api/v1/conversations/[id]/aviso-de-mensagem/route.test.ts",
+        "app/api/v1/conversations/[id]/aviso-de-mensagem/route.ts",
+        "app/api/v1/notifications/push/route.test.ts",
+        "app/api/v1/notifications/push/route.ts",
+        "app/app/settings/notifications/_client.test.tsx",
+        "app/app/settings/notifications/_client.tsx",
+        "app/app/settings/notifications/_tela-bloqueada-escolha.tsx",
+        "app/app/settings/notifications/_tela-bloqueada.tsx",
+        "app/app/settings/notifications/page.tsx",
+        "docs/architecture/central-avisos.architecture.json",
+        "docs/testing/user-journey-map.md",
+        "hooks/auth/AuthProvider.signOut.test.tsx",
+        "hooks/auth/AuthProvider.tsx",
+        "hooks/calls/useInboundCallAlerts.ts",
+        "hooks/notifications/useCrmAlerts.ts",
+        "hooks/notifications/useInboundMessageAlerts.ts",
+        "hooks/notifications/useNotificationPermission.ts",
+        "hooks/notifications/useNotify.ts",
+        "lib/ai/agents/org-tem-automatico.ts",
+        "lib/ai/elegibilidade/consulta-supabase.ts",
+        "lib/audit/actions.ts",
+        "lib/i18n/dicionario.ts",
+        "lib/notifications/deliver.test.ts",
+        "lib/notifications/deliver.ts",
+        "lib/notifications/destinatarios-da-mensagem.test.ts",
+        "lib/notifications/destinatarios-da-mensagem.ts",
+        "lib/notifications/prefs.ts",
+        "lib/notifications/push-dos-avisos.ts",
+        "lib/notifications/push.handler.test.ts",
+        "lib/notifications/push.handler.ts",
+        "lib/notifications/push_client.test.ts",
+        "lib/notifications/push_client.ts",
+        "lib/notifications/push_payload.test.ts",
+        "lib/notifications/push_payload.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          ".github/workflows/e2e.yml",
+          "app/api/v1/conversations/[id]/aviso-de-mensagem/route.test.ts",
+          "app/api/v1/conversations/[id]/aviso-de-mensagem/route.ts",
+          "app/api/v1/notifications/push/route.ts",
+          "app/app/settings/notifications/_client.test.tsx",
+          "app/app/settings/notifications/_client.tsx",
+          "app/app/settings/notifications/page.tsx",
+          "docs/architecture/central-avisos.architecture.json",
+          "docs/testing/user-journey-map.md",
+          "hooks/auth/AuthProvider.tsx",
+          "hooks/calls/useInboundCallAlerts.ts",
+          "hooks/notifications/useCrmAlerts.ts",
+          "hooks/notifications/useInboundMessageAlerts.ts",
+          "hooks/notifications/useNotificationPermission.ts",
+          "lib/ai/agents/org-tem-automatico.ts",
+          "lib/ai/elegibilidade/consulta-supabase.ts",
+          "lib/audit/actions.ts",
+          "lib/i18n/dicionario.ts",
+          "lib/notifications/deliver.test.ts",
+          "lib/notifications/deliver.ts",
+          "lib/notifications/destinatarios-da-mensagem.test.ts",
+          "lib/notifications/destinatarios-da-mensagem.ts",
+          "lib/notifications/prefs.ts",
+          "lib/notifications/push-dos-avisos.ts",
+          "lib/notifications/push.handler.test.ts",
+          "lib/notifications/push.handler.ts",
+          "lib/notifications/push_client.ts",
+          "lib/notifications/push_payload.test.ts",
+          "lib/notifications/push_payload.ts",
+          "lib/notifications/web_push.test.ts",
+          "lib/notifications/web_push.ts",
+          "lib/routing/worker.ts",
+          "lib/schemas/settings.ts",
+          "tests/unit/admin-client-exige-filtro-de-tenant.test.ts",
+          "tests/unit/aviso-de-mensagem-segue-o-responsavel.test.tsx",
+          "tests/unit/notificacoes-tela-diz-o-que-falta.test.tsx",
+          "tests/unit/push-dos-avisos.test.ts"
+        ]
+      },
+      "sinais": {
+        "bot": true,
+        "vendas": false,
+        "schema": false,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "fbec3014cbe070042cdaa91239532c3800b54d8c",
+      "numero": 3117,
+      "titulo": "perf(casca): as leituras independentes da casca do /app saem juntas",
+      "zona": "amarela",
+      "arquivos_total": 5,
+      "por_zona": {
+        "verde": 5,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/casca-do-app-sem-idas-em-fila.md",
+        "app/app/layout.tsx",
+        "lib/auth/server.ts",
+        "tests/unit/casca-do-app-ordem-dos-erros.test.tsx",
+        "tests/unit/casca-do-app-sem-idas-em-fila.test.tsx"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "app/app/layout.tsx",
+          "lib/auth/server.ts"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "bbc12b1e2c70307b1e8a842b9ce10e076707a4cf",
+      "numero": 3114,
+      "titulo": "fix(notificacoes): o push segue o vínculo e o papel de quem recebe",
+      "zona": "amarela",
+      "arquivos_total": 17,
+      "por_zona": {
+        "verde": 16,
+        "amarela": 2,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/push-segue-vinculo-e-papel.md",
+        "app/api/v1/ai/inbox/[id]/route.ts",
+        "app/api/v1/ai/inbox/resolve-all/route.ts",
+        "app/api/v1/ai/inbox/route.ts",
+        "app/api/v1/notifications/push/route.test.ts",
+        "app/api/v1/notifications/push/route.ts",
+        "app/api/v1/team/[user_id]/revoke/route.test.ts",
+        "app/api/v1/team/[user_id]/revoke/route.ts",
+        "lib/ai/inbox-destino.ts",
+        "lib/notifications/push-dos-avisos.ts",
+        "lib/notifications/push.handler.ts",
+        "lib/notifications/servicos-de-push.test.ts",
+        "lib/notifications/servicos-de-push.ts",
+        "lib/notifications/web_push.test.ts",
+        "lib/notifications/web_push.ts",
+        "tests/unit/branding.test.ts",
+        "tests/unit/push-dos-avisos.test.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "app/api/v1/ai/inbox/[id]/route.ts",
+          "app/api/v1/ai/inbox/resolve-all/route.ts",
+          "app/api/v1/ai/inbox/route.ts",
+          "app/api/v1/notifications/push/route.test.ts",
+          "app/api/v1/notifications/push/route.ts",
+          "app/api/v1/team/[user_id]/revoke/route.test.ts",
+          "app/api/v1/team/[user_id]/revoke/route.ts",
+          "lib/ai/inbox-destino.ts",
+          "lib/notifications/push-dos-avisos.ts",
+          "lib/notifications/push.handler.ts",
+          "lib/notifications/web_push.test.ts",
+          "lib/notifications/web_push.ts",
+          "tests/unit/branding.test.ts",
+          "tests/unit/push-dos-avisos.test.ts"
+        ]
+      },
+      "sinais": {
+        "bot": true,
+        "vendas": false,
+        "schema": false,
+        "tela": false
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "b00fe79b6417ecaacd8e808adb9bf9f7244d08a0",
+      "numero": 3115,
+      "titulo": "docs(adr): o app no celular é a PWA do mesmo Next (ADR-0006)",
+      "zona": "amarela",
+      "arquivos_total": 3,
+      "por_zona": {
+        "verde": 3,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        "docs/adr/0006-app-no-celular-e-a-pwa-do-mesmo-next.md",
+        "docs/design-system/screen-flow/07-responsive-strategy.md",
+        "docs/index.md"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "docs/design-system/screen-flow/07-responsive-strategy.md",
+          "docs/index.md"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": false
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "61795c6c3a588bd7c548024bfa9fec5013b050bd",
+      "numero": 3091,
+      "titulo": "feat(prospecção): escolher se a opção de parar vai na 1ª, 2ª ou 3ª mensagem",
+      "zona": "amarela",
+      "arquivos_total": 24,
+      "por_zona": {
+        "verde": 22,
+        "amarela": 3,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/prospeccao-saida-configuravel.md",
+        "app/api/v1/prospecting/route.ts",
+        "app/app/prospecting/_client.tsx",
+        "docs/architecture/prospeccao-nativa.architecture.json",
+        "docs/features/prospeccao-nativa.md",
+        "docs/superpowers/specs/2026-10-19-prospeccao-saida-depois-da-resposta-design.md",
+        "lib/agent-engine/agent/followup-turn.ts",
+        "lib/agent-engine/agent/inbound-turn.ts",
+        "lib/audit/actions.ts",
+        "lib/i18n/dicionario.ts",
+        "lib/prospecting/context.ts",
+        "lib/prospecting/rodape-de-saida.ts",
+        "lib/prospecting/saida-configuravel.test.ts",
+        "lib/prospecting/saida-configuravel.ts",
+        "lib/prospecting/schema.ts",
+        "lib/prospecting/worker.ts",
+        "supabase/baseline.sql",
+        "supabase/migrations/20261022110000_0705_prospeccao_saida_configuravel.sql",
+        "tests/invariants/prospecting-saida.test.ts",
+        "tests/unit/prospeccao-ativacao-respeita-a-selecao.test.ts",
+        "tests/unit/prospeccao-oferece-saida-e-a-saida-funciona.test.ts",
+        "tests/unit/prospeccao-resumo-e-dica-de-saida.test.tsx",
+        "tests/unit/prospeccao-saida-ligada-nos-envios.test.ts",
+        "tests/unit/prospecting-worker.test.ts"
+      ],
+      "renumerar": [
+        "supabase/migrations/20261022110000_0705_prospeccao_saida_configuravel.sql"
+      ],
+      "portar_a_mao": [
+        "supabase/baseline.sql"
+      ],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "app/api/v1/prospecting/route.ts",
+          "app/app/prospecting/_client.tsx",
+          "docs/architecture/prospeccao-nativa.architecture.json",
+          "docs/features/prospeccao-nativa.md",
+          "lib/agent-engine/agent/followup-turn.ts",
+          "lib/agent-engine/agent/inbound-turn.ts",
+          "lib/audit/actions.ts",
+          "lib/i18n/dicionario.ts",
+          "lib/prospecting/context.ts",
+          "lib/prospecting/rodape-de-saida.ts",
+          "lib/prospecting/schema.ts",
+          "lib/prospecting/worker.ts",
+          "supabase/baseline.sql",
+          "tests/unit/prospeccao-ativacao-respeita-a-selecao.test.ts",
+          "tests/unit/prospeccao-oferece-saida-e-a-saida-funciona.test.ts",
+          "tests/unit/prospecting-worker.test.ts"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": true,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "9ff58fb354779df65d586b674f0f155edd462e87",
+      "numero": 3120,
+      "titulo": "fix(i18n): o editor de sequência e as automações deixam de escrever português cru; o cartão do e-mail ganha resumo",
+      "zona": "amarela",
+      "arquivos_total": 7,
+      "por_zona": {
+        "verde": 6,
+        "amarela": 2,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/editor-de-sequencia-e-automacoes-fora-da-traducao.md",
+        "app/app/ai/followups/[id]/_components/TriggerConfigControl.tsx",
+        "app/app/ai/followups/[id]/_components/forms/MatchReplyForm.tsx",
+        "app/app/webhooks/_components/ActionConfigForm.tsx",
+        "app/app/webhooks/automacoes/[id]/_components/CaixaDaAutomacao.tsx",
+        "lib/i18n/dicionario.ts",
+        "tests/unit/editor-e-automacoes-fora-da-traducao.test.tsx"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "app/app/ai/followups/[id]/_components/TriggerConfigControl.tsx",
+          "app/app/ai/followups/[id]/_components/forms/MatchReplyForm.tsx",
+          "app/app/webhooks/_components/ActionConfigForm.tsx",
+          "app/app/webhooks/automacoes/[id]/_components/CaixaDaAutomacao.tsx",
+          "lib/i18n/dicionario.ts"
+        ]
+      },
+      "sinais": {
+        "bot": true,
+        "vendas": false,
+        "schema": false,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "3a4939e4a6cdb5e8ea64102ed8f27542aedd06e1",
+      "numero": 3131,
+      "titulo": "docs(screen-flow): o celular é o app instalado, como diz a ADR-0006",
+      "zona": "verde",
+      "arquivos_total": 1,
+      "por_zona": {
+        "verde": 1,
+        "amarela": 0,
+        "vermelha": 0
+      },
+      "arquivos": [
+        "docs/design-system/screen-flow/README.md"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": true,
+        "conflitos": []
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": false
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "7c2a766578e528dd07db8e622d9537b48ba22e9b",
+      "numero": 3096,
+      "titulo": "feat(banco-externo): o agente consulta os produtos de uma loja WooCommerce (Spec 25, R1)",
+      "zona": "amarela",
+      "arquivos_total": 46,
+      "por_zona": {
+        "verde": 43,
+        "amarela": 4,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/banco-externo-receitas-woocommerce.md",
+        ".github/workflows/e2e.yml",
+        "app/api/v1/external-db/connections/[id]/recipes/preview/route.test.ts",
+        "app/api/v1/external-db/connections/[id]/recipes/preview/route.ts",
+        "app/api/v1/external-db/connections/[id]/recipes/route.test.ts",
+        "app/api/v1/external-db/connections/[id]/recipes/route.ts",
+        "app/app/integracao-dados/[id]/_components/ReceitasProntas.erro.test.tsx",
+        "app/app/integracao-dados/[id]/_components/ReceitasProntas.test.tsx",
+        "app/app/integracao-dados/[id]/_components/ReceitasProntas.tsx",
+        "app/app/integracao-dados/[id]/page.tsx",
+        "docs/architecture/banco-de-dados-externo.architecture.json",
+        "docs/specs/25-spec-receitas-banco-externo.md",
+        "docs/threat-model.md",
+        "hooks/external-db/useReceitasDaConexao.ts",
+        "lib/ai/runtime/serialize.test.ts",
+        "lib/ai/runtime/serialize.ts",
+        "lib/audit/actions.ts",
+        "lib/external-db/dialeto.test.ts",
+        "lib/external-db/dialeto.ts",
+        "lib/external-db/dialetos/mysql/dialeto.ts",
+        "lib/external-db/dialetos/mysql/leitura.ts",
+        "lib/external-db/receitas/instancias.ts",
+        "lib/external-db/receitas/limite.ts",
+        "lib/external-db/receitas/registro.ts",
+        "lib/external-db/receitas/sql-mysql.test.ts",
+        "lib/external-db/receitas/sql-mysql.ts",
+        "lib/external-db/receitas/tipos.ts",
+        "lib/external-db/receitas/validador.test.ts",
+        "lib/external-db/receitas/validador.ts",
+        "lib/external-db/receitas/woocommerce.test.ts",
+        "lib/external-db/receitas/woocommerce.ts",
+        "lib/external-db/receitas/woocommerce.unit.test.ts",
+        "lib/i18n/dicionario.ts",
+        "lib/mcp/tools/catalogo/index.ts",
+        "lib/mcp/tools/catalogo/receitas-externas.ts",
+        "lib/mcp/tools/dados-externos.test.ts",
+        "lib/mcp/tools/index.ts",
+        "lib/mcp/tools/receitas-externas-listagem.test.ts",
+        "lib/mcp/tools/receitas-externas.test.ts",
+        "lib/mcp/tools/receitas-externas.ts"
+      ],
+      "renumerar": [
+        "supabase/migrations/20261022120000_0706_banco_externo_receitas.sql"
+      ],
+      "portar_a_mao": [
+        "supabase/baseline.sql"
+      ],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          ".github/workflows/e2e.yml",
+          "app/app/integracao-dados/[id]/page.tsx",
+          "docs/architecture/banco-de-dados-externo.architecture.json",
+          "docs/specs/25-spec-receitas-banco-externo.md",
+          "lib/audit/actions.ts",
+          "lib/external-db/dialeto.test.ts",
+          "lib/external-db/dialeto.ts",
+          "lib/external-db/dialetos/mysql/dialeto.ts",
+          "lib/external-db/dialetos/mysql/leitura.ts",
+          "lib/i18n/dicionario.ts",
+          "lib/mcp/tools/catalogo/index.ts",
+          "lib/mcp/tools/dados-externos.test.ts",
+          "lib/mcp/tools/index.ts",
+          "supabase/baseline.sql",
+          "tests/invariants/rls-isolation.test.ts"
+        ]
+      },
+      "sinais": {
+        "bot": true,
+        "vendas": false,
+        "schema": true,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "19f4d0d7d228d751e83c21109c778de79cdd8fbe",
+      "numero": 3139,
+      "titulo": "test(followup): o teste do plano B da IA não depende da hora em que roda",
+      "zona": "amarela",
+      "arquivos_total": 1,
+      "por_zona": {
+        "verde": 1,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        "tests/unit/fluxo-envia-modelo-aprovado.test.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "tests/unit/fluxo-envia-modelo-aprovado.test.ts"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": false
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "96f18da0b53a7b28dccc0cde5ad3d0bd983f76bd",
+      "numero": 3122,
+      "titulo": "perf(auth): a tela de /app pede o usuário ao GoTrue uma vez só",
+      "zona": "amarela",
+      "arquivos_total": 6,
+      "por_zona": {
+        "verde": 6,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/mfa-sem-segunda-ida-ao-gotrue.md",
+        "app/actions/auth/politicaDeMfa.test.ts",
+        "lib/auth/server.ts",
+        "tests/unit/mfa-leitura-falha-fechado.test.ts",
+        "tests/unit/mfa-sem-segunda-ida-ao-gotrue.test.ts",
+        "tests/unit/require-role-mfa.test.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "app/actions/auth/politicaDeMfa.test.ts",
+          "lib/auth/server.ts",
+          "tests/unit/mfa-leitura-falha-fechado.test.ts",
+          "tests/unit/require-role-mfa.test.ts"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": false
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "975eacf2debb642d5d84bc41f6cfb98b6bafd6bd",
+      "numero": 3121,
+      "titulo": "feat(followup): o passo de modelo preenche as variáveis do modelo aprovado, pelo contato e pelo negócio",
+      "zona": "amarela",
+      "arquivos_total": 17,
+      "por_zona": {
+        "verde": 17,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/botoes-do-modelo-no-canal-intermediado.md",
+        ".changes/variaveis-nos-modelos-do-fluxo.md",
+        "app/app/ai/followups/[id]/_components/forms/ActionForm.tsx",
+        "app/app/ai/followups/[id]/_components/forms/ActionForm.variaveis.test.tsx",
+        "docs/superpowers/specs/2026-07-21-followup-system-design.md",
+        "lib/agent-engine/agent/followup-turn.ts",
+        "lib/channels/meta/variaveis-do-fluxo.ts",
+        "lib/channels/zernio/templates.ts",
+        "lib/followup/engine.ts",
+        "lib/followup/graph-schema.ts",
+        "lib/followup/modelos-aprovados.test.ts",
+        "lib/followup/modelos-aprovados.ts",
+        "lib/i18n/dicionario.ts",
+        "tests/unit/channel-templates-zernio.test.ts",
+        "tests/unit/fluxo-envia-modelo-aprovado.test.ts",
+        "tests/unit/frase-em-pedacos-segue-a-lingua.test.tsx",
+        "tests/unit/variaveis-do-modelo-no-fluxo.test.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "app/app/ai/followups/[id]/_components/forms/ActionForm.tsx",
+          "lib/agent-engine/agent/followup-turn.ts",
+          "lib/channels/zernio/templates.ts",
+          "lib/followup/engine.ts",
+          "lib/followup/modelos-aprovados.test.ts",
+          "lib/followup/modelos-aprovados.ts",
+          "lib/i18n/dicionario.ts",
+          "tests/unit/channel-templates-zernio.test.ts",
+          "tests/unit/fluxo-envia-modelo-aprovado.test.ts",
+          "tests/unit/frase-em-pedacos-segue-a-lingua.test.tsx"
+        ]
+      },
+      "sinais": {
+        "bot": true,
+        "vendas": false,
+        "schema": false,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "725003713c2f49a407399c385125cc4cf458864c",
+      "numero": 3137,
+      "titulo": "docs(instalar): o guia de instalação passa a oferecer o Supabase no próprio servidor",
+      "zona": "amarela",
+      "arquivos_total": 6,
+      "por_zona": {
+        "verde": 6,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".agents/skills/deskcomm-instalar/SKILL.md",
+        ".agents/skills/deskcomm-instalar/references/supabase-local.md",
+        ".agents/skills/deskcomm-instalar/references/supabase.md",
+        ".claude/skills/deskcomm-instalar/SKILL.md",
+        ".claude/skills/deskcomm-instalar/references/supabase-local.md",
+        ".claude/skills/deskcomm-instalar/references/supabase.md"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          ".agents/skills/deskcomm-instalar/SKILL.md",
+          ".agents/skills/deskcomm-instalar/references/supabase.md",
+          ".claude/skills/deskcomm-instalar/SKILL.md",
+          ".claude/skills/deskcomm-instalar/references/supabase.md"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": false
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "5208893d5b14ba0dcf2b66a344c097efd7cdf3b4",
+      "numero": 2696,
+      "titulo": "fix(agente): filtro keyword_regex passa a valer no caminho vivo (#2679)",
+      "zona": "amarela",
+      "arquivos_total": 6,
+      "por_zona": {
+        "verde": 6,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/filtro-de-palavra-chave-do-agente-2679.md",
+        "lib/agent-engine/agent/agent-config.ts",
+        "lib/agent-engine/agent/inbound-turn.ts",
+        "lib/agent-engine/agent/palavra-chave-do-gatilho.ts",
+        "tests/unit/filtro-de-palavra-chave-do-gatilho.test.ts",
+        "tests/unit/filtro-de-palavra-chave-no-turno.test.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "lib/agent-engine/agent/agent-config.ts",
+          "lib/agent-engine/agent/inbound-turn.ts"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": false
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "87ad8c65ec3eb699afe51503893b16d1700cb6e6",
+      "numero": 3132,
+      "titulo": "feat(agenda): serviços e turmas independentes da revisão JEV",
+      "zona": "amarela",
+      "arquivos_total": 85,
+      "por_zona": {
+        "verde": 83,
+        "amarela": 3,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/agenda-configuracao-simplificada.md",
+        ".changes/agenda-responsaveis-nome-email.md",
+        ".changes/agendas-de-servicos.md",
+        ".github/workflows/e2e.yml",
+        "app/actions/shell/setActiveOrg.ts",
+        "app/api/v1/admin/tenants/_lista.ts",
+        "app/api/v1/admin/users/[id]/route.ts",
+        "app/api/v1/admin/users/route.ts",
+        "app/api/v1/agenda/agendamentos/[id]/route.ts",
+        "app/api/v1/agenda/agendamentos/_handler.ts",
+        "app/api/v1/agenda/agendamentos/route.ts",
+        "app/api/v1/agenda/horarios-livres/route.ts",
+        "app/api/v1/agenda/pessoas/route.ts",
+        "app/api/v1/agenda/servicos/atualizar/route.ts",
+        "app/api/v1/agenda/servicos/route.ts",
+        "app/api/v1/agenda/tipos/route.ts",
+        "app/api/v1/cron/agenda-google-sync/route.ts",
+        "app/api/v1/settings/agenda-apresentacao/route.ts",
+        "app/app/agenda/_client.tsx",
+        "app/app/agenda/page.tsx",
+        "app/app/settings/tenant/agenda/_client.tsx",
+        "app/app/settings/tenant/agenda/page.tsx",
+        "components/agenda/ConfiguracaoDoServico.tsx",
+        "components/agenda/PainelDeMarcacao.tsx",
+        "components/agenda/ReservarServicoNaConversa.tsx",
+        "components/agenda/ReservasColetivas.tsx",
+        "components/agenda/SincronizacaoDoCompromisso.tsx",
+        "components/agenda/TituloDaAgenda.tsx",
+        "components/inbox/ConversationHeader.tsx",
+        "docs/agenda-configuracao.md",
+        "docs/agenda-responsaveis.md",
+        "docs/architecture/agenda-google-sync.architecture.json",
+        "docs/architecture/agenda-no-turno.md",
+        "docs/evidence/agendas-servicos/prova-em-par.json",
+        "docs/evidence/agendas-servicos/reserva-conversa.png",
+        "docs/testing/agenda-sem-jev.md",
+        "docs/testing/agendas-de-servicos.md",
+        "hooks/agenda/usePessoasDaAgenda.ts",
+        "lib/agenda/apresentacao.ts",
+        "lib/agenda/consulta.ts"
+      ],
+      "renumerar": [
+        "supabase/migrations/20261020230856_0716_agendas_de_servicos.sql"
+      ],
+      "portar_a_mao": [
+        "supabase/baseline.sql"
+      ],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          ".github/workflows/e2e.yml",
+          "app/actions/shell/setActiveOrg.ts",
+          "app/api/v1/admin/tenants/_lista.ts",
+          "app/api/v1/agenda/agendamentos/[id]/route.ts",
+          "app/api/v1/agenda/agendamentos/_handler.ts",
+          "app/api/v1/agenda/agendamentos/route.ts",
+          "app/api/v1/agenda/horarios-livres/route.ts",
+          "app/api/v1/agenda/pessoas/route.ts",
+          "app/api/v1/agenda/tipos/route.ts",
+          "app/api/v1/cron/agenda-google-sync/route.ts",
+          "app/app/agenda/_client.tsx",
+          "app/app/agenda/page.tsx",
+          "app/app/settings/tenant/agenda/_client.tsx",
+          "app/app/settings/tenant/agenda/page.tsx",
+          "components/agenda/PainelDeMarcacao.tsx",
+          "components/agenda/SincronizacaoDoCompromisso.tsx",
+          "components/inbox/ConversationHeader.tsx",
+          "docs/architecture/agenda-google-sync.architecture.json",
+          "docs/architecture/agenda-no-turno.md",
+          "hooks/agenda/usePessoasDaAgenda.ts",
+          "lib/agenda/consulta.ts",
+          "lib/agenda/google/candidates.ts",
+          "lib/agenda/google/sync-executor.ts",
+          "lib/agenda/google/sync-store.ts",
+          "lib/agenda/lista-de-pessoas.ts",
+          "lib/audit/actions.ts",
+          "lib/auth/public-paths.ts",
+          "lib/auth/server.ts",
+          "lib/database.types.ts",
+          "lib/i18n/dicionario.ts",
+          "lib/mcp/tools/agendamento.ts",
+          "supabase/baseline.sql",
+          "tests/e2e/agenda-conectar-google.spec.ts",
+          "tests/e2e/agenda-google-sync.spec.ts",
+          "tests/e2e/agenda-papel-de-leitura.spec.ts",
+          "tests/e2e/agenda-presenca-recuperacao.spec.ts",
+          "tests/e2e/agenda-tela-do-produto.spec.ts",
+          "tests/e2e/cadastro-sem-confirmacao-de-email.spec.ts",
+          "tests/e2e/cliente-pela-agenda.spec.ts",
+          "tests/e2e/primeiro-acesso-sem-organizacao.spec.ts"
+        ]
+      },
+      "sinais": {
+        "bot": true,
+        "vendas": false,
+        "schema": true,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "23dc4463c03152846be6b14a086438b6498f954a",
+      "numero": 2814,
+      "titulo": "feat(campos): padrao e mensagem de erro validados em 3 portas (#2730)",
+      "zona": "amarela",
+      "arquivos_total": 22,
+      "por_zona": {
+        "verde": 22,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/padrao-do-campo-2730.md",
+        "app/api/v1/contacts/_handler.ts",
+        "app/api/v1/leads/_handler.ts",
+        "app/api/v1/webhooks/in/[token]/route.ts",
+        "components/contacts/CustomFieldsEditor.padrao.test.tsx",
+        "components/contacts/CustomFieldsEditor.tsx",
+        "components/contacts/EditContactDialog.padrao.test.tsx",
+        "components/contacts/EditContactDialog.tsx",
+        "lib/i18n/dicionario.ts",
+        "lib/i18n/traducoes/en.json",
+        "lib/i18n/traducoes/zh-CN.json",
+        "lib/leads/clonar-para-funil.ts",
+        "lib/leads/padrao-do-campo-no-servidor.ts",
+        "lib/leads/padrao-do-campo.ts",
+        "lib/mcp/conferencia-de-campos.ts",
+        "lib/schemas/settings.ts",
+        "tests/unit/captacao-na-etapa-exigente-cria-o-lead.test.ts",
+        "tests/unit/conferencia-de-campo-personalizado.test.ts",
+        "tests/unit/padrao-do-campo-na-api.test.ts",
+        "tests/unit/padrao-do-campo-na-ia.test.ts",
+        "tests/unit/padrao-do-campo-no-servidor.test.ts",
+        "tests/unit/padrao-do-campo.test.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "app/api/v1/contacts/_handler.ts",
+          "app/api/v1/leads/_handler.ts",
+          "app/api/v1/webhooks/in/[token]/route.ts",
+          "components/contacts/CustomFieldsEditor.tsx",
+          "components/contacts/EditContactDialog.tsx",
+          "lib/i18n/dicionario.ts",
+          "lib/i18n/traducoes/en.json",
+          "lib/i18n/traducoes/zh-CN.json",
+          "lib/leads/clonar-para-funil.ts",
+          "lib/mcp/conferencia-de-campos.ts",
+          "lib/schemas/settings.ts",
+          "tests/unit/captacao-na-etapa-exigente-cria-o-lead.test.ts",
+          "tests/unit/conferencia-de-campo-personalizado.test.ts"
+        ]
+      },
+      "sinais": {
+        "bot": true,
+        "vendas": false,
+        "schema": false,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "88de267d1488e15258c02f7465e8718911c9c7b2",
+      "numero": 3136,
+      "titulo": "fix(campanhas): o número respeita o intervalo também no rodízio",
+      "zona": "amarela",
+      "arquivos_total": 3,
+      "por_zona": {
+        "verde": 3,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/campanha-respeita-o-numero-no-rodizio-3112.md",
+        "lib/campanhas/rodada.ts",
+        "lib/campanhas/rodizio-na-rodada.test.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "lib/campanhas/rodada.ts"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": false
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "bd88c0da1dc01ee1b33ca4b19b8125abbebc7daf",
+      "numero": 3129,
+      "titulo": "feat(push): o par de chaves dos avisos com o app fechado nasce com a instalação",
+      "zona": "amarela",
+      "arquivos_total": 31,
+      "por_zona": {
+        "verde": 29,
+        "amarela": 3,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".agents/skills/deskcomm-instalar/references/o-que-a-instalacao-pede.md",
+        ".agents/skills/deskcomm-operacao/references/funcionalidades/organizacao.md",
+        ".changes/par-vapid-nasce-com-a-instalacao.md",
+        ".claude/skills/deskcomm-instalar/references/o-que-a-instalacao-pede.md",
+        ".claude/skills/deskcomm-operacao/references/funcionalidades/organizacao.md",
+        ".env.example",
+        ".env.hostgator.example",
+        "app/app/settings/notifications/_push-neste-endereco.tsx",
+        "app/app/settings/notifications/page.tsx",
+        "docs/saas/coolify.md",
+        "docs/testing/user-journey-map.md",
+        "hostgator-setup-kit/_common.sh",
+        "hostgator-setup-kit/_i18n.sh",
+        "hostgator-setup-kit/install.sh",
+        "hostgator-setup-kit/test-validators.sh",
+        "hostgator-setup-kit/update.sh",
+        "lib/env.ts",
+        "lib/i18n/dicionario.ts",
+        "lib/i18n/traducoes/en.json",
+        "lib/i18n/traducoes/zh-CN.json",
+        "lib/notifications/push_client.chave.test.ts",
+        "lib/notifications/push_client.ts",
+        "lib/recursos-opcionais/catalogo.ts",
+        "package.json",
+        "tests/e2e/notificacoes-diz-o-que-falta.spec.ts",
+        "tests/shell/par-vapid.test.sh",
+        "tests/shell/update-guard.test.sh",
+        "tests/unit/notificacoes-push-sem-https.test.tsx",
+        "tests/unit/notificacoes-tela-diz-o-que-falta.test.tsx",
+        "tests/unit/par-vapid-do-kit-aceito-pelo-web-push.test.ts",
+        "tests/unit/recursos-opcionais-catalogo.test.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          ".agents/skills/deskcomm-instalar/references/o-que-a-instalacao-pede.md",
+          ".agents/skills/deskcomm-operacao/references/funcionalidades/organizacao.md",
+          ".claude/skills/deskcomm-instalar/references/o-que-a-instalacao-pede.md",
+          ".claude/skills/deskcomm-operacao/references/funcionalidades/organizacao.md",
+          ".env.example",
+          ".env.hostgator.example",
+          "app/app/settings/notifications/page.tsx",
+          "docs/saas/coolify.md",
+          "docs/testing/user-journey-map.md",
+          "hostgator-setup-kit/_common.sh",
+          "hostgator-setup-kit/_i18n.sh",
+          "hostgator-setup-kit/install.sh",
+          "hostgator-setup-kit/test-validators.sh",
+          "hostgator-setup-kit/update.sh",
+          "lib/env.ts",
+          "lib/i18n/dicionario.ts",
+          "lib/i18n/traducoes/en.json",
+          "lib/i18n/traducoes/zh-CN.json",
+          "lib/notifications/push_client.ts",
+          "lib/recursos-opcionais/catalogo.ts",
+          "package.json",
+          "tests/e2e/notificacoes-diz-o-que-falta.spec.ts",
+          "tests/shell/update-guard.test.sh",
+          "tests/unit/notificacoes-tela-diz-o-que-falta.test.tsx",
+          "tests/unit/recursos-opcionais-catalogo.test.ts"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "2dc9ac08beffbd3c5e81499a311bc4f285c6e95c",
+      "numero": 3130,
+      "titulo": "feat(pwa): o sistema instala no celular como app e avisa com ele fechado",
+      "zona": "amarela",
+      "arquivos_total": 41,
+      "por_zona": {
+        "verde": 37,
+        "amarela": 5,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/app-no-celular.md",
+        ".github/workflows/e2e.yml",
+        "app/app-icon/[size]/route.ts",
+        "app/app/_components/AppShell.tsx",
+        "app/app/settings/aplicativo/_client.tsx",
+        "app/app/settings/aplicativo/page.tsx",
+        "app/app/settings/notifications/page.tsx",
+        "app/layout.tsx",
+        "app/manifest.ts",
+        "app/providers.tsx",
+        "docs/architecture/marca-propria.architecture.json",
+        "docs/testing/user-journey-map.md",
+        "lib/auth/public-paths.ts",
+        "lib/branding/icone-do-app.tsx",
+        "lib/branding/icone.ts",
+        "lib/i18n/dicionario.ts",
+        "lib/navigation/catalogo.ts",
+        "lib/navigation/registry.ts",
+        "lib/notifications/emit.test.ts",
+        "lib/notifications/emit.ts",
+        "lib/notifications/push.handler.ts",
+        "lib/notifications/push_payload.test.ts",
+        "lib/notifications/push_payload.ts",
+        "lib/pwa/estado-da-instalacao.test.ts",
+        "lib/pwa/estado-da-instalacao.ts",
+        "lib/pwa/pedido-de-instalacao.test.ts",
+        "lib/pwa/pedido-de-instalacao.ts",
+        "lib/ui/icons.ts",
+        "playwright.config.ts",
+        "public/notify-sw.js",
+        "tests/e2e/app-no-celular.spec.ts",
+        "tests/e2e/icone-da-marca.spec.ts",
+        "tests/unit/aplicativo-no-celular-textos.test.tsx",
+        "tests/unit/branding-app-icon-route.test.ts",
+        "tests/unit/branding-app-manifest.test.ts",
+        "tests/unit/branding-icone-do-app.test.ts",
+        "tests/unit/branding-manifest.test.ts",
+        "tests/unit/metadata-do-iphone.test.ts",
+        "tests/unit/notify-sw.test.ts",
+        "tests/unit/pontos-de-ia-completude.test.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          ".github/workflows/e2e.yml",
+          "app/app-icon/[size]/route.ts",
+          "app/app/_components/AppShell.tsx",
+          "app/app/settings/notifications/page.tsx",
+          "app/layout.tsx",
+          "app/manifest.ts",
+          "docs/architecture/marca-propria.architecture.json",
+          "docs/testing/user-journey-map.md",
+          "lib/auth/public-paths.ts",
+          "lib/branding/icone-do-app.tsx",
+          "lib/branding/icone.ts",
+          "lib/i18n/dicionario.ts",
+          "lib/navigation/catalogo.ts",
+          "lib/navigation/registry.ts",
+          "lib/notifications/emit.test.ts",
+          "lib/notifications/emit.ts",
+          "lib/notifications/push.handler.ts",
+          "lib/notifications/push_payload.test.ts",
+          "lib/notifications/push_payload.ts",
+          "lib/ui/icons.ts",
+          "playwright.config.ts",
+          "public/notify-sw.js",
+          "tests/e2e/icone-da-marca.spec.ts",
+          "tests/unit/branding-app-icon-route.test.ts",
+          "tests/unit/branding-app-manifest.test.ts",
+          "tests/unit/branding-icone-do-app.test.ts",
+          "tests/unit/branding-manifest.test.ts",
+          "tests/unit/pontos-de-ia-completude.test.ts"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "fadf29cb44ca495b77a7832c35db6ec1f664d4c6",
+      "numero": 3135,
+      "titulo": "fix(notificacoes): sair encerra os avisos de todos os aparelhos e os interruptores de Push não travam ao recarregar",
+      "zona": "amarela",
+      "arquivos_total": 10,
+      "por_zona": {
+        "verde": 10,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/interruptores-de-push-depois-de-recarregar.md",
+        ".changes/push-sair-encerra-todos-os-aparelhos.md",
+        "app/actions/auth/signOut.test.ts",
+        "app/actions/auth/signOut.ts",
+        "app/actions/settings/signOutEverywhere.ts",
+        "app/app/settings/notifications/_client.hidratacao.test.tsx",
+        "docs/testing/user-journey-map.md",
+        "hooks/notifications/useNotificationPermission.ts",
+        "lib/notifications/encerrar-push-de-todos-os-aparelhos.ts",
+        "tests/unit/permissao-lida-no-primeiro-render.test.tsx"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "app/actions/auth/signOut.ts",
+          "app/actions/settings/signOutEverywhere.ts",
+          "docs/testing/user-journey-map.md",
+          "hooks/notifications/useNotificationPermission.ts",
+          "tests/unit/permissao-lida-no-primeiro-render.test.tsx"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "49aabea722cb274cc5de83021724b2431ebbf7e2",
+      "numero": 2681,
+      "titulo": "test(sentimento): vigia o veto de canal desativado no processSentiment (refs #2436)",
+      "zona": "amarela",
+      "arquivos_total": 1,
+      "por_zona": {
+        "verde": 1,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        "tests/unit/sentimento-so-mede-quando-o-alerta-tem-efeito.test.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "tests/unit/sentimento-so-mede-quando-o-alerta-tem-efeito.test.ts"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": false
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "8b009a7eaf37eb201268b0b9b3ae76d37bfd4d5e",
+      "numero": 2680,
+      "titulo": "fix(prospecção): o corpo é fatiado em bolhas e o envio para na 2ª não confirmada (refs #2665)",
+      "zona": "amarela",
+      "arquivos_total": 6,
+      "por_zona": {
+        "verde": 6,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/prospeccao-respeita-estilo-de-resposta-2665.md",
+        "lib/prospecting/guard.ts",
+        "lib/prospecting/prospeccao-bolhas-com-guarda-real.test.ts",
+        "lib/prospecting/worker.ts",
+        "tests/unit/prospeccao-oferece-saida-e-a-saida-funciona.test.ts",
+        "tests/unit/prospecting-worker.test.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "lib/prospecting/guard.ts",
+          "lib/prospecting/worker.ts",
+          "tests/unit/prospeccao-oferece-saida-e-a-saida-funciona.test.ts",
+          "tests/unit/prospecting-worker.test.ts"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": false
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "6e7ca767e95e22e2cee660f5731dc1be7cebe212",
+      "numero": 3146,
+      "titulo": "fix(sequências): a lista em espanhol não deixa mais três textos em português (refs #3104)",
+      "zona": "amarela",
+      "arquivos_total": 5,
+      "por_zona": {
+        "verde": 5,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/espanhol-na-lista-de-sequencias-3104.md",
+        "app/app/ai/followups/_components/FlowsList.tsx",
+        "app/app/ai/followups/page.tsx",
+        "lib/i18n/dicionario.ts",
+        "tests/unit/textos-fora-da-traducao-nas-sequencias.test.tsx"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "app/app/ai/followups/_components/FlowsList.tsx",
+          "app/app/ai/followups/page.tsx",
+          "lib/i18n/dicionario.ts",
+          "tests/unit/textos-fora-da-traducao-nas-sequencias.test.tsx"
+        ]
+      },
+      "sinais": {
+        "bot": true,
+        "vendas": false,
+        "schema": false,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "e24453d9ff783c7f32739ed91477a41067592690",
+      "numero": 3145,
+      "titulo": "fix(campos): o mesmo tipo tem o mesmo nome na captação e nos funis (refs #3095)",
+      "zona": "amarela",
+      "arquivos_total": 9,
+      "por_zona": {
+        "verde": 8,
+        "amarela": 2,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/rotulo-unico-do-tipo-3095.md",
+        "app/app/settings/tenant/pipelines/_client.test.tsx",
+        "app/app/settings/tenant/pipelines/_client.tsx",
+        "app/app/webhooks/_components/CadastrarCampo.tsx",
+        "app/app/webhooks/_components/CapturaDetail.test.tsx",
+        "lib/i18n/dicionario.ts",
+        "lib/i18n/traducoes/en.json",
+        "lib/schemas/rotulos-do-campo.test.ts",
+        "lib/schemas/rotulos-do-campo.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "app/app/settings/tenant/pipelines/_client.test.tsx",
+          "app/app/settings/tenant/pipelines/_client.tsx",
+          "app/app/webhooks/_components/CadastrarCampo.tsx",
+          "app/app/webhooks/_components/CapturaDetail.test.tsx",
+          "lib/i18n/dicionario.ts",
+          "lib/i18n/traducoes/en.json"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "c51ddbbf139eac60a102c4aeee0b32c8ebba686e",
+      "numero": 2819,
+      "titulo": "fix(lgpd): rótulo opaco, external_id zerado na cascata e aviso do art. 12.º",
+      "zona": "amarela",
+      "arquivos_total": 25,
+      "por_zona": {
+        "verde": 23,
+        "amarela": 3,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/aviso-do-artigo-12-e-rotulo-opaco-2342.md",
+        "app/api/v1/lgpd/requests/[id]/art12/route.ts",
+        "lib/api/errors.ts",
+        "lib/audit/actions.ts",
+        "lib/i18n/dicionario.ts",
+        "lib/i18n/traducoes/en.json",
+        "lib/i18n/traducoes/zh-CN.json",
+        "lib/lgpd/aviso-apos-apagar.ts",
+        "lib/lgpd/avisos-do-artigo-12.ts",
+        "supabase/baseline.sql",
+        "supabase/migrations/20261013120000_0657_rotulo_opaco_e_external_id_na_cascata.sql",
+        "tests/invariants/adr-0002-d8-secoes-de-modulo-na-cascata.test.ts",
+        "tests/invariants/lgpd-alcanca-prospeccao-de-quem-ja-era-contato.test.ts",
+        "tests/invariants/lgpd-aviso-do-artigo-12-so-fora-do-brasil.test.ts",
+        "tests/invariants/lgpd-cascata-alcanca-a-passagem.test.ts",
+        "tests/invariants/lgpd-caso-anonimiza.test.ts",
+        "tests/invariants/lgpd-rotulo-opaco-e-external-id.test.ts",
+        "tests/invariants/rotulo-da-secao-nao-inventa-o-nulo.test.ts",
+        "tests/unit/cascata-lgpd-rotulo-opaco-e-external-id.test.ts",
+        "tests/unit/i18n-a-data-segue-o-idioma.test.ts",
+        "tests/unit/lgpd-aviso-apos-apagar.test.ts",
+        "tests/unit/lgpd-avisos-do-artigo-12.test.ts",
+        "tests/unit/lgpd-prazo-e-dia-civil.test.ts",
+        "tests/unit/rotulo-da-secao-de-lgpd-preserva-o-nulo.test.ts",
+        "workers/lgpd-redact-worker.ts"
+      ],
+      "renumerar": [
+        "supabase/migrations/20261013120000_0657_rotulo_opaco_e_external_id_na_cascata.sql"
+      ],
+      "portar_a_mao": [
+        "supabase/baseline.sql"
+      ],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "lib/api/errors.ts",
+          "lib/audit/actions.ts",
+          "lib/i18n/dicionario.ts",
+          "lib/i18n/traducoes/en.json",
+          "lib/i18n/traducoes/zh-CN.json",
+          "supabase/baseline.sql",
+          "tests/invariants/adr-0002-d8-secoes-de-modulo-na-cascata.test.ts",
+          "tests/invariants/lgpd-alcanca-prospeccao-de-quem-ja-era-contato.test.ts",
+          "tests/invariants/lgpd-cascata-alcanca-a-passagem.test.ts",
+          "tests/invariants/lgpd-caso-anonimiza.test.ts",
+          "tests/invariants/rotulo-da-secao-nao-inventa-o-nulo.test.ts",
+          "tests/unit/i18n-a-data-segue-o-idioma.test.ts",
+          "tests/unit/lgpd-prazo-e-dia-civil.test.ts",
+          "tests/unit/rotulo-da-secao-de-lgpd-preserva-o-nulo.test.ts"
+        ]
+      },
+      "sinais": {
+        "bot": true,
+        "vendas": false,
+        "schema": true,
+        "tela": false
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "634fef9de5f33944555586241591bbe0bf882eb1",
+      "numero": 2643,
+      "titulo": "fix(contatos): telefone informado pelo cliente é gravado sozinho quando a ficha está vazia (#2593)",
+      "zona": "amarela",
+      "arquivos_total": 18,
+      "por_zona": {
+        "verde": 17,
+        "amarela": 2,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/telefone-de-ficha-vazia.md",
+        "app/actions/settings/definirTelefoneDeFichaVazia.ts",
+        "app/app/settings/atendimento/_telefoneDeFichaVazia.tsx",
+        "app/app/settings/atendimento/page.tsx",
+        "lib/audit/actions.ts",
+        "lib/contacts/proposta-de-dado.test.ts",
+        "lib/contacts/proposta-de-dado.ts",
+        "lib/contacts/telefone-aplicado.ts",
+        "lib/i18n/dicionario.ts",
+        "lib/i18n/traducoes/en.json",
+        "lib/i18n/traducoes/zh-CN.json",
+        "lib/leads/activity-vocabulary.ts",
+        "lib/mcp/tools/catalogo/atendimento.ts",
+        "lib/mcp/tools/contacts.ts",
+        "lib/schemas/contacts.ts",
+        "lib/schemas/settings.ts",
+        "tests/unit/telefone-aplicado-trecho-fora-da-auditoria.test.ts",
+        "tests/unit/telefone-de-ficha-vazia-opcao-da-org.test.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "app/app/settings/atendimento/page.tsx",
+          "lib/audit/actions.ts",
+          "lib/contacts/proposta-de-dado.test.ts",
+          "lib/contacts/proposta-de-dado.ts",
+          "lib/i18n/dicionario.ts",
+          "lib/i18n/traducoes/en.json",
+          "lib/i18n/traducoes/zh-CN.json",
+          "lib/leads/activity-vocabulary.ts",
+          "lib/mcp/tools/contacts.ts",
+          "lib/schemas/contacts.ts",
+          "lib/schemas/settings.ts"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "1437ed4ad56ea01facc68050e181618156c18e04",
+      "numero": 2776,
+      "titulo": "feat(contatos): Sincronizar agenda do celular — importa a agenda do aparelho pareado (#2736)",
+      "zona": "amarela",
+      "arquivos_total": 23,
+      "por_zona": {
+        "verde": 22,
+        "amarela": 2,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/sincronizar-agenda-do-celular-2736.md",
+        "app/api/v1/contacts/import/agenda/route.test.ts",
+        "app/api/v1/contacts/import/agenda/route.ts",
+        "app/app/contacts/[id]/_client.tsx",
+        "app/app/contacts/_client.tsx",
+        "components/contacts/SyncPhoneContactsDialog.test.tsx",
+        "components/contacts/SyncPhoneContactsDialog.tsx",
+        "hooks/contacts/useSyncPhoneContacts.ts",
+        "lib/audit/actions.ts",
+        "lib/channels/adapters/waha.ts",
+        "lib/channels/capabilities.ts",
+        "lib/channels/index.ts",
+        "lib/channels/types.ts",
+        "lib/contacts/agenda-do-celular.test.ts",
+        "lib/contacts/agenda-do-celular.ts",
+        "lib/i18n/dicionario.ts",
+        "lib/leads/origem-do-contato.ts",
+        "lib/waha/client-agenda.test.ts",
+        "lib/waha/client.ts",
+        "tests/unit/canal-zernio-vocabulario.test.ts",
+        "tests/unit/channel-capability-matrix.test.ts",
+        "tests/unit/identificadores-que-cruzam-fronteira.test.ts",
+        "tests/unit/nome-da-agenda-nunca-vai-ao-cliente.test.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "app/app/contacts/[id]/_client.tsx",
+          "app/app/contacts/_client.tsx",
+          "lib/audit/actions.ts",
+          "lib/channels/adapters/waha.ts",
+          "lib/channels/capabilities.ts",
+          "lib/channels/index.ts",
+          "lib/channels/types.ts",
+          "lib/i18n/dicionario.ts",
+          "lib/leads/origem-do-contato.ts",
+          "lib/waha/client.ts",
+          "tests/unit/canal-zernio-vocabulario.test.ts",
+          "tests/unit/channel-capability-matrix.test.ts",
+          "tests/unit/identificadores-que-cruzam-fronteira.test.ts",
+          "tests/unit/nome-da-agenda-nunca-vai-ao-cliente.test.ts"
+        ]
+      },
+      "sinais": {
+        "bot": true,
+        "vendas": false,
+        "schema": false,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "d492c1305379c2ff6c70df816f54b124bde97ef8",
+      "numero": 2858,
+      "titulo": "feat(automacao): condicoes ganham 'nao contem', 'esta vazio/preenchido', comparadores e grupo 'qualquer uma' (#2727)",
+      "zona": "amarela",
+      "arquivos_total": 20,
+      "por_zona": {
+        "verde": 19,
+        "amarela": 2,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/operadores-e-grupo-ou-nas-condicoes-2727.md",
+        "app/app/webhooks/_components/RuleEditor.tsx",
+        "app/app/webhooks/automacoes/[id]/_components/CaixaDaAutomacao.tsx",
+        "app/app/webhooks/automacoes/[id]/_components/CanvasDaAutomacao.tsx",
+        "app/app/webhooks/automacoes/[id]/_components/PainelDaCaixa.test.tsx",
+        "app/app/webhooks/automacoes/[id]/_components/PainelDaCaixa.tsx",
+        "hooks/webhooks/useAutomationRules.ts",
+        "lib/automation/conditions.test.ts",
+        "lib/automation/conditions.ts",
+        "lib/automation/desenho-da-regra.test.ts",
+        "lib/automation/desenho-da-regra.ts",
+        "lib/automation/engine.ts",
+        "lib/automation/guarda-do-contato.ts",
+        "lib/i18n/dicionario.ts",
+        "lib/i18n/traducoes/en.json",
+        "lib/i18n/traducoes/zh-CN.json",
+        "lib/operacao/regras-automaticas.test.ts",
+        "lib/operacao/regras-automaticas.ts",
+        "lib/schemas/webhooks.test.ts",
+        "lib/schemas/webhooks.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "app/app/webhooks/_components/RuleEditor.tsx",
+          "app/app/webhooks/automacoes/[id]/_components/CaixaDaAutomacao.tsx",
+          "app/app/webhooks/automacoes/[id]/_components/CanvasDaAutomacao.tsx",
+          "app/app/webhooks/automacoes/[id]/_components/PainelDaCaixa.tsx",
+          "lib/automation/conditions.test.ts",
+          "lib/automation/conditions.ts",
+          "lib/automation/desenho-da-regra.test.ts",
+          "lib/automation/desenho-da-regra.ts",
+          "lib/automation/guarda-do-contato.ts",
+          "lib/i18n/dicionario.ts",
+          "lib/i18n/traducoes/en.json",
+          "lib/i18n/traducoes/zh-CN.json",
+          "lib/operacao/regras-automaticas.ts",
+          "lib/schemas/webhooks.ts"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": true
+      },
+      "fragmentos": []
+    },
+    {
+      "sha": "9756b6df4434143ad295aad8f2bdba025d290bfc",
+      "numero": 2831,
+      "titulo": "Etiquetas da ficha do contato: seletor com autocompletar das existentes (#2732)",
+      "zona": "amarela",
+      "arquivos_total": 9,
+      "por_zona": {
+        "verde": 9,
+        "amarela": 1,
+        "vermelha": 0
+      },
+      "arquivos": [
+        ".changes/etiquetas-da-ficha-com-autocompletar-2732.md",
+        "app/app/contacts/[id]/_client.tsx",
+        "components/contacts/ContactsTable.tsx",
+        "components/contacts/EditContactDialog.etiquetas-digitadas.test.tsx",
+        "components/contacts/EditContactDialog.tsx",
+        "components/contacts/EtiquetasDoContato.test.tsx",
+        "components/contacts/EtiquetasDoContato.tsx",
+        "lib/contacts/etiquetas.ts",
+        "lib/i18n/dicionario.ts"
+      ],
+      "renumerar": [],
+      "portar_a_mao": [],
+      "cherry_pick": {
+        "limpo": false,
+        "conflitos": [
+          "app/app/contacts/[id]/_client.tsx",
+          "components/contacts/ContactsTable.tsx",
+          "components/contacts/EditContactDialog.tsx",
+          "lib/i18n/dicionario.ts"
+        ]
+      },
+      "sinais": {
+        "bot": false,
+        "vendas": false,
+        "schema": false,
+        "tela": true
+      },
+      "fragmentos": []
+    }
+  ]
+}
