@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { fragmentosDeRelease, lerMerge, montarAviso, sinaisDe, type ItemDoAviso } from "@/scripts/upstream-garimpo/coleta";
+import { conflitosDoMergeTree, fragmentosDeRelease, lerMerge, montarAviso, sinaisDe, type ItemDoAviso } from "@/scripts/upstream-garimpo/coleta";
 
 describe("lerMerge", () => {
   it("PR: número do assunto, título da primeira linha do corpo", () => {
@@ -102,5 +102,26 @@ describe("montarAviso", () => {
     const destaque = txt.split("\n").find((l) => l.startsWith("Para olhar primeiro"))!;
     expect(destaque.length).toBeLessThan(120);
     expect(txt.split("\n")).toHaveLength(4);
+  });
+});
+
+describe("conflitosDoMergeTree", () => {
+  it("lê os arquivos entre o OID e a primeira linha em branco", () => {
+    const saida = [
+      "4e893b45a4b162cb8dfa1a30d288066b4d156d29",
+      "app/app/ai/followups/_components/FlowsList.tsx",
+      "lib/i18n/dicionario.ts",
+      "",
+      "CONFLITO (conteúdo): Conflito de merge em app/app/ai/followups/_components/FlowsList.tsx",
+    ].join("\n");
+    expect(conflitosDoMergeTree(saida)).toEqual([
+      "app/app/ai/followups/_components/FlowsList.tsx",
+      "lib/i18n/dicionario.ts",
+    ]);
+  });
+
+  it("merge limpo: só o OID, nenhuma linha de conflito", () => {
+    expect(conflitosDoMergeTree("2f0bad117f553984705d61ae64901dbad4cf8573\n")).toEqual([]);
+    expect(conflitosDoMergeTree("2f0bad117f553984705d61ae64901dbad4cf8573")).toEqual([]);
   });
 });

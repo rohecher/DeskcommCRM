@@ -31,6 +31,7 @@ Uma rotina diária que (a) lê o que entrou no upstream desde a última análise
 | Arquivos do upstream que o fork **modificou** | 65 (CONFIRMADO), em sua maioria strings de vocabulário | Zona de conflito real. Ex.: `lib/audit/actions.ts` tem 423 commits do upstream desde a base |
 | **Colisão de migrations** | Upstream tem `0144`–`0149` diferentes das do fork (`0144_followup_timing_plan` vs `0144_organizacao_nova_nasce_igreja`) e já está na `0683` (CONFIRMADO) | Migration do upstream **nunca** entra com o número original. Renumera para depois da última do fork (hoje `0149`), e vira apêndice no `baseline.sql` ANTES do bloco `VARREDURA anon` |
 | `baseline.sql` | O fork tem apêndice próprio e mexeu na ordem da varredura | Nunca importar o `baseline.sql` do upstream. Portar só o bloco da migration escolhida |
+| **Quase nada aplica limpo** | Simulação de cherry-pick (`git merge-tree`) sobre 105 itens do upstream de 16/10 em diante: **9 limpos (≈9%)**. Arquivos que mais conflitam: `lib/i18n/dicionario.ts` (43), `lib/i18n/traducoes/en.json` (19), `zh-CN.json` (12), `supabase/baseline.sql` (11), `CRMSidePanel.tsx` (6), `lib/audit/actions.ts` (6) (CONFIRMADO, 2026-10-20) | O upstream criou um sistema de i18n depois da base do fork; o fork nunca o recebeu, então todo PR de tela conflita. **A zona sozinha enganava**: 2 dos 3 itens "verdes e pequenos" do primeiro lote (#3092, #3077) dependiam de peças que o fork não tem. O coletor passa a simular o cherry-pick e mostra "Aplica limpo?" |
 | Fragmentos de release | O upstream publica `docs/release/*.md` por PR (CONFIRMADO) | Boa fonte de resumo em linguagem de produto para o classificador |
 
 ## 4. As três zonas
@@ -92,6 +93,8 @@ Só roda para ticket com `Status: ready-for-agent`, ou seja, aprovado.
 5. **Ritmo de aplicação.** Teto de PRs aplicados por semana, para não virar a fonte de instabilidade da produção?
 6. **Registro de decisão.** Esta rotina é decisão estrutural nova. Pela regra do `CLAUDE.md`, ela entra em `docs/decisoes.md` **antes** de qualquer código. Quer que eu proponha o texto da entrada?
 7. **Estrutura para diminuir conflito futuro.** Hoje o vocabulário pastoral está espalhado em 65 arquivos do upstream. Centralizar em um único módulo de vocabulário reduziria o conflito a cada cherry-pick, mas é mudança estrutural. Vale abrir como decisão separada?
+
+8. **O fork deve adotar o sistema de i18n do upstream?** É a causa de ~40% dos conflitos medidos (`dicionario.ts` conflita em 43 de 105 itens). Adotar é mudança estrutural grande (toca praticamente toda tela) e o Cajado é só em português; não adotar significa portar à mão cada item de tela, no estilo do arquivo (como foi feito no #3082). Precisa de decisão própria em `docs/decisoes.md`.
 
 ## 9. Tickets previstos (ainda não criados)
 
