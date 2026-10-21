@@ -47,3 +47,18 @@ export type StatusCulto = "rascunho" | "aprovado" | "publicado";
  * ser escalado para servir na quinta.
  */
 export type OrigemSlot = "gerado" | "fixado" | "manual" | "externo";
+
+/**
+ * Os avisos de WhatsApp da escala (migration 0150). Espelho do CHECK `escala_avisos_tipo_check`,
+ * vigiado por `tests/invariants/vocabulario-banco-x-typescript.test.ts`.
+ */
+export type TipoDeAviso =
+  | "confirmacao"
+  | "lembrete_vespera"
+  | "lembrete_no_dia"
+  | "pesquisa"
+  | "troca_entrou"
+  | "troca_saiu";
+
+/** `pulado` = não havia como enviar (sem telefone, contato bloqueado); o motivo fica na linha. */
+export type StatusDoAviso = "pendente" | "enviado" | "falhou" | "pulado";
