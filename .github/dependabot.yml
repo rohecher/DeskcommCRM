@@ -8,6 +8,11 @@ updates:
     groups:
       minor-and-patch:
         update-types: ["minor", "patch"]
+        # O Next fica FORA do grupo: uma subida dele precisa da sua própria PR (e do build da
+        # imagem, que o publish-image faz em PR), e não pode ficar escondida dentro de uma PR
+        # com dezenas de pacotes. Aconteceu: 16.2.12 -> 16.3.8 quebrou o build da imagem.
+        exclude-patterns:
+          - "next"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:

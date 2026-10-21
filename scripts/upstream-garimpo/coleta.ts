@@ -104,3 +104,19 @@ export function montarAviso(data: string, itens: readonly ItemDoAviso[], urlDaPR
   linhas.push(`Decida aqui: ${urlDaPR}`);
   return linhas.join("\n");
 }
+
+// ---- Simulação do cherry-pick -------------------------------------------------------
+
+/**
+ * Lê a saída de `git merge-tree --write-tree --name-only`: a 1ª linha é o OID da árvore,
+ * depois vêm os arquivos em conflito, até a primeira linha em branco. Árvore limpa = lista vazia.
+ */
+export function conflitosDoMergeTree(saida: string): string[] {
+  const [, ...resto] = saida.split("\n");
+  const arquivos: string[] = [];
+  for (const linha of resto) {
+    if (linha.trim() === "") break;
+    arquivos.push(linha.trim());
+  }
+  return arquivos;
+}
