@@ -81,12 +81,21 @@ function limpaTitulo(t: string): string {
  * pode ser interpretado como marcação. Itens vermelhos nunca entram nos destaques — a
  * rotina não propõe tocar neles.
  */
-export function montarAviso(data: string, itens: readonly ItemDoAviso[], urlDaPR: string): string {
+export function montarAviso(
+  data: string,
+  itens: readonly ItemDoAviso[],
+  urlDaPR: string,
+  totalNoUpstream?: number,
+): string {
   const [, mes, dia] = data.split("-");
   const n = (z: ItemDoAviso["zona"]) => itens.filter((i) => i.zona === z).length;
   const migrations = itens.filter((i) => i.renumerar.length > 0).length;
 
-  const linhas = [`Garimpo de ${dia}/${mes}: ${plural(itens.length, "item novo", "itens novos")} no upstream.`];
+  const abertura =
+    totalNoUpstream === undefined
+      ? `${plural(itens.length, "item novo", "itens novos")} no upstream`
+      : `${plural(itens.length, "correção pequena", "correções pequenas")} entre ${totalNoUpstream} itens novos no upstream`;
+  const linhas = [`Garimpo de ${dia}/${mes}: ${abertura}.`];
   const faixas = [
     plural(n("verde"), "entra limpo", "entram limpos"),
     plural(n("amarela"), "pede cuidado", "pedem cuidado"),
@@ -119,4 +128,28 @@ export function conflitosDoMergeTree(saida: string): string[] {
     arquivos.push(linha.trim());
   }
   return arquivos;
+}
+
+// ---- Filtro: só correção, segurança e mudança pequena --------------------------------
+
+/**
+ * Decisão de 2026-10-21: o fork não acompanha funcionalidade do upstream (3% dos PRs
+ * aplicam limpo; o i18n que o fork nunca recebeu conflita em quase tudo). O garimpo passa a
+ * propor só (a) correção de defeito e (b) segurança, e só quando a mudança é pequena.
+ * "Pequena" é medida em arquivos tocados: é a única medida que o coletor tem sem ler código.
+ */
+const TITULO_DE_CORRECAO = /^(fix|perf|security|sec)(\([^)]*\))?!?:/i;
+const TEMA_DE_SEGURANCA = /seguran|vulnerab|\bCVE-|GHSA|\bRCE\b|\bXSS\b|\bSSRF\b|injec|lgpd|anonimiz|rgpd/i;
+const TEMA_DE_I18N = /i18n|idioma|língua|traduç|locale|espanhol|inglês|português/i;
+
+export const MAX_ARQUIVOS_DE_CORRECAO = 12;
+/** Correção de segurança pode ser grande (cascata de LGPD, por exemplo) e ainda valer. */
+export const MAX_ARQUIVOS_DE_SEGURANCA = 40;
+
+export function ehCandidato(item: { titulo: string; arquivos_total: number }): boolean {
+  // i18n conflita por construção: o fork não tem o sistema. Nem correção dele entra.
+  if (TEMA_DE_I18N.test(item.titulo)) return false;
+  const seguranca = TEMA_DE_SEGURANCA.test(item.titulo);
+  if (!seguranca && !TITULO_DE_CORRECAO.test(item.titulo)) return false;
+  return item.arquivos_total <= (seguranca ? MAX_ARQUIVOS_DE_SEGURANCA : MAX_ARQUIVOS_DE_CORRECAO);
 }

@@ -8,8 +8,10 @@ name: upstream-garimpo
 
 on:
   schedule:
-    # 10:00 UTC = 07:00 em Brasília.
-    - cron: "0 10 * * *"
+    # Segunda-feira, 10:17 UTC = 07:17 em Brasília. Semanal (decisão de 2026-10-21): o fork só
+    # acompanha correção, segurança e mudança pequena do upstream. O minuto 17 e não 00: tarefa
+    # agendada no topo da hora atrasa horas (a primeira rodou às 11:58 de Brasília).
+    - cron: "17 10 * * 1"
   workflow_dispatch:
 
 permissions:

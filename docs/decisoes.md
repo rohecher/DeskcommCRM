@@ -1,5 +1,23 @@
 # Decisões
 
+## 2026-10-21 — Escalas: a divulgação é por aviso (WhatsApp e push), não por planilha
+
+Specs: `tasks/avisos-da-escala/spec.md` e `tasks/exportar-escala-planilha/spec.md` (pausada).
+
+- **DECISÃO — a exportação da escala para planilha está pausada** ("não será permitido, no momento", Roberto). Isso muda a pendência 1 da entrada de 2026-10-16: `exportar.py` deixa de ser o que impede arquivar o `motor-legado/`, enquanto a divulgação não for por planilha. Pendência 4 (`auditar.py`) segue aberta.
+- **DECISÃO — a prioridade da divulgação é aviso no WhatsApp** (confirmação, alteração etc.) **e push no app.** O mês inteiro é aprovado de uma vez, e a aprovação é o gatilho da convocação.
+- **DECISÃO — vaga sem nome fica em aberto e pode virar sugestão** para o próprio voluntário se oferecer. É sugestão: a liderança aprova, e a vaga nunca é ocupada sozinha.
+- **RISCO — o push não existe no fork** (sem service worker, manifest ou biblioteca) e o pacote do upstream depende do i18n que o fork não tem. Por isso o desenho é em fases: WhatsApp primeiro, aviso dentro do app depois, push de verdade por último.
+
+## 2026-10-21 — Garimpo do upstream: só correção, segurança e mudança pequena, toda segunda
+
+Revisa a decisão de 2026-10-19 (abaixo), que continua valendo no que não é dito aqui.
+
+- **DECISÃO — o Cajado não acompanha funcionalidade do upstream.** Medido: só 9 de 105 PRs (≈9%) e 1 de 34 (3%) aplicam limpo por cherry-pick, porque o fork nunca recebeu o sistema de i18n do upstream (`lib/i18n/dicionario.ts` conflita em 43 dos 105). Funcionalidade nova do upstream (JEV, PWA, notificações push, banco externo) vira ideia para depois, e se um dia valer a pena é uma migração única e planejada, não um fluxo diário.
+- **DECISÃO — o garimpo passa a ser semanal e filtrado.** Roda às segundas, 10:17 UTC (07:17 em Brasília). O coletor só propõe item que seja (a) correção de defeito (`fix`, `perf`, `security`), (b) segurança (títulos com LGPD, CVE, RCE, SSRF…) ou (c) mudança pequena: até 12 arquivos, e até 40 se for de segurança. i18n nunca entra, nem a correção dele. Sem candidato, não há PR nem aviso. O relatório JSON guarda todos os itens, com `candidato: false` nos que ficaram de fora, para quem quiser auditar o filtro.
+- **DECISÃO — segurança de dependência segue pelo Dependabot**, com `dependabot.yml` (o `next` fora do grupo), o workflow manual `atualizar-dependencia` e a `cajado` protegida (`verify`, `invariants`, `build-and-push`). Uma revisão mensal de 15 minutos dos alertas de runtime críticos e altos.
+- **PENDÊNCIA — o JEV é fornecedor externo (TypeSafe AI)**, e o fork não tem o miolo (`lib/ai/decisao/clima.ts`, `pedidos.ts`). Trazer exige código, conta no fornecedor e decisão do Roberto. Sem prazo.
+
 ## 2026-10-19 — Garimpo diário do upstream: a rotina propõe, a pessoa aprova
 
 Spec: `tasks/upstream-garimpo/spec.md`. Medido em 2026-10-19, merge-base `48e517070`.
