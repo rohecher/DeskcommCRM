@@ -47,6 +47,14 @@ Marcação: **CONFIRMADO** = lido no repositório; **INFERIDO** = dedução; **D
 - **Sistema vivo.** Voluntário que não responde em N dias não some: aparece na Central da liderança com o próximo passo.
 - **Nada de nome real** em fixture ou teste (fork público).
 
+## 4b. Respostas do Roberto (2026-10-21)
+
+1. **Número do aviso:** uma **tela para vincular o número** usado nos avisos. Feita: `/app/escalas/avisos` (ticket 01, abaixo).
+2. **Domingo:** sim, aviso de troca **urgente do próprio dia** pode sair no domingo, entre 7h e 22h.
+3. **Lembrete parametrizável:** um dia antes, no dia, e **pesquisa pós-culto**. Cada um liga e desliga, com a antecedência configurável.
+4. **Sem resposta:** **dois cultos seguidos sem resposta** abrem um **atendimento no kanban** (não só um aviso na Central).
+5. **Pergunta 5 da seção abaixo (telefones):** ainda sem contagem (ticket 01 da lista antiga).
+
 ## 5. Perguntas abertas (`needs-info`; "não sei" é aceito)
 
 1. **De qual número sai o aviso?** O mesmo WhatsApp do atendimento da igreja ou um número só da escala? Muda o risco de banimento do número principal.
@@ -70,3 +78,9 @@ Marcação: **CONFIRMADO** = lido no repositório; **INFERIDO** = dedução; **D
 ## 7. Laço de retorno (invariante 7)
 
 Se o aviso sai errado ou não chega, a liderança volta a avisar no grupo à mão. O sinal é a Central: aviso que falhou ou voluntário sem resposta aparece lá, com o motivo.
+
+## Progresso
+
+- **Número dos avisos (decisão 1): feito** em `feat/aviso-numero-da-escala`. Guarda o id da sessão em `escala_config.aviso_canal_id`, sem migration. `lib/escalas/aviso.ts`, ação `salvarCanalDeAviso`, tela `/app/escalas/avisos`. Falta provar **pela tela** com Playwright num banco fresco (doutrina de QA visual).
+- Próximo: convocação ao aprovar o mês (ticket 02), que **lê esse número** e não envia nada se ele não estiver escolhido.
+
