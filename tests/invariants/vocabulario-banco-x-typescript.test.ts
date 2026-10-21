@@ -205,6 +205,19 @@ const PARES: Array<{
     arquivo: "lib/escalas/tipos.ts",
     simbolo: "OrigemSlot",
   },
+  // ── migration 0150, avisos da escala ────────────────────────────────────────
+  {
+    tabela: "escala_avisos",
+    coluna: "tipo",
+    arquivo: "lib/escalas/tipos.ts",
+    simbolo: "TipoDeAviso",
+  },
+  {
+    tabela: "escala_avisos",
+    coluna: "status",
+    arquivo: "lib/escalas/tipos.ts",
+    simbolo: "StatusDoAviso",
+  },
 ];
 
 /** Tira um nível de parênteses externos, se ele envolver a expressão inteira. */
