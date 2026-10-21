@@ -42,7 +42,7 @@ Marcação: **CONFIRMADO** = lido no repositório; **INFERIDO** = dedução; **D
 - **Escopo semanal.** O disparo vai **só para quem está na escala da semana**, e não para o mês inteiro. O mês continua sendo aprovado de uma vez; a convocação é que sai semana a semana. Hoje são cerca de 35 pessoas por culto, mas a conta precisa valer para uma igreja de 1.500 voluntários.
 - **O ritmo se calcula.** `lib/escalas/disparo.ts` (feito, 10 testes): `capacidadePorHora` = o menor entre o teto configurado (padrão 25) e o limite diário do número dividido pelas horas da janela (300 por dia em 15 horas = 20 por hora). `planejarDisparo` distribui as mensagens em **blocos por hora**, na janela de 7h às 22h e **sem domingo**, e devolve quando termina e **se cabe no prazo**. Se não couber, o plano **diz isso à liderança** em vez de estourar o ritmo.
 - **Mostrado antes de enviar:** "N pessoas vão receber. Começa em X e termina em Y."
-- **Padrões a confirmar:** a convocação da semana abre **segunda às 7h**; o prazo para terminar é **24 horas antes do primeiro culto da semana**. Ambos ficam na tela de avisos.
+- **Antecedência por culto, parametrizável (Roberto, 2026-10-21):** o aviso de cada culto abre **2 dias antes** (culto de quinta avisa na terça; culto de domingo avisa na sexta), às 7h. `abreEmDoCulto` (feito, testado). O **prazo** para terminar é **24 horas antes** da hora do culto, `prazoDoCulto`. Os dois ficam na tela de avisos. Isso substitui a ideia de "abrir toda segunda": quem está nos dois cultos da semana recebe dois avisos, um por culto.
 - O envio continua passando pelo que já existe: janela, limite diário, espaçamento (5 s em envio em massa), `PARAR`.
 
 ### 3b. Pesquisa pós-culto (decisão de 2026-10-21)
