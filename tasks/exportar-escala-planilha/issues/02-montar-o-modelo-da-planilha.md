@@ -1,6 +1,6 @@
 # 02 — Função pura que monta o modelo da planilha (regra + paridade)
 
-Status: ready-for-agent
+Status: wontfix
 Type: task
 Spec: `tasks/exportar-escala-planilha/spec.md`
 
@@ -15,3 +15,5 @@ Spec: `tasks/exportar-escala-planilha/spec.md`
 - Sem I/O. Sem nome real no repositório.
 
 ## Comments
+
+- 2026-10-21: pausado. A divulgação deixou de ser por planilha (ver spec, "Decisão de 2026-10-21").

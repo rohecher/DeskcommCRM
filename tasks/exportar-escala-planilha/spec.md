@@ -1,6 +1,6 @@
 # Spec — Exportar a escala do mês para planilha (divulgação)
 
-Status: needs-triage
+Status: wontfix (pausada em 2026-10-21; reabrir se a divulgação voltar a ser por planilha)
 Origem: `docs/decisoes.md`, entrada de 2026-10-16, pendência 1 (`exportar.py`). Medido em 2026-10-21.
 Marcação: **CONFIRMADO** = lido no código ou no repositório; **INFERIDO** = dedução; **DECISÃO** = precisa do Roberto.
 
@@ -77,3 +77,15 @@ Recomendo **ExcelJS** (estilos, larguras e painel congelado). O pacote `xlsx` (S
 - **Log:** auditoria `escala.exportada`. **Tela:** o botão e os avisos de vaga vazia.
 - **Anti-morte:** o botão fica no cabeçalho do mês, que é a tela que a liderança já abre todo mês.
 - **Laço de retorno:** se a planilha sai errada, a liderança volta a usar o Python. O sinal é o `motor-legado/` continuar sendo aberto. A paridade em teste é o que previne isso.
+
+## Decisão de 2026-10-21 (Roberto)
+
+**"Não será permitido, no momento, exportar a escala."** A divulgação passa a ser por **aviso no WhatsApp e push no app**, e não por planilha. Respostas dadas às perguntas do item 6:
+
+1. Quem pode baixar: ninguém, por ora.
+2. Quais cultos entram: o **mês inteiro aprovado** (não culto a culto).
+3. Divulgação: prioridade é notificação por WhatsApp (confirmação, alteração etc.) e push no app. Ver `tasks/avisos-da-escala/spec.md`.
+5. Vaga sem nome: fica **em aberto**, e pode virar sugestão para o próprio voluntário se oferecer.
+
+Nada desta spec foi implementado. Os tickets 01 a 05 ficam `wontfix` (pausados). O `motor-legado/exportar.py` continua sendo o único exportador, e `motor-legado/` não pode ser arquivado por causa dele (ver `docs/decisoes.md`).
+

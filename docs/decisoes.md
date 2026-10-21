@@ -1,5 +1,14 @@
 # Decisões
 
+## 2026-10-21 — Escalas: a divulgação é por aviso (WhatsApp e push), não por planilha
+
+Specs: `tasks/avisos-da-escala/spec.md` e `tasks/exportar-escala-planilha/spec.md` (pausada).
+
+- **DECISÃO — a exportação da escala para planilha está pausada** ("não será permitido, no momento", Roberto). Isso muda a pendência 1 da entrada de 2026-10-16: `exportar.py` deixa de ser o que impede arquivar o `motor-legado/`, enquanto a divulgação não for por planilha. Pendência 4 (`auditar.py`) segue aberta.
+- **DECISÃO — a prioridade da divulgação é aviso no WhatsApp** (confirmação, alteração etc.) **e push no app.** O mês inteiro é aprovado de uma vez, e a aprovação é o gatilho da convocação.
+- **DECISÃO — vaga sem nome fica em aberto e pode virar sugestão** para o próprio voluntário se oferecer. É sugestão: a liderança aprova, e a vaga nunca é ocupada sozinha.
+- **RISCO — o push não existe no fork** (sem service worker, manifest ou biblioteca) e o pacote do upstream depende do i18n que o fork não tem. Por isso o desenho é em fases: WhatsApp primeiro, aviso dentro do app depois, push de verdade por último.
+
 ## 2026-10-21 — Garimpo do upstream: só correção, segurança e mudança pequena, toda segunda
 
 Revisa a decisão de 2026-10-19 (abaixo), que continua valendo no que não é dito aqui.

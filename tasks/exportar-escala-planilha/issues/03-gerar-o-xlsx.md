@@ -1,6 +1,6 @@
 # 03 — Gerar o .xlsx com o visual do exportar.py
 
-Status: ready-for-agent
+Status: wontfix
 Type: task
 Spec: `tasks/exportar-escala-planilha/spec.md`
 
@@ -15,3 +15,5 @@ Transformar o modelo em `.xlsx`: cabeçalho azul-escuro `1F3864` com texto branc
 - O arquivo abre no LibreOffice e no Excel (conferir à mão uma vez e anexar captura).
 
 ## Comments
+
+- 2026-10-21: pausado. A divulgação deixou de ser por planilha (ver spec, "Decisão de 2026-10-21").

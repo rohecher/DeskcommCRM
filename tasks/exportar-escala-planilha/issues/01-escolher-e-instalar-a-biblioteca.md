@@ -1,6 +1,6 @@
 # 01 — Escolher e instalar a biblioteca de planilha
 
-Status: ready-for-agent
+Status: wontfix
 Type: task
 Spec: `tasks/exportar-escala-planilha/spec.md`
 
@@ -14,3 +14,5 @@ Recomendação da spec: **ExcelJS**. Conferir a versão atual no Context7 e roda
 - Lembrar: o `pnpm` local expira na rede desta máquina. Se acontecer, usar o workflow `atualizar-dependencia` (pacote e versão exata).
 
 ## Comments
+
+- 2026-10-21: pausado. A divulgação deixou de ser por planilha (ver spec, "Decisão de 2026-10-21").

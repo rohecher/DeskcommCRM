@@ -1,6 +1,6 @@
 # 04 — Rota de download com permissão, RLS e auditoria
 
-Status: needs-info
+Status: wontfix
 Type: task
 Spec: `tasks/exportar-escala-planilha/spec.md`
 
@@ -16,3 +16,5 @@ Spec: `tasks/exportar-escala-planilha/spec.md`
 - `pnpm test:db` verde se tocar em schema ou RLS (não deve tocar).
 
 ## Comments
+
+- 2026-10-21: pausado. A divulgação deixou de ser por planilha (ver spec, "Decisão de 2026-10-21").
